@@ -52,58 +52,42 @@ export default function SeatTable() {
 
   return (
     <div className="space-y-6">
-      {/* Poll Data Selection */}
-      <Card className="bg-white dark:bg-gray-800 shadow-lg border border-gray-200 dark:border-gray-700">
-        <CardContent className="p-4">
-          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
-            <div>
-              <h3 className="text-sm font-medium text-gray-900 dark:text-gray-100 mb-1">Load Poll Data</h3>
-              <p className="text-xs text-gray-600 dark:text-gray-400">
-                Updated: {new Date().toLocaleDateString('nl-NL', { 
-                  day: 'numeric', 
-                  month: 'long', 
-                  year: 'numeric' 
-                })}
-              </p>
-            </div>
-            <div className="flex flex-wrap gap-2">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => loadPollData('current')}
-                className="text-xs"
-              >
-                Current Seats
-              </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => loadPollData('peilingwijzer')}
-                className="text-xs"
-              >
-                Poll Peilingwijzer
-              </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => loadPollData('peil')}
-                className="text-xs"
-              >
-                Poll Peil.nl
-              </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => setPartySeats({})}
-                className="text-xs text-red-600 hover:text-red-700"
-              >
-                <RotateCcw className="mr-1 h-3 w-3" />
-                Blank/Reset
-              </Button>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+      {/* Poll Data Buttons */}
+      <div className="flex flex-wrap gap-2 mb-6">
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => loadPollData('current')}
+          className="text-xs"
+        >
+          Current Seats
+        </Button>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => loadPollData('peilingwijzer')}
+          className="text-xs"
+        >
+          Poll Peilingwijzer
+        </Button>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => loadPollData('peil')}
+          className="text-xs"
+        >
+          Poll Peil.nl
+        </Button>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => setPartySeats({})}
+          className="text-xs text-red-600 hover:text-red-700"
+        >
+          <RotateCcw className="mr-1 h-3 w-3" />
+          Blank/Reset
+        </Button>
+      </div>
 
       {/* Sticky Header with Progress Bar */}
       <div className="sticky top-0 z-10 bg-white dark:bg-gray-900 pb-2">
