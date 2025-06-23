@@ -109,6 +109,9 @@ Changelog:
 - June 23, 2025. Added election countdown (October 29, 2025) to header navigation
 - June 23, 2025. Made Current Prediction bar sticky and moved PartyBar to Seat Predictions tab
 - June 23, 2025. Simplified Coalition Builder with read-only party selection (no seat editing)
+- June 23, 2025. Enhanced Seat Predictions with integrated progress bar in sticky header
+- June 23, 2025. Added hold-to-increment functionality for plus/minus seat adjustment buttons
+- June 23, 2025. Repositioned poll data buttons to header top-right for better accessibility
 ```
 
 ## User Preferences
