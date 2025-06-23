@@ -54,7 +54,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   const [selectedParties, setSelectedParties] = useLocalStorage<string[]>('coalition-selected-parties', []);
   const [darkMode, setDarkMode] = useLocalStorage<boolean>('coalition-dark-mode', false);
   const [ideologyFilter, setIdeologyFilter] = useLocalStorage<boolean>('coalition-ideology-filter', false);
-  const [language, setLanguageState] = useLocalStorage<string>('coalition-language', 'en');
+  const [language, setLanguageState] = useLocalStorage<string>('coalition-language', 'nl');
   
   const { i18n } = useTranslation();
 

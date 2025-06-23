@@ -5,44 +5,8 @@
     "fullName": "Volkspartij voor Vrijheid en Democratie",
     "color": "#1E40AF",
     "ideology": "Liberal",
-    "leader": "Mark Rutte",
-    "currentSeats": 34
-  },
-  {
-    "id": "pvda",
-    "name": "PvdA",
-    "fullName": "Partij van de Arbeid",
-    "color": "#DC2626",
-    "ideology": "Social Democratic",
-    "leader": "Attje Kuiken",
-    "currentSeats": 9
-  },
-  {
-    "id": "d66",
-    "name": "D66",
-    "fullName": "Democraten 66",
-    "color": "#059669",
-    "ideology": "Liberal Democratic",
-    "leader": "Sigrid Kaag",
+    "leader": "Dilan Yeşilgöz",
     "currentSeats": 24
-  },
-  {
-    "id": "cda",
-    "name": "CDA",
-    "fullName": "Christen-Democratisch Appèl",
-    "color": "#7C3AED",
-    "ideology": "Christian Democratic",
-    "leader": "Wopke Hoekstra",
-    "currentSeats": 15
-  },
-  {
-    "id": "sp",
-    "name": "SP",
-    "fullName": "Socialistische Partij",
-    "color": "#F59E0B",
-    "ideology": "Socialist",
-    "leader": "Lilian Marijnissen",
-    "currentSeats": 9
   },
   {
     "id": "pvv",
@@ -51,16 +15,61 @@
     "color": "#8B5CF6",
     "ideology": "Populist",
     "leader": "Geert Wilders",
-    "currentSeats": 17
+    "currentSeats": 37
   },
   {
-    "id": "gl",
-    "name": "GroenLinks",
-    "fullName": "GroenLinks",
-    "color": "#10B981",
+    "id": "gl-pvda",
+    "name": "GL-PvdA",
+    "fullName": "GroenLinks-PvdA",
+    "color": "#DC2626",
     "ideology": "Green Left",
-    "leader": "Jesse Klaver",
-    "currentSeats": 14
+    "leader": "Frans Timmermans",
+    "currentSeats": 25
+  },
+  {
+    "id": "nsc",
+    "name": "NSC",
+    "fullName": "Nieuw Sociaal Contract",
+    "color": "#06B6D4",
+    "ideology": "Centrist",
+    "leader": "Pieter Omtzigt",
+    "currentSeats": 20
+  },
+  {
+    "id": "d66",
+    "name": "D66",
+    "fullName": "Democraten 66",
+    "color": "#059669",
+    "ideology": "Liberal Democratic",
+    "leader": "Rob Jetten",
+    "currentSeats": 9
+  },
+  {
+    "id": "bbb",
+    "name": "BBB",
+    "fullName": "BoerBurgerBeweging",
+    "color": "#10B981",
+    "ideology": "Agrarian",
+    "leader": "Caroline van der Plas",
+    "currentSeats": 7
+  },
+  {
+    "id": "cda",
+    "name": "CDA",
+    "fullName": "Christen-Democratisch Appèl",
+    "color": "#7C3AED",
+    "ideology": "Christian Democratic",
+    "leader": "Henri Bontenbal",
+    "currentSeats": 5
+  },
+  {
+    "id": "sp",
+    "name": "SP",
+    "fullName": "Socialistische Partij",
+    "color": "#F59E0B",
+    "ideology": "Socialist",
+    "leader": "Lilian Marijnissen",
+    "currentSeats": 5
   },
   {
     "id": "fvd",
@@ -69,7 +78,16 @@
     "color": "#92400E",
     "ideology": "National Conservative",
     "leader": "Thierry Baudet",
-    "currentSeats": 8
+    "currentSeats": 3
+  },
+  {
+    "id": "pvdd",
+    "name": "PvdD",
+    "fullName": "Partij voor de Dieren",
+    "color": "#065F46",
+    "ideology": "Animal Rights",
+    "leader": "Esther Ouwehand",
+    "currentSeats": 3
   },
   {
     "id": "cu",
@@ -77,8 +95,8 @@
     "fullName": "ChristenUnie",
     "color": "#1D4ED8",
     "ideology": "Christian Democratic",
-    "leader": "Gert-Jan Segers",
-    "currentSeats": 5
+    "leader": "Miriam Bikker",
+    "currentSeats": 3
   },
   {
     "id": "sgp",
@@ -90,40 +108,13 @@
     "currentSeats": 3
   },
   {
-    "id": "pvdd",
-    "name": "PvdD",
-    "fullName": "Partij voor de Dieren",
-    "color": "#065F46",
-    "ideology": "Animal Rights",
-    "leader": "Esther Ouwehand",
-    "currentSeats": 6
-  },
-  {
-    "id": "50plus",
-    "name": "50PLUS",
-    "fullName": "50PLUS",
-    "color": "#7C2D12",
-    "ideology": "Pensioners",
-    "leader": "Liane den Haan",
-    "currentSeats": 1
-  },
-  {
     "id": "denk",
     "name": "DENK",
     "fullName": "DENK",
     "color": "#B91C1C",
     "ideology": "Minority Interests",
-    "leader": "Farid Azarkan",
+    "leader": "Stephan van Baarle",
     "currentSeats": 3
-  },
-  {
-    "id": "bij1",
-    "name": "BIJ1",
-    "fullName": "BIJ1",
-    "color": "#7C3AED",
-    "ideology": "Anti-Racism",
-    "leader": "Sylvana Simons",
-    "currentSeats": 1
   },
   {
     "id": "volt",
@@ -132,6 +123,15 @@
     "color": "#5B21B6",
     "ideology": "Pro-European",
     "leader": "Laurens Dassen",
-    "currentSeats": 3
+    "currentSeats": 2
+  },
+  {
+    "id": "ja21",
+    "name": "JA21",
+    "fullName": "Juiste Antwoord 2021",
+    "color": "#EA580C",
+    "ideology": "Conservative Liberal",
+    "leader": "Joost Eerdmans",
+    "currentSeats": 1
   }
 ]
