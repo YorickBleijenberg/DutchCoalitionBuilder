@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useApp } from '../context/AppContext';
 import Header from '../components/Header';
 import SeatTable from '../components/SeatTable';
-import CoalitionBarChart from '../components/CoalitionBarChart';
+
 import ComparisonBarChart from '../components/ComparisonBarChart';
 import PartyBar from '../components/PartyBar';
 import CoalitionSuggestions from '../components/CoalitionSuggestions';
@@ -99,9 +99,8 @@ export default function Home() {
                 <ScenarioManager />
               </div>
               
-              {/* Right Column: Coalition Bar Chart, Suggestions, and Stability Analysis */}
+              {/* Right Column: Suggestions and Stability Analysis */}
               <div className="lg:col-span-2 space-y-8">
-                <CoalitionBarChart />
                 <CoalitionSuggestions />
                 <StabilityAnalysis />
               </div>

@@ -19,7 +19,7 @@ export default function CoalitionPredictionBar() {
     .sort((a, b) => (partySeats[b.id] || 0) - (partySeats[a.id] || 0));
 
   return (
-    <Card className="bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-600 shadow-md">
+    <Card className="sticky top-4 z-20 bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-600 shadow-md">
       <CardContent className="p-4">
         <div className="flex justify-between items-center mb-3">
           <span className="font-medium text-gray-900 dark:text-gray-100">Current Prediction</span>
