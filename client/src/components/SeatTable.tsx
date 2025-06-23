@@ -58,57 +58,63 @@ export default function SeatTable() {
           <CardContent className="p-4">
             <div className="flex justify-between items-center mb-4">
               <span className="font-medium text-blue-900 dark:text-blue-100">{t('seats.total')}: 150</span>
-              <div className="flex items-center gap-3">
-                <div className="flex flex-wrap gap-2">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => loadPollData('current')}
-                    className="text-xs border-blue-300 hover:bg-blue-100 dark:border-blue-600 dark:hover:bg-blue-800"
-                  >
-                    Current Seats
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => loadPollData('peilingwijzer')}
-                    className="text-xs border-blue-300 hover:bg-blue-100 dark:border-blue-600 dark:hover:bg-blue-800"
-                  >
-                    Poll Peilingwijzer
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => loadPollData('peil')}
-                    className="text-xs border-blue-300 hover:bg-blue-100 dark:border-blue-600 dark:hover:bg-blue-800"
-                  >
-                    Poll Peil.nl
-                  </Button>
+              <span className="text-2xl font-bold text-blue-900 dark:text-blue-100">{totalSeats}</span>
+            </div>
+            
+            {/* Progress Bar with Party Segments */}
+            <div className={`relative w-full bg-blue-200 dark:bg-blue-800 rounded-full h-8 overflow-hidden mb-2 border-2 transition-colors ${
+              seatStatus.isComplete ? 'border-green-500' : 'border-transparent'
+            }`}>
+              {/* Party segments */}
+              <div className="absolute inset-0 flex">
+                {parties
+                  .filter(party => (partySeats[party.id] || 0) > 0)
+                  .sort((a, b) => (partySeats[b.id] || 0) - (partySeats[a.id] || 0))
+                  .map((party) => {
+                    const seats = partySeats[party.id] || 0;
+                    const widthPercent = (seats / 150) * 100;
+                    return (
+                      <div
+                        key={party.id}
+                        className="h-full border-r border-white dark:border-gray-800 flex items-center justify-center relative"
+                        style={{
+                          backgroundColor: party.color,
+                          width: `${widthPercent}%`,
+                          opacity: totalSeats > 150 ? 0.7 : 0.9
+                        }}
+                        title={`${party.name}: ${seats} seats`}
+                      >
+                        {widthPercent > 8 && (
+                          <div className="text-white text-xs font-bold text-center px-1">
+                            <div className="leading-tight truncate">{party.name}</div>
+                            <div className="text-xs">{seats}</div>
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+              </div>
+              
+              {/* Red overlay when over 150 seats */}
+              {totalSeats > 150 && (
+                <div className="absolute inset-0 bg-red-500 bg-opacity-30 flex items-center justify-center">
+                  <span className="text-sm font-bold text-red-800 drop-shadow-md">
+                    OVER LIMIT: {totalSeats}/150
+                  </span>
                 </div>
-                <span className="text-2xl font-bold text-blue-900 dark:text-blue-100">{totalSeats}</span>
-              </div>
+              )}
+              
+              {/* Center text when no parties or under limit */}
+              {(totalSeats === 0 || (totalSeats <= 150 && parties.filter(party => (partySeats[party.id] || 0) > 0).length === 0)) && (
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <span className="text-sm font-medium text-blue-800 dark:text-blue-200">
+                    {totalSeats}/150 seats
+                  </span>
+                </div>
+              )}
             </div>
             
-            {/* Progress Bar */}
-            <div className="relative w-full bg-blue-200 dark:bg-blue-800 rounded-full h-6 overflow-hidden mb-2">
-              <div 
-                className={`h-full transition-all duration-500 ${
-                  seatStatus.isComplete 
-                    ? 'bg-green-500 dark:bg-green-400' 
-                    : seatStatus.isUnder 
-                      ? 'bg-blue-500 dark:bg-blue-400'
-                      : 'bg-red-500 dark:bg-red-400'
-                }`}
-                style={{ width: `${Math.min((totalSeats / 150) * 100, 100)}%` }}
-              />
-              <div className="absolute inset-0 flex items-center justify-center">
-                <span className="text-sm font-medium text-white drop-shadow-md">
-                  {totalSeats}/150 seats
-                </span>
-              </div>
-            </div>
-            
-            <div className="flex justify-between items-center">
+            <div className="flex justify-center">
               <Badge 
                 variant={seatStatus.isComplete ? "default" : seatStatus.isUnder ? "secondary" : "destructive"}
                 className="inline-flex items-center"
@@ -120,17 +126,54 @@ export default function SeatTable() {
                 )}
                 {t(`seats.${seatStatus.isComplete ? 'complete' : seatStatus.isUnder ? 'unassigned' : 'overassigned'}`)} {seatStatus.isComplete ? '' : Math.abs(seatStatus.difference)}
               </Badge>
-              <div className="text-xs text-blue-700 dark:text-blue-300">
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+      {/* Poll Data Selection */}
+      <Card className="bg-white dark:bg-gray-800 shadow-lg border border-gray-200 dark:border-gray-700 mb-6">
+        <CardContent className="p-4">
+          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
+            <div>
+              <h3 className="text-sm font-medium text-gray-900 dark:text-gray-100 mb-1">Load Poll Data</h3>
+              <p className="text-xs text-gray-600 dark:text-gray-400">
                 Updated: {new Date().toLocaleDateString('nl-NL', { 
                   day: 'numeric', 
                   month: 'long', 
                   year: 'numeric' 
                 })}
-              </div>
+              </p>
             </div>
-          </CardContent>
-        </Card>
-      </div>
+            <div className="flex flex-wrap gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => loadPollData('current')}
+                className="text-xs"
+              >
+                Current Seats
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => loadPollData('peilingwijzer')}
+                className="text-xs"
+              >
+                Poll Peilingwijzer
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => loadPollData('peil')}
+                className="text-xs"
+              >
+                Poll Peil.nl
+              </Button>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
       {/* Party List */}
       <Card className="bg-white dark:bg-gray-800 shadow-lg border border-gray-200 dark:border-gray-700">
         <CardHeader className="bg-gray-50 dark:bg-gray-700 border-b border-gray-200 dark:border-gray-600">
