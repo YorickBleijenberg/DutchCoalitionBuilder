@@ -1,0 +1,112 @@
+Create a full-stack-ready, front-end–only web app called “Dutch Election Coalition Builder” using React + Vite + Tailwind CSS.
+
+Core requirements
+Seat prediction panel
+
+Render a list of Dutch Tweede Kamer parties (seed it with a JSON file).
+
+Each party has a numeric <input type="number"> (0 – 150) for predicted seats.
+
+Show a live “Total 150 seats” indicator.
+
+If the running sum ≠ 150, display:
+
+“Unassigned X” (green) when under,
+
+“Over-assigned −Y” (red) when over.
+
+Block negative numbers; allow only integers.
+
+Coalition builder
+
+Each party row gets a checkbox.
+
+Checked boxes sum into coalitionSeats; display live (“Coalition seats: NN”).
+
+Highlight green when ≥ 76, red when < 76.
+
+Majority threshold = 76 (constant).
+
+Top-5 coalition suggestions
+
+Implement a pure JS function getTopCoalitions(parties, majority, ideologyFilter?) that:
+
+Generates all combinations,
+
+Sorts by fewest parties, then highest seat total,
+
+Returns the five best ≥ 76.
+
+Recompute and re-render on every seat-input change.
+
+Add a toggle “Ideology lock”; when on, only return coalitions where all parties share the same ideology field.
+
+Local persistence
+
+Store partySeats, dark-mode setting, and last selected language in localStorage.
+
+Hydrate state from localStorage on load.
+
+Export
+
+Add a “Download snapshot” button that wraps the results panel (seat chart + coalition list) in html-to-image and saves a PNG.
+
+Internationalisation
+
+Integrate react-i18next.
+
+Provide en.json and nl.json with all UI strings.
+
+Include a small 🇬🇧/🇳🇱 toggle that calls i18n.changeLanguage.
+
+Dark mode
+
+Tailwind class-based dark mode (<html class="dark">).
+
+Add a moon/sun toggle; persist preference.
+
+Styling
+
+Colors:
+
+Primary #1E3A8A, Secondary #DC2626, Accent #059669, Background #F8FAFC, Text #1F2937, Neutral #6B7280.
+
+Fonts: Inter & Source Sans Pro (load via Google Fonts).
+
+Responsive card-style layout inspired by Politico/FiveThirtyEight.
+
+Visualization
+
+Include a component <ParliamentChart> that shows a semicircle of 150 dots coloured by party (use D3 or a ready D3-parliament plugin).
+
+Chart updates in real time with seat inputs.
+
+Project structure (suggested)
+pgsql
+Copy
+Edit
+src/
+├─ assets/parties.json
+├─ components/
+│  ├─ PartyRow.jsx
+│  ├─ SeatTable.jsx
+│  ├─ CoalitionBuilder.jsx
+│  ├─ CoalitionSuggestions.jsx
+│  ├─ ParliamentChart.jsx
+│  └─ Header.jsx  (language + dark-mode toggles)
+├─ hooks/
+│  └─ useLocalStorage.js
+├─ lib/
+│  └─ coalition.js  (getTopCoalitions, helper utils)
+├─ i18n/
+│  ├─ en.json
+│  └─ nl.json
+└─ App.jsx
+Extras
+Use React Context (or Zustand) for global state (partySeats, selectedParties, theme, language).
+
+Write unit tests for getTopCoalitions (Jest + Vitest).
+
+Add Tailwind typography & forms plugins for nicer inputs.
+
+Prepare for backend by keeping data fetch/submit functions isolated (e.g. api.js with stubs).
