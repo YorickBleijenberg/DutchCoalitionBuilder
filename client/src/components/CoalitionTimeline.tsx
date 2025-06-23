@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useApp } from '../context/AppContext';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -65,6 +66,7 @@ const historicalData: HistoricalCoalition[] = [
 
 export default function CoalitionTimeline() {
   const { parties, selectedParties, partySeats } = useApp();
+  const [expandedReason, setExpandedReason] = useState<number | null>(null);
 
   const getCurrentCoalitionPrediction = () => {
     if (selectedParties.length === 0) return null;
@@ -143,7 +145,10 @@ export default function CoalitionTimeline() {
         </p>
       </CardHeader>
       
-      <CardContent className="space-y-6">
+      <CardContent 
+        className="space-y-6"
+        onClick={() => setExpandedReason(null)}
+      >
         {/* Current Coalition Prediction */}
         {prediction && (
           <div className="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-700">
@@ -214,7 +219,11 @@ export default function CoalitionTimeline() {
           
           <div className="space-y-3">
             {historicalData.map((coalition, index) => (
-              <div key={index} className="flex items-center justify-between p-3 border border-gray-200 dark:border-gray-600 rounded-lg">
+              <div 
+                key={index} 
+                className="flex items-center justify-between p-3 border border-gray-200 dark:border-gray-600 rounded-lg"
+                onClick={(e) => e.stopPropagation()}
+              >
                 <div className="flex items-center gap-4">
                   <div className="text-center">
                     <div className="font-bold text-lg">{coalition.year}</div>
@@ -237,7 +246,15 @@ export default function CoalitionTimeline() {
                   
                   <div className="flex-1">
                     <div className="font-medium">{coalition.formationDays} days</div>
-                    <div className="text-sm text-gray-600 dark:text-gray-400 line-clamp-1">
+                    <div 
+                      className={`text-sm text-gray-600 dark:text-gray-400 cursor-pointer transition-all duration-200 ${
+                        expandedReason === index ? '' : 'line-clamp-1'
+                      }`}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setExpandedReason(expandedReason === index ? null : index);
+                      }}
+                    >
                       {coalition.reason}
                     </div>
                   </div>
