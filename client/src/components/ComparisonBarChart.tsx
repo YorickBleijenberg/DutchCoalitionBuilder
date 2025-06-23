@@ -36,7 +36,7 @@ export default function ComparisonBarChart() {
               </div>
               <div className="flex items-center gap-2">
                 <div className="w-4 h-4 bg-green-500 rounded"></div>
-                <span className="text-gray-600 dark:text-gray-400">Voorspelling</span>
+                <span className="text-gray-600 dark:text-gray-400">Jouw voorspelling</span>
               </div>
             </div>
           </div>
@@ -91,27 +91,7 @@ export default function ComparisonBarChart() {
             </div>
           </div>
 
-          {/* Summary */}
-          <div className="border-t border-gray-200 dark:border-gray-700 pt-4">
-            <div className="grid grid-cols-2 gap-4 text-center">
-              <div>
-                <div className="text-2xl font-bold text-gray-900 dark:text-gray-100">
-                  {parties.reduce((sum, party) => sum + party.currentSeats, 0)}
-                </div>
-                <div className="text-sm text-gray-600 dark:text-gray-400">
-                  Huidige zetels
-                </div>
-              </div>
-              <div>
-                <div className="text-2xl font-bold text-red-600">
-                  {parties.reduce((sum, party) => sum + (partySeats[party.id] || 0), 0)}
-                </div>
-                <div className="text-sm text-gray-600 dark:text-gray-400">
-                  Voorspelde zetels
-                </div>
-              </div>
-            </div>
-          </div>
+
         </div>
       </CardContent>
     </Card>

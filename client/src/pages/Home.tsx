@@ -117,6 +117,7 @@ export default function Home() {
 
           {/* Seat Predictions Tab */}
           <TabsContent value="predictions" className="space-y-8 bg-blue-50/30 dark:bg-blue-900/10 rounded-lg p-6">
+            <CoalitionPredictionBar />
             <SeatTable />
             <div className="w-full">
               <ComparisonBarChart />
@@ -126,9 +127,9 @@ export default function Home() {
           {/* Coalition Builder Tab */}
           <TabsContent value="coalitions" className="space-y-8 bg-green-50/30 dark:bg-green-900/10 rounded-lg p-6">
             <CoalitionPredictionBar />
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               {/* Left Column: Coalition Builder */}
-              <div className="lg:col-span-1 space-y-8">
+              <div className="space-y-8">
                 <CoalitionBuilder />
                 {/* Scenario Manager - visible on wide screens */}
                 <div className="hidden lg:block">
@@ -137,7 +138,7 @@ export default function Home() {
               </div>
               
               {/* Right Column: Coalition Suggestions */}
-              <div className="lg:col-span-2 space-y-8">
+              <div className="space-y-8">
                 <CoalitionSuggestions />
               </div>
             </div>
@@ -150,12 +151,12 @@ export default function Home() {
 
           {/* Analytics Tab */}
           <TabsContent value="analytics" className="space-y-8 bg-purple-50/30 dark:bg-purple-900/10 rounded-lg p-6">
+            <CoalitionTimeline />
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               <SwingAnalysis />
               <StabilityAnalysis />
             </div>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              <CoalitionTimeline />
               <MediaSentiment />
             </div>
             <div className="w-full">
