@@ -131,47 +131,47 @@ export default function SeatTable() {
         </Card>
       </div>
 
-      {/* Poll Data Buttons */}
-      <div className="flex flex-wrap gap-2 mb-6">
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => loadPollData('current')}
-          className="text-xs"
-        >
-          Current Seats
-        </Button>
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => loadPollData('peilingwijzer')}
-          className="text-xs"
-        >
-          Poll Peilingwijzer
-        </Button>
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => loadPollData('peil')}
-          className="text-xs"
-        >
-          Poll Peil.nl
-        </Button>
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => setPartySeats({})}
-          className="text-xs text-red-600 hover:text-red-700"
-        >
-          <RotateCcw className="mr-1 h-3 w-3" />
-          Blank/Reset
-        </Button>
-      </div>
-
       {/* Party List */}
       <Card className="bg-white dark:bg-gray-800 shadow-lg border border-gray-200 dark:border-gray-700">
         <CardHeader className="bg-gray-50 dark:bg-gray-700 border-b border-gray-200 dark:border-gray-600">
-          <CardTitle className="text-lg font-inter font-semibold">{t('seats.title')}</CardTitle>
+          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
+            <CardTitle className="text-lg font-inter font-semibold">{t('seats.title')}</CardTitle>
+            <div className="flex flex-wrap gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => loadPollData('current')}
+                className="text-xs"
+              >
+                Current Seats
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => loadPollData('peilingwijzer')}
+                className="text-xs"
+              >
+                Poll Peilingwijzer
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => loadPollData('peil')}
+                className="text-xs"
+              >
+                Poll Peil.nl
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setPartySeats({})}
+                className="text-xs text-red-600 hover:text-red-700"
+              >
+                <RotateCcw className="mr-1 h-3 w-3" />
+                Blank/Reset
+              </Button>
+            </div>
+          </div>
         </CardHeader>
         
         <CardContent className="p-6">
