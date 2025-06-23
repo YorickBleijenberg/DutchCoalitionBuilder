@@ -101,6 +101,7 @@ Changelog:
 - June 23, 2025. Enhanced Coalition Builder with sticky coalition summary and seats needed indicator
 - June 23, 2025. Removed ideology lock and added party exclusion dropdown for coalition suggestions
 - June 23, 2025. Integrated polling data from Peilingwijzer and Peil.nl with quick load options
+- June 23, 2025. Moved Current Prediction bar to top of Coalition Builder tab for better visibility
 ```
 
 ## User Preferences
