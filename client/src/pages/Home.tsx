@@ -11,6 +11,11 @@ import CoalitionBuilder from '../components/CoalitionBuilder';
 import CoalitionPredictionBar from '../components/CoalitionPredictionBar';
 import StabilityAnalysis from '../components/StabilityAnalysis';
 import ScenarioManager from '../components/ScenarioManager';
+import SwingAnalysis from '../components/SwingAnalysis';
+import CoalitionTimeline from '../components/CoalitionTimeline';
+import ExportShare from '../components/ExportShare';
+import GuidedBuilder from '../components/GuidedBuilder';
+import MediaSentiment from '../components/MediaSentiment';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
@@ -61,6 +66,7 @@ export default function Home() {
               </div>
               
               <div className="flex flex-wrap gap-2">
+                <GuidedBuilder />
                 <Button
                   variant="outline"
                   size="sm"
@@ -112,7 +118,11 @@ export default function Home() {
           {/* Seat Predictions Tab */}
           <TabsContent value="predictions" className="space-y-8 bg-blue-50/30 dark:bg-blue-900/10 rounded-lg p-6">
             <SeatTable />
-            <ComparisonBarChart />
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              <ComparisonBarChart />
+              <SwingAnalysis />
+            </div>
+            <ExportShare />
           </TabsContent>
 
           {/* Coalition Builder Tab */}
@@ -125,8 +135,10 @@ export default function Home() {
                 <ScenarioManager />
               </div>
               
-              {/* Right Column: Suggestions and Stability Analysis */}
+              {/* Right Column: Timeline, Media, Suggestions and Stability Analysis */}
               <div className="lg:col-span-2 space-y-8">
+                <CoalitionTimeline />
+                <MediaSentiment />
                 <CoalitionSuggestions />
                 <StabilityAnalysis />
               </div>

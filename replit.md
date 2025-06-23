@@ -115,6 +115,11 @@ Changelog:
 - June 23, 2025. Implemented color-coded tab themes (blue predictions, green coalitions) with enhanced contrast
 - June 23, 2025. Made party containers fully clickable for streamlined coalition building
 - June 23, 2025. Improved mobile responsiveness with stacked navigation and responsive button labels
+- June 23, 2025. Added advanced analytics: Swing Analysis for seat change impact visualization
+- June 23, 2025. Implemented Coalition Formation Timeline with historical data and predictions
+- June 23, 2025. Created Export & Sharing functionality with beautiful prediction and coalition cards
+- June 23, 2025. Added Media Sentiment Tracking with simulated news coverage analysis
+- June 23, 2025. Built Guided Coalition Builder tutorial for new user onboarding
 ```
 
 ## User Preferences
