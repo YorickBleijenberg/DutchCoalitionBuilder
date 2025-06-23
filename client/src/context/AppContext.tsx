@@ -25,6 +25,8 @@ interface AppContextType {
   setPartySeats: (seats: Record<string, number>) => void;
   selectedParties: string[];
   setSelectedParties: (parties: string[]) => void;
+  excludedParties: string[];
+  setExcludedParties: (parties: string[]) => void;
   darkMode: boolean;
   toggleDarkMode: () => void;
   ideologyFilter: boolean;
@@ -52,6 +54,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
 
   const [partySeats, setPartySeats] = useLocalStorage<Record<string, number>>('coalition-party-seats', getInitialSeats());
   const [selectedParties, setSelectedParties] = useLocalStorage<string[]>('coalition-selected-parties', []);
+  const [excludedParties, setExcludedParties] = useLocalStorage<string[]>('coalition-excluded-parties', []);
   const [darkMode, setDarkMode] = useLocalStorage<boolean>('coalition-dark-mode', false);
   const [ideologyFilter, setIdeologyFilter] = useLocalStorage<boolean>('coalition-ideology-filter', false);
   const [language, setLanguageState] = useLocalStorage<string>('coalition-language', 'nl');
@@ -103,6 +106,8 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     setPartySeats,
     selectedParties,
     setSelectedParties,
+    excludedParties,
+    setExcludedParties,
     darkMode,
     toggleDarkMode,
     ideologyFilter,

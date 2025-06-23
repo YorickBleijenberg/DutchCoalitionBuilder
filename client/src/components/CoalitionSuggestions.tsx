@@ -3,25 +3,39 @@ import { useApp } from '../context/AppContext';
 import { getTopCoalitions } from '../lib/coalition';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Switch } from '@/components/ui/switch';
 import { Badge } from '@/components/ui/badge';
-import { Users, Layers, CheckCircle, AlertCircle } from 'lucide-react';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Users, Layers, CheckCircle, AlertCircle, X } from 'lucide-react';
 
 export default function CoalitionSuggestions() {
   const { t } = useTranslation();
   const { 
     parties, 
     partySeats, 
-    ideologyFilter, 
-    setIdeologyFilter, 
+    excludedParties,
+    setExcludedParties,
     setSelectedParties 
   } = useApp();
 
-  const coalitionSuggestions = getTopCoalitions(parties, partySeats, 76, ideologyFilter);
+  const coalitionSuggestions = getTopCoalitions(parties, partySeats, 76, false, excludedParties);
 
   const handleSelectCoalition = (coalitionParties: string[]) => {
     setSelectedParties(coalitionParties);
   };
+
+  const handleExcludeParty = (partyId: string) => {
+    if (!excludedParties.includes(partyId)) {
+      setExcludedParties([...excludedParties, partyId]);
+    }
+  };
+
+  const handleRemoveExclusion = (partyId: string) => {
+    setExcludedParties(excludedParties.filter(id => id !== partyId));
+  };
+
+  const availableParties = parties.filter(party => 
+    (partySeats[party.id] || 0) > 0 && !excludedParties.includes(party.id)
+  );
 
   return (
     <Card className="bg-white dark:bg-gray-800 shadow-lg border border-gray-200 dark:border-gray-700">
@@ -32,16 +46,50 @@ export default function CoalitionSuggestions() {
             <p className="text-sm coalition-neutral mt-1">{t('suggestions.subtitle')}</p>
           </div>
           
-          {/* Ideology Filter Toggle */}
+          {/* Party Exclusion Dropdown */}
           <div className="flex items-center space-x-2">
-            <Switch
-              checked={ideologyFilter}
-              onCheckedChange={setIdeologyFilter}
-              className="data-[state=checked]:bg-blue-600"
-            />
-            <span className="text-sm font-medium">{t('suggestions.ideologyLock')}</span>
+            <Select onValueChange={handleExcludeParty}>
+              <SelectTrigger className="w-48">
+                <SelectValue placeholder="Exclude party from suggestions" />
+              </SelectTrigger>
+              <SelectContent>
+                {availableParties.map((party) => (
+                  <SelectItem key={party.id} value={party.id}>
+                    {party.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
         </div>
+        
+        {/* Excluded Parties Display */}
+        {excludedParties.length > 0 && (
+          <div className="mt-3 flex flex-wrap gap-2">
+            {excludedParties.map((partyId) => {
+              const party = parties.find(p => p.id === partyId);
+              if (!party) return null;
+              
+              return (
+                <Badge 
+                  key={partyId} 
+                  variant="secondary" 
+                  className="inline-flex items-center space-x-1"
+                >
+                  <span>Excluded: {party.name}</span>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => handleRemoveExclusion(partyId)}
+                    className="h-4 w-4 p-0 hover:bg-transparent"
+                  >
+                    <X className="h-3 w-3" />
+                  </Button>
+                </Badge>
+              );
+            })}
+          </div>
+        )}
       </CardHeader>
       
       <CardContent className="p-6">

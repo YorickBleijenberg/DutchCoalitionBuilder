@@ -61,15 +61,15 @@ export default function CoalitionBuilder() {
       </CardHeader>
       
       <CardContent className="p-6">
-        {/* Coalition Summary */}
-        <div className="mb-6 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-600/30">
+        {/* Coalition Summary - Sticky */}
+        <div className="sticky top-0 z-10 mb-6 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-600/30 shadow-md">
           <div className="flex justify-between items-center mb-2">
             <span className="font-medium">{t('coalition.selected')}</span>
             <span className="text-xl font-bold text-blue-600 dark:text-blue-400">
               {coalitionSeats}
             </span>
           </div>
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between mb-2">
             <Badge 
               variant={hasMajority ? "default" : "destructive"}
               className="inline-flex items-center"
@@ -86,6 +86,11 @@ export default function CoalitionBuilder() {
               {selectedParties.length} parties
             </span>
           </div>
+          {!hasMajority && (
+            <div className="text-center text-sm text-red-600 dark:text-red-400 font-medium">
+              {76 - coalitionSeats} seats needed for majority
+            </div>
+          )}
         </div>
 
         {/* Selected Parties */}

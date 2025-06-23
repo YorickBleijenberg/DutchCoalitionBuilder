@@ -11,9 +11,12 @@ export function getTopCoalitions(
   parties: Party[],
   partySeats: Record<string, number>,
   majority: number = 76,
-  ideologyFilter: boolean = false
+  ideologyFilter: boolean = false,
+  excludedParties: string[] = []
 ): CoalitionSuggestion[] {
-  const partiesWithSeats = parties.filter(party => (partySeats[party.id] || 0) > 0);
+  const partiesWithSeats = parties.filter(party => 
+    (partySeats[party.id] || 0) > 0 && !excludedParties.includes(party.id)
+  );
   
   if (partiesWithSeats.length === 0) {
     return [];
