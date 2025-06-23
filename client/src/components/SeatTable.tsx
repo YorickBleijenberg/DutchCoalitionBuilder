@@ -3,14 +3,32 @@ import { useApp } from '../context/AppContext';
 import { calculateSeatDifference } from '../lib/coalition';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { CheckCircle, AlertTriangle } from 'lucide-react';
-import PartyRow from './PartyRow';
+import { Button } from '@/components/ui/button';
+import { CheckCircle, AlertTriangle, Plus, Minus, RotateCcw } from 'lucide-react';
 
 export default function SeatTable() {
   const { t } = useTranslation();
-  const { parties, totalSeats } = useApp();
+  const { parties, partySeats, setPartySeats, totalSeats } = useApp();
 
   const seatStatus = calculateSeatDifference(totalSeats);
+
+  const updatePartySeats = (partyId: string, newSeats: number) => {
+    const clampedSeats = Math.max(0, Math.min(150, newSeats));
+    setPartySeats({
+      ...partySeats,
+      [partyId]: clampedSeats
+    });
+  };
+
+  const resetPartySeats = (partyId: string) => {
+    const party = parties.find(p => p.id === partyId);
+    if (party) {
+      setPartySeats({
+        ...partySeats,
+        [partyId]: party.currentSeats
+      });
+    }
+  };
 
   return (
     <div className="space-y-6">
@@ -45,11 +63,80 @@ export default function SeatTable() {
         </CardHeader>
         
         <CardContent className="p-6">
-          {/* Two-column layout on larger screens */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
-            {parties.map((party) => (
-              <PartyRow key={party.id} party={party} mode="prediction" />
-            ))}
+          <div className="space-y-3">
+            {parties.map((party) => {
+              const currentSeats = party.currentSeats;
+              const predictedSeats = partySeats[party.id] || 0;
+              const difference = predictedSeats - currentSeats;
+              
+              return (
+                <div key={party.id} className="flex items-center gap-4 p-3 border border-gray-200 dark:border-gray-700 rounded-lg">
+                  {/* Party Name */}
+                  <div className="flex items-center gap-2 min-w-0 flex-1">
+                    <div 
+                      className="w-4 h-4 rounded"
+                      style={{ backgroundColor: party.color }}
+                    />
+                    <span className="font-medium text-gray-900 dark:text-gray-100 truncate">
+                      {party.name}
+                    </span>
+                  </div>
+                  
+                  {/* Current Seats */}
+                  <div className="text-center min-w-[60px]">
+                    <div className="text-sm text-gray-600 dark:text-gray-400">Huidig</div>
+                    <div className="font-bold text-gray-900 dark:text-gray-100">{currentSeats}</div>
+                  </div>
+                  
+                  {/* Gain/Loss */}
+                  <div className="text-center min-w-[60px]">
+                    <div className="text-sm text-gray-600 dark:text-gray-400">+/-</div>
+                    <div className={`font-bold ${
+                      difference > 0 ? 'text-green-600' : 
+                      difference < 0 ? 'text-red-600' : 
+                      'text-gray-500'
+                    }`}>
+                      {difference > 0 ? `+${difference}` : difference}
+                    </div>
+                  </div>
+                  
+                  {/* Predicted Seats */}
+                  <div className="text-center min-w-[60px]">
+                    <div className="text-sm text-gray-600 dark:text-gray-400">Voorspelling</div>
+                    <div className="font-bold text-blue-600">{predictedSeats}</div>
+                  </div>
+                  
+                  {/* Controls */}
+                  <div className="flex items-center gap-1">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => updatePartySeats(party.id, predictedSeats + 1)}
+                      className="w-8 h-8 p-0"
+                    >
+                      <Plus className="h-3 w-3" />
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => updatePartySeats(party.id, predictedSeats - 1)}
+                      className="w-8 h-8 p-0"
+                    >
+                      <Minus className="h-3 w-3" />
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => resetPartySeats(party.id)}
+                      className="w-8 h-8 p-0"
+                      title="Reset naar huidige zetels"
+                    >
+                      <RotateCcw className="h-3 w-3" />
+                    </Button>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </CardContent>
       </Card>

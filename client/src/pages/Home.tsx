@@ -58,18 +58,8 @@ export default function Home() {
 
           {/* Seat Predictions Tab */}
           <TabsContent value="predictions" className="space-y-8">
+            <SeatTable />
             <ComparisonBarChart />
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-              {/* Left Column: Seat Prediction Panel */}
-              <div className="lg:col-span-1">
-                <SeatTable />
-              </div>
-              
-              {/* Right Column: Empty space or additional content */}
-              <div className="lg:col-span-2">
-                {/* Additional content can go here if needed */}
-              </div>
-            </div>
           </TabsContent>
 
           {/* Coalition Builder Tab */}

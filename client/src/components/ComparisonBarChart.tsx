@@ -41,52 +41,54 @@ export default function ComparisonBarChart() {
             </div>
           </div>
 
-          {/* Bar Chart */}
-          <div className="space-y-4">
-            {relevantParties.map((party) => {
-              const currentSeats = party.currentSeats;
-              const predictedSeats = partySeats[party.id] || 0;
-              const currentWidth = (currentSeats / maxSeats) * 100;
-              const predictedWidth = (predictedSeats / maxSeats) * 100;
-              
-              return (
-                <div key={party.id} className="space-y-1">
-                  {/* Party name */}
-                  <div className="text-sm font-medium text-gray-900 dark:text-gray-100 uppercase">
-                    {party.name}
-                  </div>
-                  
-                  {/* Bars container */}
-                  <div className="relative h-16 space-y-1">
-                    {/* Current seats bar */}
-                    <div className="relative h-7">
-                      <div
-                        className="h-full bg-gray-500 flex items-center justify-end pr-2 rounded-sm"
-                        style={{ width: `${Math.max(currentWidth, 8)}%` }}
-                      >
-                        <span className="text-white text-xs font-bold">
-                          {currentSeats}
-                        </span>
+          {/* Horizontal Scrollable Bar Chart */}
+          <div className="overflow-x-auto">
+            <div className="flex gap-4 pb-4" style={{ minWidth: `${relevantParties.length * 120}px` }}>
+              {relevantParties.map((party) => {
+                const currentSeats = party.currentSeats;
+                const predictedSeats = partySeats[party.id] || 0;
+                const currentHeight = (currentSeats / maxSeats) * 200;
+                const predictedHeight = (predictedSeats / maxSeats) * 200;
+                
+                return (
+                  <div key={party.id} className="flex flex-col items-center w-28">
+                    {/* Bars container */}
+                    <div className="flex items-end gap-2 h-52 mb-2">
+                      {/* Current seats bar */}
+                      <div className="flex flex-col items-center">
+                        <div
+                          className="bg-gray-500 w-12 flex items-end justify-center pb-1 rounded-t"
+                          style={{ height: `${Math.max(currentHeight, 20)}px` }}
+                        >
+                          <span className="text-white text-xs font-bold">
+                            {currentSeats}
+                          </span>
+                        </div>
+                      </div>
+                      
+                      {/* Predicted seats bar */}
+                      <div className="flex flex-col items-center">
+                        <div
+                          className="bg-red-500 w-12 flex items-end justify-center pb-1 rounded-t"
+                          style={{ height: `${Math.max(predictedHeight, predictedSeats > 0 ? 20 : 0)}px` }}
+                        >
+                          {predictedSeats > 0 && (
+                            <span className="text-white text-xs font-bold">
+                              {predictedSeats}
+                            </span>
+                          )}
+                        </div>
                       </div>
                     </div>
                     
-                    {/* Predicted seats bar */}
-                    <div className="relative h-7">
-                      <div
-                        className="h-full bg-red-500 flex items-center justify-end pr-2 rounded-sm"
-                        style={{ width: `${Math.max(predictedWidth, predictedSeats > 0 ? 8 : 0)}%` }}
-                      >
-                        {predictedSeats > 0 && (
-                          <span className="text-white text-xs font-bold">
-                            {predictedSeats}
-                          </span>
-                        )}
-                      </div>
+                    {/* Party name */}
+                    <div className="text-xs font-medium text-gray-900 dark:text-gray-100 uppercase text-center leading-tight">
+                      {party.name}
                     </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
           </div>
 
           {/* Summary */}
