@@ -158,11 +158,6 @@ export default function ParliamentChart() {
 
   return (
     <Card className="bg-white dark:bg-gray-800 shadow-lg border border-gray-200 dark:border-gray-700" id="results-panel">
-      <CardHeader className="bg-gray-50 dark:bg-gray-700 border-b border-gray-200 dark:border-gray-600">
-        <CardTitle className="text-lg font-inter font-semibold">{t('parliament.title')}</CardTitle>
-        <p className="text-sm coalition-neutral mt-1">{t('parliament.subtitle')}</p>
-      </CardHeader>
-      
       <CardContent className="p-6">
         <div className="w-full h-80 flex items-center justify-center bg-gray-50 dark:bg-gray-700 rounded-lg">
           <svg

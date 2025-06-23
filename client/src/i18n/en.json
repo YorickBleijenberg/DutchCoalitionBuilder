@@ -51,5 +51,6 @@
     "coalitions": "Coalition Builder",
     "loadCurrent": "Load Current",
     "reset": "Reset All"
-  }
+  },
+  "currentPrediction": "Current Prediction"
 }

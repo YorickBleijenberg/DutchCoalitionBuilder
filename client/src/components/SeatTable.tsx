@@ -13,18 +13,13 @@ export default function SeatTable() {
   const seatStatus = calculateSeatDifference(totalSeats);
 
   return (
-    <Card className="bg-white dark:bg-gray-800 shadow-lg border border-gray-200 dark:border-gray-700">
-      <CardHeader className="bg-gray-50 dark:bg-gray-700 border-b border-gray-200 dark:border-gray-600">
-        <CardTitle className="text-lg font-inter font-semibold">{t('seats.title')}</CardTitle>
-        <p className="text-sm coalition-neutral mt-1">{t('seats.subtitle')}</p>
-      </CardHeader>
-      
-      <CardContent className="p-6">
-        {/* Total Seats Indicator */}
-        <div className="mb-6 p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
+    <div className="space-y-6">
+      {/* Pinned Total Seats Indicator */}
+      <Card className="bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-700">
+        <CardContent className="p-4">
           <div className="flex justify-between items-center">
-            <span className="font-medium">{t('seats.total')}: 150</span>
-            <span className="text-xl font-bold">{totalSeats}</span>
+            <span className="font-medium text-blue-900 dark:text-blue-100">{t('seats.total')}: 150</span>
+            <span className="text-2xl font-bold text-blue-900 dark:text-blue-100">{totalSeats}</span>
           </div>
           <div className="mt-2">
             <Badge 
@@ -39,15 +34,25 @@ export default function SeatTable() {
               {t(`seats.${seatStatus.isComplete ? 'complete' : seatStatus.isUnder ? 'unassigned' : 'overassigned'}`)} {seatStatus.isComplete ? '' : Math.abs(seatStatus.difference)}
             </Badge>
           </div>
-        </div>
+        </CardContent>
+      </Card>
+
+      {/* Party List */}
+      <Card className="bg-white dark:bg-gray-800 shadow-lg border border-gray-200 dark:border-gray-700">
+        <CardHeader className="bg-gray-50 dark:bg-gray-700 border-b border-gray-200 dark:border-gray-600">
+          <CardTitle className="text-lg font-inter font-semibold">{t('seats.title')}</CardTitle>
+          <p className="text-sm coalition-neutral mt-1">{t('seats.subtitle')}</p>
+        </CardHeader>
         
-        {/* Party List */}
-        <div className="space-y-3">
-          {parties.map((party) => (
-            <PartyRow key={party.id} party={party} mode="prediction" />
-          ))}
-        </div>
-      </CardContent>
-    </Card>
+        <CardContent className="p-6">
+          {/* Two-column layout on larger screens */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
+            {parties.map((party) => (
+              <PartyRow key={party.id} party={party} mode="prediction" />
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+    </div>
   );
 }

@@ -51,5 +51,6 @@
     "coalitions": "Coalitie Builder",
     "loadCurrent": "Laad Huidige",
     "reset": "Reset Alles"
-  }
+  },
+  "currentPrediction": "Huidige Voorspelling"
 }

@@ -4,6 +4,7 @@ import { useApp } from '../context/AppContext';
 import Header from '../components/Header';
 import SeatTable from '../components/SeatTable';
 import ParliamentChart from '../components/ParliamentChart';
+import PartyBar from '../components/PartyBar';
 import CoalitionSuggestions from '../components/CoalitionSuggestions';
 import CoalitionBuilder from '../components/CoalitionBuilder';
 import ScenarioManager from '../components/ScenarioManager';
@@ -56,6 +57,7 @@ export default function Home() {
 
           {/* Seat Predictions Tab */}
           <TabsContent value="predictions" className="space-y-8">
+            <PartyBar />
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               {/* Left Column: Seat Prediction Panel */}
               <div className="lg:col-span-1">
@@ -71,6 +73,7 @@ export default function Home() {
 
           {/* Coalition Builder Tab */}
           <TabsContent value="coalitions" className="space-y-8">
+            <PartyBar />
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               {/* Left Column: Coalition Builder and Scenario Manager */}
               <div className="lg:col-span-1 space-y-8">
