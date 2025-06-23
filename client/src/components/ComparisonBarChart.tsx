@@ -35,7 +35,7 @@ export default function ComparisonBarChart() {
                 <span className="text-gray-600 dark:text-gray-400">Huidige zetels (2023)</span>
               </div>
               <div className="flex items-center gap-2">
-                <div className="w-4 h-4 bg-red-500 rounded"></div>
+                <div className="w-4 h-4 bg-green-500 rounded"></div>
                 <span className="text-gray-600 dark:text-gray-400">Voorspelling</span>
               </div>
             </div>
@@ -57,7 +57,7 @@ export default function ComparisonBarChart() {
                       {/* Current seats bar */}
                       <div className="flex flex-col items-center">
                         <div
-                          className="bg-gray-500 w-12 flex items-end justify-center pb-1 rounded-t"
+                          className="bg-gray-500 w-8 flex items-end justify-center pb-1 rounded-t"
                           style={{ height: `${Math.max(currentHeight, 20)}px` }}
                         >
                           <span className="text-white text-xs font-bold">
@@ -69,7 +69,7 @@ export default function ComparisonBarChart() {
                       {/* Predicted seats bar */}
                       <div className="flex flex-col items-center">
                         <div
-                          className="bg-red-500 w-12 flex items-end justify-center pb-1 rounded-t"
+                          className="bg-green-500 w-12 flex items-end justify-center pb-1 rounded-t"
                           style={{ height: `${Math.max(predictedHeight, predictedSeats > 0 ? 20 : 0)}px` }}
                         >
                           {predictedSeats > 0 && (
