@@ -32,28 +32,30 @@ export default function SeatTable() {
 
   return (
     <div className="space-y-6">
-      {/* Pinned Total Seats Indicator */}
-      <Card className="bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-700">
-        <CardContent className="p-4 text-[18px]">
-          <div className="flex justify-between items-center">
-            <span className="font-medium text-blue-900 dark:text-blue-100">{t('seats.total')}: 150</span>
-            <span className="text-2xl font-bold text-blue-900 dark:text-blue-100">{totalSeats}</span>
-          </div>
-          <div className="mt-2">
-            <Badge 
-              variant={seatStatus.isComplete ? "default" : seatStatus.isUnder ? "secondary" : "destructive"}
-              className="inline-flex items-center"
-            >
-              {seatStatus.isComplete ? (
-                <CheckCircle className="mr-1 h-3 w-3" />
-              ) : (
-                <AlertTriangle className="mr-1 h-3 w-3" />
-              )}
-              {t(`seats.${seatStatus.isComplete ? 'complete' : seatStatus.isUnder ? 'unassigned' : 'overassigned'}`)} {seatStatus.isComplete ? '' : Math.abs(seatStatus.difference)}
-            </Badge>
-          </div>
-        </CardContent>
-      </Card>
+      {/* Sticky Total Seats Indicator */}
+      <div className="sticky top-0 z-10 bg-white dark:bg-gray-900 pb-2">
+        <Card className="bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-700">
+          <CardContent className="p-4">
+            <div className="flex justify-between items-center">
+              <span className="font-medium text-blue-900 dark:text-blue-100">{t('seats.total')}: 150</span>
+              <span className="text-2xl font-bold text-blue-900 dark:text-blue-100">{totalSeats}</span>
+            </div>
+            <div className="mt-2">
+              <Badge 
+                variant={seatStatus.isComplete ? "default" : seatStatus.isUnder ? "secondary" : "destructive"}
+                className="inline-flex items-center"
+              >
+                {seatStatus.isComplete ? (
+                  <CheckCircle className="mr-1 h-3 w-3" />
+                ) : (
+                  <AlertTriangle className="mr-1 h-3 w-3" />
+                )}
+                {t(`seats.${seatStatus.isComplete ? 'complete' : seatStatus.isUnder ? 'unassigned' : 'overassigned'}`)} {seatStatus.isComplete ? '' : Math.abs(seatStatus.difference)}
+              </Badge>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
       {/* Party List */}
       <Card className="bg-white dark:bg-gray-800 shadow-lg border border-gray-200 dark:border-gray-700">
         <CardHeader className="bg-gray-50 dark:bg-gray-700 border-b border-gray-200 dark:border-gray-600">
@@ -69,69 +71,75 @@ export default function SeatTable() {
               const difference = predictedSeats - currentSeats;
               
               return (
-                <div key={party.id} className="flex items-center gap-4 p-3 border border-gray-200 dark:border-gray-700 rounded-lg">
-                  {/* Party Name */}
-                  <div className="flex items-center gap-2 min-w-0 flex-1">
-                    <div 
-                      className="w-4 h-4 rounded"
-                      style={{ backgroundColor: party.color }}
-                    />
-                    <span className="font-medium text-gray-900 dark:text-gray-100 truncate">
-                      {party.name}
-                    </span>
-                  </div>
-                  
-                  {/* Current Seats */}
-                  <div className="text-center min-w-[60px]">
-                    <div className="text-sm text-gray-600 dark:text-gray-400">Huidig</div>
-                    <div className="font-bold text-gray-900 dark:text-gray-100">{currentSeats}</div>
-                  </div>
-                  
-                  {/* Gain/Loss */}
-                  <div className="text-center min-w-[60px]">
-                    <div className="text-sm text-gray-600 dark:text-gray-400">+/-</div>
-                    <div className={`font-bold ${
-                      difference > 0 ? 'text-green-600' : 
-                      difference < 0 ? 'text-red-600' : 
-                      'text-gray-500'
-                    }`}>
-                      {difference > 0 ? `+${difference}` : difference}
+                <div key={party.id} className="border border-gray-200 dark:border-gray-700 rounded-lg p-3">
+                  {/* Mobile-first responsive layout */}
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+                    {/* Party Name - Full width on mobile */}
+                    <div className="flex items-center gap-2 sm:min-w-0 sm:flex-1">
+                      <div 
+                        className="w-4 h-4 rounded"
+                        style={{ backgroundColor: party.color }}
+                      />
+                      <span className="font-medium text-gray-900 dark:text-gray-100">
+                        {party.name}
+                      </span>
                     </div>
-                  </div>
-                  
-                  {/* Predicted Seats */}
-                  <div className="text-center min-w-[60px]">
-                    <div className="text-sm text-gray-600 dark:text-gray-400">Voorspelling</div>
-                    <div className="font-bold text-blue-600">{predictedSeats}</div>
-                  </div>
-                  
-                  {/* Controls */}
-                  <div className="flex items-center gap-1">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => updatePartySeats(party.id, predictedSeats + 1)}
-                      className="w-8 h-8 p-0"
-                    >
-                      <Plus className="h-3 w-3" />
-                    </Button>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => updatePartySeats(party.id, predictedSeats - 1)}
-                      className="w-8 h-8 p-0"
-                    >
-                      <Minus className="h-3 w-3" />
-                    </Button>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => resetPartySeats(party.id)}
-                      className="w-8 h-8 p-0"
-                      title="Reset naar huidige zetels"
-                    >
-                      <RotateCcw className="h-3 w-3" />
-                    </Button>
+                    
+                    {/* Numbers row - Horizontal on mobile, continues horizontal on desktop */}
+                    <div className="flex justify-between sm:justify-end sm:gap-6">
+                      {/* Current Seats */}
+                      <div className="text-center">
+                        <div className="text-xs text-gray-600 dark:text-gray-400">Huidig</div>
+                        <div className="font-bold text-gray-900 dark:text-gray-100">{currentSeats}</div>
+                      </div>
+                      
+                      {/* Gain/Loss */}
+                      <div className="text-center">
+                        <div className="text-xs text-gray-600 dark:text-gray-400">+/-</div>
+                        <div className={`font-bold ${
+                          difference > 0 ? 'text-green-600' : 
+                          difference < 0 ? 'text-red-600' : 
+                          'text-gray-500'
+                        }`}>
+                          {difference > 0 ? `+${difference}` : difference}
+                        </div>
+                      </div>
+                      
+                      {/* Predicted Seats */}
+                      <div className="text-center">
+                        <div className="text-xs text-gray-600 dark:text-gray-400">Voorspelling</div>
+                        <div className="font-bold text-blue-600">{predictedSeats}</div>
+                      </div>
+                    </div>
+                    
+                    {/* Controls - Center on mobile, right on desktop */}
+                    <div className="flex items-center justify-center sm:justify-end gap-1">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => updatePartySeats(party.id, predictedSeats + 1)}
+                        className="w-8 h-8 p-0"
+                      >
+                        <Plus className="h-3 w-3" />
+                      </Button>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => updatePartySeats(party.id, predictedSeats - 1)}
+                        className="w-8 h-8 p-0"
+                      >
+                        <Minus className="h-3 w-3" />
+                      </Button>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => resetPartySeats(party.id)}
+                        className="w-8 h-8 p-0"
+                        title="Reset naar huidige zetels"
+                      >
+                        <RotateCcw className="h-3 w-3" />
+                      </Button>
+                    </div>
                   </div>
                 </div>
               );
