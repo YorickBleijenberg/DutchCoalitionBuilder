@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useApp } from '../context/AppContext';
 import Header from '../components/Header';
 import SeatTable from '../components/SeatTable';
-import ParliamentChart from '../components/ParliamentChart';
+import CoalitionBarChart from '../components/CoalitionBarChart';
 import PartyBar from '../components/PartyBar';
 import CoalitionSuggestions from '../components/CoalitionSuggestions';
 import CoalitionBuilder from '../components/CoalitionBuilder';
@@ -64,9 +64,9 @@ export default function Home() {
                 <SeatTable />
               </div>
               
-              {/* Right Column: Parliament Visualization */}
+              {/* Right Column: Coalition Bar Chart */}
               <div className="lg:col-span-2">
-                <ParliamentChart />
+                <CoalitionBarChart />
               </div>
             </div>
           </TabsContent>
@@ -81,9 +81,9 @@ export default function Home() {
                 <ScenarioManager />
               </div>
               
-              {/* Right Column: Parliament Visualization and Suggestions */}
+              {/* Right Column: Coalition Bar Chart and Suggestions */}
               <div className="lg:col-span-2 space-y-8">
-                <ParliamentChart />
+                <CoalitionBarChart />
                 <CoalitionSuggestions />
               </div>
             </div>
