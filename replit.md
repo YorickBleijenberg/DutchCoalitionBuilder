@@ -41,6 +41,7 @@ This is a full-stack web application for building and analyzing Dutch political 
 
 #### Business Logic
 - **Coalition Calculator**: Generates viable coalition combinations based on seat thresholds
+- **Stability Scoring**: Advanced algorithms analyzing ideological alignment, size balance, leadership experience, and historical precedent
 - **Parliament Visualization**: Renders 150-seat Dutch parliament layout
 - **Seat Validation**: Ensures total seats don't exceed 150-seat limit
 
@@ -102,6 +103,7 @@ Changelog:
 - June 23, 2025. Removed ideology lock and added party exclusion dropdown for coalition suggestions
 - June 23, 2025. Integrated polling data from Peilingwijzer and Peil.nl with quick load options
 - June 23, 2025. Moved Current Prediction bar to top of Coalition Builder tab for better visibility
+- June 23, 2025. Implemented advanced coalition stability scoring algorithms with multi-factor analysis
 ```
 
 ## User Preferences

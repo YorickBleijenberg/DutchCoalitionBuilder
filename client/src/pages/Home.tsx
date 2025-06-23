@@ -9,6 +9,7 @@ import PartyBar from '../components/PartyBar';
 import CoalitionSuggestions from '../components/CoalitionSuggestions';
 import CoalitionBuilder from '../components/CoalitionBuilder';
 import CoalitionPredictionBar from '../components/CoalitionPredictionBar';
+import StabilityAnalysis from '../components/StabilityAnalysis';
 import ScenarioManager from '../components/ScenarioManager';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
@@ -98,10 +99,11 @@ export default function Home() {
                 <ScenarioManager />
               </div>
               
-              {/* Right Column: Coalition Bar Chart and Suggestions */}
+              {/* Right Column: Coalition Bar Chart, Suggestions, and Stability Analysis */}
               <div className="lg:col-span-2 space-y-8">
                 <CoalitionBarChart />
                 <CoalitionSuggestions />
+                <StabilityAnalysis />
               </div>
             </div>
           </TabsContent>
