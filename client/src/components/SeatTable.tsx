@@ -8,7 +8,7 @@ import { CheckCircle, AlertTriangle, Plus, Minus, RotateCcw } from 'lucide-react
 
 export default function SeatTable() {
   const { t } = useTranslation();
-  const { parties, partySeats, setPartySeats, totalSeats } = useApp();
+  const { parties, partySeats, setPartySeats, totalSeats, loadPollData } = useApp();
 
   const seatStatus = calculateSeatDifference(totalSeats);
 
@@ -52,6 +52,44 @@ export default function SeatTable() {
                 )}
                 {t(`seats.${seatStatus.isComplete ? 'complete' : seatStatus.isUnder ? 'unassigned' : 'overassigned'}`)} {seatStatus.isComplete ? '' : Math.abs(seatStatus.difference)}
               </Badge>
+            </div>
+            
+            {/* Poll Data Selection */}
+            <div className="mt-4 pt-3 border-t border-blue-300 dark:border-blue-600">
+              <div className="text-sm font-medium text-blue-900 dark:text-blue-100 mb-2">Load Poll Data:</div>
+              <div className="flex flex-wrap gap-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => loadPollData('current')}
+                  className="text-xs border-blue-300 hover:bg-blue-100 dark:border-blue-600 dark:hover:bg-blue-800"
+                >
+                  Current Seats
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => loadPollData('peilingwijzer')}
+                  className="text-xs border-blue-300 hover:bg-blue-100 dark:border-blue-600 dark:hover:bg-blue-800"
+                >
+                  Poll Peilingwijzer
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => loadPollData('peil')}
+                  className="text-xs border-blue-300 hover:bg-blue-100 dark:border-blue-600 dark:hover:bg-blue-800"
+                >
+                  Poll Peil.nl
+                </Button>
+              </div>
+              <div className="text-xs text-blue-700 dark:text-blue-300 mt-1">
+                Updated: {new Date().toLocaleDateString('nl-NL', { 
+                  day: 'numeric', 
+                  month: 'long', 
+                  year: 'numeric' 
+                })}
+              </div>
             </div>
           </CardContent>
         </Card>

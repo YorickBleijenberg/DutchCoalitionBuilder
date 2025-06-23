@@ -37,6 +37,7 @@ interface AppContextType {
   language: string;
   setLanguage: (lang: string) => void;
   loadCurrentSeats: () => void;
+  loadPollData: (pollSource: 'current' | 'peilingwijzer' | 'peil') => void;
   resetSeats: () => void;
 }
 
@@ -84,6 +85,56 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     setPartySeats(currentSeats);
   };
 
+  const loadPollData = (pollSource: 'current' | 'peilingwijzer' | 'peil') => {
+    const pollData: Record<string, Record<string, number>> = {
+      current: {},
+      peilingwijzer: {
+        'vvd': 26,
+        'd66': 11,
+        'gl-pvda': 27,
+        'pvv': 31,
+        'cda': 20,
+        'sp': 6,
+        'fvd': 3,
+        'pvdd': 6,
+        'cu': 3,
+        'volt': 3,
+        'ja21': 3,
+        'sgp': 3,
+        'denk': 4,
+        'bbb': 3,
+        'nsc': 1
+      },
+      peil: {
+        'vvd': 22,
+        'd66': 8,
+        'gl-pvda': 29,
+        'pvv': 30,
+        'cda': 21,
+        'sp': 7,
+        'fvd': 4,
+        'pvdd': 4,
+        'cu': 3,
+        'volt': 3,
+        'ja21': 8,
+        'sgp': 4,
+        'denk': 4,
+        'bbb': 3,
+        'nsc': 0
+      }
+    };
+
+    if (pollSource === 'current') {
+      loadCurrentSeats();
+    } else {
+      const pollSeats: Record<string, number> = {};
+      parties.forEach(party => {
+        pollSeats[party.id] = pollData[pollSource][party.id] || 0;
+      });
+      setPartySeats(pollSeats);
+    }
+  };
+
   const resetSeats = () => {
     setPartySeats({});
   };
@@ -118,6 +169,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     language,
     setLanguage,
     loadCurrentSeats,
+    loadPollData,
     resetSeats,
   };
 

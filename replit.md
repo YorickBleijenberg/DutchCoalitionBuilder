@@ -98,6 +98,9 @@ Changelog:
 - June 23, 2025. Redesigned seat predictions with horizontal comparison chart and mobile-responsive controls
 - June 23, 2025. Implemented sticky total seats indicator and simplified header interface
 - June 23, 2025. Added settings dropdown menu with dark mode and language options
+- June 23, 2025. Enhanced Coalition Builder with sticky coalition summary and seats needed indicator
+- June 23, 2025. Removed ideology lock and added party exclusion dropdown for coalition suggestions
+- June 23, 2025. Integrated polling data from Peilingwijzer and Peil.nl with quick load options
 ```
 
 ## User Preferences
