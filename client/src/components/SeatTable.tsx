@@ -34,7 +34,7 @@ export default function SeatTable() {
     <div className="space-y-6">
       {/* Pinned Total Seats Indicator */}
       <Card className="bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-700">
-        <CardContent className="p-4">
+        <CardContent className="p-4 text-[18px]">
           <div className="flex justify-between items-center">
             <span className="font-medium text-blue-900 dark:text-blue-100">{t('seats.total')}: 150</span>
             <span className="text-2xl font-bold text-blue-900 dark:text-blue-100">{totalSeats}</span>
@@ -54,7 +54,6 @@ export default function SeatTable() {
           </div>
         </CardContent>
       </Card>
-
       {/* Party List */}
       <Card className="bg-white dark:bg-gray-800 shadow-lg border border-gray-200 dark:border-gray-700">
         <CardHeader className="bg-gray-50 dark:bg-gray-700 border-b border-gray-200 dark:border-gray-600">
