@@ -160,8 +160,7 @@ export default function ExportShare() {
         {/* Prediction Card */}
         <div 
           ref={predictionCardRef}
-          className="fixed -left-[2000px] top-0 bg-gradient-to-br from-blue-50 to-indigo-100 p-6 rounded-2xl shadow-xl border-2 border-blue-200"
-          style={{ width: '600px', minHeight: '400px' }}
+          className="bg-gradient-to-br from-blue-50 to-indigo-100 p-6 rounded-2xl shadow-xl border-2 border-blue-200 max-w-[600px] mx-auto"
         >
           <div className="text-center mb-6">
             <h1 className="text-3xl font-bold text-blue-900 mb-2">Dutch Election Prediction 2025</h1>
@@ -211,8 +210,7 @@ export default function ExportShare() {
         {selectedParties.length > 0 && (
           <div 
             ref={coalitionCardRef}
-            className="fixed -left-[2000px] top-0 bg-gradient-to-br from-green-50 to-emerald-100 p-6 rounded-2xl shadow-xl border-2 border-green-200"
-            style={{ width: '600px', minHeight: '400px' }}
+            className="bg-gradient-to-br from-green-50 to-emerald-100 p-6 rounded-2xl shadow-xl border-2 border-green-200 max-w-[600px] mx-auto"
           >
             <div className="text-center mb-6">
               <h1 className="text-3xl font-bold text-green-900 mb-2">Coalition Analysis</h1>
