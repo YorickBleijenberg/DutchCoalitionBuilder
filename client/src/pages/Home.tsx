@@ -118,9 +118,8 @@ export default function Home() {
           {/* Seat Predictions Tab */}
           <TabsContent value="predictions" className="space-y-8 bg-blue-50/30 dark:bg-blue-900/10 rounded-lg p-6">
             <SeatTable />
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div className="w-full">
               <ComparisonBarChart />
-              <PartyBar />
             </div>
           </TabsContent>
 
