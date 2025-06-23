@@ -26,14 +26,17 @@ This is a full-stack web application for building and analyzing Dutch political 
 ### Key Components
 
 #### Data Layer
-- **Schema**: User management schema defined in Drizzle ORM
-- **Storage Interface**: Abstracted storage layer with in-memory implementation for development
-- **Database**: PostgreSQL configured for production deployment
+- **Schema**: User management and coalition scenarios schema defined in Drizzle ORM
+- **Storage Interface**: Abstracted storage layer with PostgreSQL database implementation
+- **Database**: Neon PostgreSQL with coalition scenario persistence
+- **Local Storage**: Browser localStorage for scenario save/load functionality
 
 #### Frontend Components
-- **SeatTable**: Interactive seat prediction input with validation
-- **ParliamentChart**: D3.js-powered semicircular parliament visualization
-- **CoalitionSuggestions**: Algorithm-based coalition recommendations
+- **SeatTable**: Interactive seat prediction input with validation and current/predicted comparison
+- **ParliamentChart**: D3.js-powered semicircular parliament visualization with real-time updates
+- **CoalitionBuilder**: Interactive coalition formation with checkbox selection
+- **CoalitionSuggestions**: Algorithm-based coalition recommendations with ideology filtering
+- **ScenarioManager**: Save/load coalition scenarios with localStorage persistence
 - **Header**: Navigation with dark mode, language switching, and export functionality
 
 #### Business Logic
@@ -87,7 +90,11 @@ This is a full-stack web application for building and analyzing Dutch political 
 ## Changelog
 ```
 Changelog:
-- June 23, 2025. Initial setup
+- June 23, 2025. Initial setup with React frontend and Express backend
+- June 23, 2025. Added PostgreSQL database with Drizzle ORM
+- June 23, 2025. Implemented tab-based interface separating seat predictions from coalition building
+- June 23, 2025. Added current Dutch parliament seats data and scenario save/load functionality
+- June 23, 2025. Enhanced UI with real-time seat comparison and localStorage persistence
 ```
 
 ## User Preferences

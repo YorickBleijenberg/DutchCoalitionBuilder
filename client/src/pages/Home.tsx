@@ -6,6 +6,7 @@ import SeatTable from '../components/SeatTable';
 import ParliamentChart from '../components/ParliamentChart';
 import CoalitionSuggestions from '../components/CoalitionSuggestions';
 import CoalitionBuilder from '../components/CoalitionBuilder';
+import ScenarioManager from '../components/ScenarioManager';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
 import { RotateCcw, Download } from 'lucide-react';
@@ -71,9 +72,10 @@ export default function Home() {
           {/* Coalition Builder Tab */}
           <TabsContent value="coalitions" className="space-y-8">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-              {/* Left Column: Coalition Builder */}
-              <div className="lg:col-span-1">
+              {/* Left Column: Coalition Builder and Scenario Manager */}
+              <div className="lg:col-span-1 space-y-8">
                 <CoalitionBuilder />
+                <ScenarioManager />
               </div>
               
               {/* Right Column: Parliament Visualization and Suggestions */}
