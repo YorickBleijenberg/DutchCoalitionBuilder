@@ -17,9 +17,10 @@
     "builder": "Coalitie Builder"
   },
   "parliament": {
-    "title": "Parlement Visualisatie",
+    "title": "Zetelverdeling Tweede Kamer",
     "subtitle": "Interactieve weergave van de 150-zetel Tweede Kamer",
-    "majorityLine": "Meerderheid: 76 zetels"
+    "majorityLine": "Meerderheidslijn",
+    "majorityThreshold": "Meerderheidslijn"
   },
   "suggestions": {
     "title": "Coalitie Suggesties",

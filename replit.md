@@ -127,6 +127,14 @@ Changelog:
 - June 23, 2025. Created dedicated Analytics tab with Swing Analysis, Stability Analysis, Coalition Timeline, and Media Sentiment
 - June 23, 2025. Created dedicated Export & Share tab containing export functionality and preview cards
 - June 23, 2025. Enhanced mobile responsiveness with 2x2 grid layout for tabs on small screens
+- June 23, 2025. Comprehensive UI improvements: removed Load Current and Reset buttons from header, added election countdown banner
+- June 23, 2025. Enhanced Current Prediction bar: removed majority indicators and simplified to show only seat counts
+- June 23, 2025. Updated majority threshold label and removed majority status indicators throughout
+- June 23, 2025. Added Blank/Reset button to poll data section for easy clearing of custom values
+- June 23, 2025. Converted Seat Predictions to two-column layout for better screen space utilization
+- June 23, 2025. Improved Coalition Suggestions responsive layout with side buttons on wide screens
+- June 23, 2025. Repositioned Scenario Manager to bottom on narrow screens for better mobile experience
+- June 23, 2025. Moved Parliament Chart (Zetelverdeling Tweede Kamer) to Analytics tab for better organization
 ```
 
 ## User Preferences

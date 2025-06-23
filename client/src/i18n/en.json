@@ -17,9 +17,10 @@
     "builder": "Coalition Builder"
   },
   "parliament": {
-    "title": "Parliament Visualization",
+    "title": "Tweede Kamer Seat Distribution",
     "subtitle": "Interactive view of the 150-seat Tweede Kamer",
-    "majorityLine": "Majority: 76 seats"
+    "majorityLine": "Majority threshold",
+    "majorityThreshold": "Majority threshold"
   },
   "suggestions": {
     "title": "Coalition Suggestions",

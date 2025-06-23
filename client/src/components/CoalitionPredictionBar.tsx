@@ -27,9 +27,6 @@ export default function CoalitionPredictionBar() {
             <div className="text-sm text-gray-600 dark:text-gray-400">
               Coalitie zetels: <span className="font-bold text-lg text-gray-900 dark:text-gray-100">{coalitionSeats}</span>
             </div>
-            <div className={`text-sm font-medium ${hasMajority ? 'text-green-600' : 'text-red-600'}`}>
-              {hasMajority ? 'Meerderheid' : `Nog ${76 - coalitionSeats} zetels nodig`}
-            </div>
           </div>
         </div>
         
@@ -93,25 +90,9 @@ export default function CoalitionPredictionBar() {
         {/* Majority threshold indicator */}
         <div className="flex justify-center mt-1">
           <span className="text-xs text-red-600 dark:text-red-400">
-            ↑ Majority (76 seats)
+            ↑ {t('parliament.majorityThreshold')}
           </span>
         </div>
-
-        {/* Majority status indicator */}
-        {selectedParties.length > 0 && (
-          <div className="flex justify-between items-center text-sm mt-3 pt-3 border-t border-gray-200 dark:border-gray-600">
-            <span className="text-gray-600 dark:text-gray-400">
-              Meerderheid vereist: 76 zetels
-            </span>
-            <div className={`px-3 py-1 rounded-full text-xs font-medium ${
-              hasMajority 
-                ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' 
-                : 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'
-            }`}>
-              {hasMajority ? '✓ Meerderheid' : '✗ Geen meerderheid'}
-            </div>
-          </div>
-        )}
         
         {/* Legend for selected parties */}
         {selectedParties.length > 0 && (

@@ -6,6 +6,8 @@ import SeatTable from '../components/SeatTable';
 
 import ComparisonBarChart from '../components/ComparisonBarChart';
 import PartyBar from '../components/PartyBar';
+import ParliamentChart from '../components/ParliamentChart';
+
 import CoalitionSuggestions from '../components/CoalitionSuggestions';
 import CoalitionBuilder from '../components/CoalitionBuilder';
 import CoalitionPredictionBar from '../components/CoalitionPredictionBar';
@@ -29,6 +31,24 @@ export default function Home() {
   return (
     <div className="min-h-screen coalition-background coalition-text transition-colors duration-300">
       <Header />
+      
+      {/* Election Countdown Banner */}
+      <div className="bg-blue-600 dark:bg-blue-800 text-white py-3">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-center">
+            <Calendar className="mr-2 h-5 w-5" />
+            <span className="text-lg font-semibold">
+              {(() => {
+                const electionDate = new Date('2025-10-29');
+                const today = new Date();
+                const diffTime = electionDate.getTime() - today.getTime();
+                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                return diffDays > 0 ? `${diffDays} dagen tot verkiezing` : 'Verkiezing vandaag!';
+              })()}
+            </span>
+          </div>
+        </div>
+      </div>
       
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
@@ -65,69 +85,33 @@ export default function Home() {
               </TabsTrigger>
             </TabsList>
             
-            {/* Election Countdown and Action Buttons */}
-            <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-2 sm:space-y-0 sm:space-x-3">
-              {/* Election Countdown */}
-              <div className="flex items-center px-3 py-2 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-md">
-                <Calendar className="mr-2 h-4 w-4" />
-                <span className="text-sm font-medium">
-                  {(() => {
-                    const electionDate = new Date('2025-10-29');
-                    const today = new Date();
-                    const diffTime = electionDate.getTime() - today.getTime();
-                    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-                    return diffDays > 0 ? `${diffDays} dagen tot verkiezing` : 'Verkiezing vandaag!';
-                  })()}
-                </span>
-              </div>
+            {/* Action Buttons */}
+            <div className="flex flex-wrap gap-2">
+              <GuidedBuilder />
               
-              <div className="flex flex-wrap gap-2">
-                <GuidedBuilder />
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={loadCurrentSeats}
-                  className="flex items-center"
-                >
-                  <Download className="mr-2 h-4 w-4" />
-                  <span className="hidden sm:inline">{t('tabs.loadCurrent')}</span>
-                  <span className="sm:hidden">Current</span>
-                </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={resetSeats}
-                  className="flex items-center text-red-600 hover:text-red-700"
-                >
-                  <RotateCcw className="mr-2 h-4 w-4" />
-                  <span className="hidden sm:inline">{t('tabs.reset')}</span>
-                  <span className="sm:hidden">Reset</span>
-                </Button>
-                
-                {/* Settings Dropdown */}
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant="outline" size="sm" className="flex items-center">
-                      <Settings className="mr-2 h-4 w-4" />
-                      <span className="hidden sm:inline">Instellingen</span>
-                      <span className="sm:hidden">Menu</span>
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end" className="w-48">
-                    <DropdownMenuItem onClick={toggleDarkMode}>
-                      {darkMode ? <Sun className="mr-2 h-4 w-4" /> : <Moon className="mr-2 h-4 w-4" />}
-                      {darkMode ? 'Lichte modus' : 'Donkere modus'}
-                    </DropdownMenuItem>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem onClick={() => setLanguage('nl')} className={language === 'nl' ? 'bg-gray-100 dark:bg-gray-700' : ''}>
-                      🇳🇱 Nederlands
-                    </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => setLanguage('en')} className={language === 'en' ? 'bg-gray-100 dark:bg-gray-700' : ''}>
-                      🇬🇧 English
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </div>
+              {/* Settings Dropdown */}
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline" size="sm" className="flex items-center">
+                    <Settings className="mr-2 h-4 w-4" />
+                    <span className="hidden sm:inline">Instellingen</span>
+                    <span className="sm:hidden">Menu</span>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-48">
+                  <DropdownMenuItem onClick={toggleDarkMode}>
+                    {darkMode ? <Sun className="mr-2 h-4 w-4" /> : <Moon className="mr-2 h-4 w-4" />}
+                    {darkMode ? 'Lichte modus' : 'Donkere modus'}
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={() => setLanguage('nl')} className={language === 'nl' ? 'bg-gray-100 dark:bg-gray-700' : ''}>
+                    🇳🇱 Nederlands
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => setLanguage('en')} className={language === 'en' ? 'bg-gray-100 dark:bg-gray-700' : ''}>
+                    🇬🇧 English
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
           </div>
 
@@ -144,16 +128,24 @@ export default function Home() {
           <TabsContent value="coalitions" className="space-y-8 bg-green-50/30 dark:bg-green-900/10 rounded-lg p-6">
             <CoalitionPredictionBar />
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-              {/* Left Column: Coalition Builder and Scenario Manager */}
+              {/* Left Column: Coalition Builder */}
               <div className="lg:col-span-1 space-y-8">
                 <CoalitionBuilder />
-                <ScenarioManager />
+                {/* Scenario Manager - visible on wide screens */}
+                <div className="hidden lg:block">
+                  <ScenarioManager />
+                </div>
               </div>
               
               {/* Right Column: Coalition Suggestions */}
               <div className="lg:col-span-2 space-y-8">
                 <CoalitionSuggestions />
               </div>
+            </div>
+            
+            {/* Scenario Manager - visible on narrow screens at bottom */}
+            <div className="lg:hidden">
+              <ScenarioManager />
             </div>
           </TabsContent>
 
@@ -167,6 +159,7 @@ export default function Home() {
               <CoalitionTimeline />
               <MediaSentiment />
             </div>
+            <ParliamentChart />
           </TabsContent>
 
           {/* Export & Share Tab */}

@@ -169,6 +169,15 @@ export default function SeatTable() {
               >
                 Poll Peil.nl
               </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setPartySeats({})}
+                className="text-xs text-red-600 hover:text-red-700"
+              >
+                <RotateCcw className="mr-1 h-3 w-3" />
+                Blank/Reset
+              </Button>
             </div>
           </div>
         </CardContent>
@@ -182,7 +191,7 @@ export default function SeatTable() {
         </CardHeader>
         
         <CardContent className="p-6">
-          <div className="space-y-3">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
             {parties.map((party) => {
               const currentSeats = party.currentSeats;
               const predictedSeats = partySeats[party.id] || 0;
