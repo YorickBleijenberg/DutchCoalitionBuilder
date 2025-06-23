@@ -120,6 +120,9 @@ Changelog:
 - June 23, 2025. Created Export & Sharing functionality with beautiful prediction and coalition cards
 - June 23, 2025. Added Media Sentiment Tracking with simulated news coverage analysis
 - June 23, 2025. Built Guided Coalition Builder tutorial for new user onboarding
+- June 23, 2025. Fixed export functionality for desktop by positioning cards off-screen during generation
+- June 23, 2025. Enhanced prediction export to show all parties with predicted seats instead of just top parties
+- June 23, 2025. Improved Coalition Suggestions mobile layout with full-width select buttons placed underneath options
 ```
 
 ## User Preferences

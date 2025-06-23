@@ -100,56 +100,55 @@ export default function CoalitionSuggestions() {
                 key={index}
                 className="p-4 bg-gray-50 dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
               >
-                <div className="flex justify-between items-start">
-                  <div className="flex-1">
-                    <div className="flex items-center space-x-2 mb-2">
-                      <span className="inline-flex items-center justify-center w-6 h-6 coalition-primary text-white text-xs font-bold rounded-full">
-                        {index + 1}
-                      </span>
-                      <span className="font-medium coalition-text">
-                        {coalition.parties.map(p => p.name).join(' + ')}
-                      </span>
-                    </div>
-                    
-                    <div className="flex items-center space-x-4 text-sm coalition-neutral">
-                      <span className="flex items-center">
-                        <Users className="mr-1 h-3 w-3" />
-                        {coalition.totalSeats} seats
-                      </span>
-                      <span className="flex items-center">
-                        <Layers className="mr-1 h-3 w-3" />
-                        {coalition.partyCount} parties
-                      </span>
-                      <Badge 
-                        variant={coalition.isViable ? "default" : "destructive"}
-                        className="inline-flex items-center"
-                      >
-                        {coalition.isViable ? (
-                          <CheckCircle className="mr-1 h-2 w-2" />
-                        ) : (
-                          <AlertCircle className="mr-1 h-2 w-2" />
-                        )}
-                        {coalition.isViable ? 'Majority' : 'No Majority'}
-                      </Badge>
-                    </div>
-                    
-                    {/* Party color indicators */}
-                    <div className="flex items-center space-x-1 mt-2">
-                      {coalition.parties.map((party) => (
-                        <div
-                          key={party.id}
-                          className="w-3 h-3 rounded-full"
-                          style={{ backgroundColor: party.color }}
-                          title={party.fullName}
-                        />
-                      ))}
-                    </div>
+                <div className="space-y-3">
+                  <div className="flex items-center space-x-2">
+                    <span className="inline-flex items-center justify-center w-6 h-6 coalition-primary text-white text-xs font-bold rounded-full">
+                      {index + 1}
+                    </span>
+                    <span className="font-medium coalition-text flex-1">
+                      {coalition.parties.map(p => p.name).join(' + ')}
+                    </span>
                   </div>
                   
+                  <div className="flex flex-wrap items-center gap-2 text-sm coalition-neutral">
+                    <span className="flex items-center">
+                      <Users className="mr-1 h-3 w-3" />
+                      {coalition.totalSeats} seats
+                    </span>
+                    <span className="flex items-center">
+                      <Layers className="mr-1 h-3 w-3" />
+                      {coalition.partyCount} parties
+                    </span>
+                    <Badge 
+                      variant={coalition.isViable ? "default" : "destructive"}
+                      className="inline-flex items-center"
+                    >
+                      {coalition.isViable ? (
+                        <CheckCircle className="mr-1 h-2 w-2" />
+                      ) : (
+                        <AlertCircle className="mr-1 h-2 w-2" />
+                      )}
+                      {coalition.isViable ? 'Majority' : 'No Majority'}
+                    </Badge>
+                  </div>
+                  
+                  {/* Party color indicators */}
+                  <div className="flex items-center space-x-1">
+                    {coalition.parties.map((party) => (
+                      <div
+                        key={party.id}
+                        className="w-3 h-3 rounded-full"
+                        style={{ backgroundColor: party.color }}
+                        title={party.fullName}
+                      />
+                    ))}
+                  </div>
+                  
+                  {/* Select button underneath for mobile */}
                   <Button
                     size="sm"
                     onClick={() => handleSelectCoalition(coalition.parties.map(p => p.id))}
-                    className="coalition-primary"
+                    className="coalition-primary w-full sm:w-auto"
                   >
                     {t('suggestions.select')}
                   </Button>

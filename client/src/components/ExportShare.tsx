@@ -160,8 +160,8 @@ export default function ExportShare() {
         {/* Prediction Card */}
         <div 
           ref={predictionCardRef}
-          className="bg-gradient-to-br from-blue-50 to-indigo-100 p-6 rounded-2xl shadow-xl border-2 border-blue-200 w-[600px] mx-auto"
-          style={{ width: '600px', maxWidth: '600px' }}
+          className="fixed -left-[2000px] top-0 bg-gradient-to-br from-blue-50 to-indigo-100 p-6 rounded-2xl shadow-xl border-2 border-blue-200"
+          style={{ width: '600px', minHeight: '400px' }}
         >
           <div className="text-center mb-6">
             <h1 className="text-3xl font-bold text-blue-900 mb-2">Dutch Election Prediction 2025</h1>
@@ -178,7 +178,10 @@ export default function ExportShare() {
           </div>
 
           <div className="grid grid-cols-2 gap-2 mb-6">
-            {topParties.map((party, index) => (
+            {parties
+              .filter(party => (partySeats[party.id] || 0) > 0)
+              .sort((a, b) => (partySeats[b.id] || 0) - (partySeats[a.id] || 0))
+              .map((party, index) => (
               <div key={party.id} className="flex items-center justify-between bg-white/70 p-2 rounded-lg">
                 <div className="flex items-center gap-2">
                   <span className="text-xs font-bold text-gray-500">#{index + 1}</span>
@@ -188,7 +191,7 @@ export default function ExportShare() {
                   />
                   <span className="font-medium text-gray-900 text-sm truncate">{party.name}</span>
                 </div>
-                <span className="font-bold text-lg text-blue-900">{partySeats[party.id] || 0}</span>
+                <span className="font-bold text-lg text-blue-900">{partySeats[party.id]}</span>
               </div>
             ))}
           </div>
@@ -208,8 +211,8 @@ export default function ExportShare() {
         {selectedParties.length > 0 && (
           <div 
             ref={coalitionCardRef}
-            className="bg-gradient-to-br from-green-50 to-emerald-100 p-6 rounded-2xl shadow-xl border-2 border-green-200 w-[600px] mx-auto"
-            style={{ width: '600px', maxWidth: '600px' }}
+            className="fixed -left-[2000px] top-0 bg-gradient-to-br from-green-50 to-emerald-100 p-6 rounded-2xl shadow-xl border-2 border-green-200"
+            style={{ width: '600px', minHeight: '400px' }}
           >
             <div className="text-center mb-6">
               <h1 className="text-3xl font-bold text-green-900 mb-2">Coalition Analysis</h1>
