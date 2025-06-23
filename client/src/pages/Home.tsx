@@ -14,7 +14,7 @@ import ScenarioManager from '../components/ScenarioManager';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
-import { RotateCcw, Download, Settings, Moon, Sun } from 'lucide-react';
+import { RotateCcw, Download, Settings, Moon, Sun, Calendar } from 'lucide-react';
 
 export default function Home() {
   const { t } = useTranslation();
@@ -38,8 +38,21 @@ export default function Home() {
               </TabsTrigger>
             </TabsList>
             
-            {/* Action Buttons */}
+            {/* Election Countdown and Action Buttons */}
             <div className="flex items-center space-x-3">
+              {/* Election Countdown */}
+              <div className="flex items-center px-3 py-2 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-md">
+                <Calendar className="mr-2 h-4 w-4" />
+                <span className="text-sm font-medium">
+                  {(() => {
+                    const electionDate = new Date('2025-10-29');
+                    const today = new Date();
+                    const diffTime = electionDate.getTime() - today.getTime();
+                    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                    return diffDays > 0 ? `${diffDays} dagen tot verkiezing` : 'Verkiezing vandaag!';
+                  })()}
+                </span>
+              </div>
               <Button
                 variant="outline"
                 onClick={loadCurrentSeats}
@@ -85,13 +98,13 @@ export default function Home() {
           {/* Seat Predictions Tab */}
           <TabsContent value="predictions" className="space-y-8">
             <SeatTable />
+            <PartyBar />
             <ComparisonBarChart />
           </TabsContent>
 
           {/* Coalition Builder Tab */}
           <TabsContent value="coalitions" className="space-y-8">
             <CoalitionPredictionBar />
-            <PartyBar />
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               {/* Left Column: Coalition Builder and Scenario Manager */}
               <div className="lg:col-span-1 space-y-8">

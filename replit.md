@@ -106,6 +106,9 @@ Changelog:
 - June 23, 2025. Implemented advanced coalition stability scoring algorithms with multi-factor analysis
 - June 23, 2025. Enhanced Current Prediction bar with party labels, seat numbers, and legend display
 - June 23, 2025. Updated comparison chart colors (green predictions, thinner current seats bars)
+- June 23, 2025. Added election countdown (October 29, 2025) to header navigation
+- June 23, 2025. Made Current Prediction bar sticky and moved PartyBar to Seat Predictions tab
+- June 23, 2025. Simplified Coalition Builder with read-only party selection (no seat editing)
 ```
 
 ## User Preferences

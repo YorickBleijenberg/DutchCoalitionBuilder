@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { X, Users, CheckCircle, AlertTriangle } from 'lucide-react';
-import PartyRow from './PartyRow';
+
 
 export default function CoalitionBuilder() {
   const { t } = useTranslation();
@@ -103,7 +103,28 @@ export default function CoalitionBuilder() {
             <h3 className="font-medium mb-3 coalition-text">Available Parties</h3>
             <div className="space-y-2">
               {availableParties.map((party) => (
-                <PartyRow key={party.id} party={party} mode="coalition" />
+                <div key={party.id} className="flex items-center justify-between p-3 border border-gray-200 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                  <div className="flex items-center space-x-3">
+                    <div 
+                      className="w-4 h-4 rounded-full"
+                      style={{ backgroundColor: party.color }}
+                    />
+                    <div>
+                      <div className="font-medium text-sm">{party.name}</div>
+                      <div className="text-xs coalition-neutral">
+                        {seatData[party.id] || 0} seats
+                      </div>
+                    </div>
+                  </div>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => handlePartyToggle(party.id, true)}
+                    className="text-green-600 hover:text-green-700 hover:bg-green-50 dark:hover:bg-green-900/20"
+                  >
+                    Add
+                  </Button>
+                </div>
               ))}
             </div>
           </div>
