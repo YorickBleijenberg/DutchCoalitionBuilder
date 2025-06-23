@@ -10,7 +10,7 @@ export default function CoalitionBuilder() {
   const { t } = useTranslation();
   const { 
     parties, 
-    partySeats, 
+    partySeats: seatData, 
     selectedParties, 
     setSelectedParties, 
     coalitionSeats, 
@@ -31,7 +31,7 @@ export default function CoalitionBuilder() {
 
   const selectedPartiesData = parties.filter(party => selectedParties.includes(party.id));
   const availableParties = parties.filter(party => 
-    !selectedParties.includes(party.id) && (partySeats[party.id] || 0) > 0
+    !selectedParties.includes(party.id) && (seatData[party.id] || 0) > 0
   );
 
   return (
@@ -61,36 +61,82 @@ export default function CoalitionBuilder() {
       </CardHeader>
       
       <CardContent className="p-6">
-        {/* Coalition Summary - Sticky */}
-        <div className="sticky top-0 z-10 mb-6 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-600/30 shadow-md">
-          <div className="flex justify-between items-center mb-2">
-            <span className="font-medium">{t('coalition.selected')}</span>
-            <span className="text-xl font-bold text-blue-600 dark:text-blue-400">
-              {coalitionSeats}
-            </span>
-          </div>
-          <div className="flex items-center justify-between mb-2">
-            <Badge 
-              variant={hasMajority ? "default" : "destructive"}
-              className="inline-flex items-center"
-            >
-              {hasMajority ? (
-                <CheckCircle className="mr-1 h-3 w-3" />
-              ) : (
-                <AlertTriangle className="mr-1 h-3 w-3" />
-              )}
-              {hasMajority ? t('coalition.majority') : t('coalition.noMajority')}
-            </Badge>
-            <span className="text-sm coalition-neutral flex items-center">
-              <Users className="mr-1 h-3 w-3" />
-              {selectedParties.length} parties
-            </span>
-          </div>
-          {!hasMajority && (
-            <div className="text-center text-sm text-red-600 dark:text-red-400 font-medium">
-              {76 - coalitionSeats} seats needed for majority
+        {/* Current Prediction Bar - Sticky */}
+        <div className="sticky top-0 z-10 mb-6 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-600 shadow-md">
+          <div className="flex justify-between items-center mb-3">
+            <span className="font-medium text-gray-900 dark:text-gray-100">Current Prediction</span>
+            <div className="flex items-center space-x-4">
+              <span className="text-sm text-gray-600 dark:text-gray-400">
+                {coalitionSeats}/150 seats
+              </span>
+              <Badge 
+                variant={hasMajority ? "default" : "secondary"}
+                className="inline-flex items-center"
+              >
+                {hasMajority ? (
+                  <CheckCircle className="mr-1 h-3 w-3" />
+                ) : (
+                  <AlertTriangle className="mr-1 h-3 w-3" />
+                )}
+                {hasMajority ? 'Majority' : `Need ${76 - coalitionSeats} more`}
+              </Badge>
             </div>
-          )}
+          </div>
+          
+          {/* Progress Bar */}
+          <div className="relative w-full bg-gray-200 dark:bg-gray-700 rounded-full h-8 overflow-hidden">
+            {/* Majority threshold line */}
+            <div 
+              className="absolute top-0 bottom-0 w-0.5 bg-red-500 dark:bg-red-400 z-10"
+              style={{ left: '50.67%' }} /* 76/150 = 50.67% */
+            />
+            
+            {/* Coalition seats progress */}
+            <div 
+              className={`h-full transition-all duration-500 ${
+                hasMajority 
+                  ? 'bg-green-500 dark:bg-green-400' 
+                  : 'bg-blue-500 dark:bg-blue-400'
+              }`}
+              style={{ width: `${Math.min((coalitionSeats / 150) * 100, 100)}%` }}
+            />
+            
+            {/* Selected parties color indicators */}
+            {selectedParties.length > 0 && (
+              <div className="absolute inset-0 flex">
+                {selectedPartiesData.map((party, index) => {
+                  const seats = seatData[party.id] || 0;
+                  const widthPercent = (seats / 150) * 100;
+                  return (
+                    <div
+                      key={party.id}
+                      className="h-full border-r border-white dark:border-gray-800"
+                      style={{
+                        backgroundColor: party.color,
+                        width: `${widthPercent}%`,
+                        opacity: 0.8
+                      }}
+                      title={`${party.name}: ${seats} seats`}
+                    />
+                  );
+                })}
+              </div>
+            )}
+            
+            {/* Seat count overlay */}
+            <div className="absolute inset-0 flex items-center justify-center">
+              <span className="text-sm font-medium text-white drop-shadow-md">
+                {coalitionSeats > 0 ? `${coalitionSeats} seats` : 'Select parties to start'}
+              </span>
+            </div>
+          </div>
+          
+          {/* Majority threshold indicator */}
+          <div className="flex justify-center mt-1">
+            <span className="text-xs text-red-600 dark:text-red-400">
+              ↑ Majority (76 seats)
+            </span>
+          </div>
         </div>
 
         {/* Selected Parties */}
@@ -111,7 +157,7 @@ export default function CoalitionBuilder() {
                     <div>
                       <div className="font-medium text-sm">{party.name}</div>
                       <div className="text-xs coalition-neutral">
-                        {partySeats[party.id] || 0} seats
+                        {seatData[party.id] || 0} seats
                       </div>
                     </div>
                   </div>
