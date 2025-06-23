@@ -57,7 +57,7 @@ export default function CoalitionPredictionBar() {
             style={{ width: `${Math.min((coalitionSeats / 150) * 100, 100)}%` }}
           />
           
-          {/* Selected parties color indicators */}
+          {/* Selected parties color indicators with labels */}
           {selectedParties.length > 0 && (
             <div className="absolute inset-0 flex">
               {selectedPartiesData.map((party) => {
@@ -66,25 +66,34 @@ export default function CoalitionPredictionBar() {
                 return (
                   <div
                     key={party.id}
-                    className="h-full border-r border-white dark:border-gray-800"
+                    className="h-full border-r border-white dark:border-gray-800 flex items-center justify-center relative"
                     style={{
                       backgroundColor: party.color,
                       width: `${widthPercent}%`,
-                      opacity: 0.8
+                      opacity: 0.9
                     }}
                     title={`${party.name}: ${seats} seats`}
-                  />
+                  >
+                    {widthPercent > 8 && (
+                      <div className="text-white text-xs font-bold text-center px-1">
+                        <div className="leading-tight">{party.name}</div>
+                        <div className="text-xs">{seats}</div>
+                      </div>
+                    )}
+                  </div>
                 );
               })}
             </div>
           )}
           
-          {/* Seat count overlay */}
-          <div className="absolute inset-0 flex items-center justify-center">
-            <span className="text-sm font-medium text-white drop-shadow-md">
-              {coalitionSeats > 0 ? `${coalitionSeats} seats` : 'Select parties to start'}
-            </span>
-          </div>
+          {/* Fallback seat count overlay for empty state */}
+          {selectedParties.length === 0 && (
+            <div className="absolute inset-0 flex items-center justify-center">
+              <span className="text-sm font-medium text-gray-600 dark:text-gray-400">
+                Select parties to start
+              </span>
+            </div>
+          )}
         </div>
         
         {/* Majority threshold indicator */}
@@ -93,6 +102,28 @@ export default function CoalitionPredictionBar() {
             ↑ Majority (76 seats)
           </span>
         </div>
+        
+        {/* Legend for selected parties */}
+        {selectedParties.length > 0 && (
+          <div className="mt-4 pt-3 border-t border-gray-300 dark:border-gray-600">
+            <div className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              Coalition Parties:
+            </div>
+            <div className="flex flex-wrap gap-3">
+              {selectedPartiesData.map((party) => (
+                <div key={party.id} className="flex items-center gap-2">
+                  <div
+                    className="w-3 h-3 rounded-full"
+                    style={{ backgroundColor: party.color }}
+                  />
+                  <span className="text-sm text-gray-700 dark:text-gray-300">
+                    {party.name}: {partySeats[party.id] || 0} seats
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </CardContent>
     </Card>
   );

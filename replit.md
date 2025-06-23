@@ -104,6 +104,8 @@ Changelog:
 - June 23, 2025. Integrated polling data from Peilingwijzer and Peil.nl with quick load options
 - June 23, 2025. Moved Current Prediction bar to top of Coalition Builder tab for better visibility
 - June 23, 2025. Implemented advanced coalition stability scoring algorithms with multi-factor analysis
+- June 23, 2025. Enhanced Current Prediction bar with party labels, seat numbers, and legend display
+- June 23, 2025. Updated comparison chart colors (green predictions, thinner current seats bars)
 ```
 
 ## User Preferences
