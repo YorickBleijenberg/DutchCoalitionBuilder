@@ -3,8 +3,8 @@ import { useApp } from '../context/AppContext';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Checkbox } from '@/components/ui/checkbox';
 import { X, Users, CheckCircle, AlertTriangle } from 'lucide-react';
+import PartyRow from './PartyRow';
 
 export default function CoalitionBuilder() {
   const { t } = useTranslation();
@@ -130,28 +130,7 @@ export default function CoalitionBuilder() {
             <h3 className="font-medium mb-3 coalition-text">Available Parties</h3>
             <div className="space-y-2">
               {availableParties.map((party) => (
-                <div 
-                  key={party.id}
-                  className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
-                >
-                  <div className="flex items-center space-x-3">
-                    <div 
-                      className="w-4 h-4 rounded-full" 
-                      style={{ backgroundColor: party.color }}
-                    />
-                    <div>
-                      <div className="font-medium text-sm">{party.name}</div>
-                      <div className="text-xs coalition-neutral">
-                        {party.ideology} • {partySeats[party.id] || 0} seats
-                      </div>
-                    </div>
-                  </div>
-                  <Checkbox
-                    checked={false}
-                    onCheckedChange={(checked) => handlePartyToggle(party.id, checked as boolean)}
-                    className="rounded border-gray-300 text-primary focus:ring-primary"
-                  />
-                </div>
+                <PartyRow key={party.id} party={party} mode="coalition" />
               ))}
             </div>
           </div>

@@ -45,5 +45,11 @@
   "language": {
     "english": "English",
     "dutch": "Dutch"
+  },
+  "tabs": {
+    "predictions": "Seat Predictions",
+    "coalitions": "Coalition Builder",
+    "loadCurrent": "Load Current",
+    "reset": "Reset All"
   }
 }

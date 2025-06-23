@@ -5,7 +5,8 @@
     "fullName": "Volkspartij voor Vrijheid en Democratie",
     "color": "#1E40AF",
     "ideology": "Liberal",
-    "leader": "Mark Rutte"
+    "leader": "Mark Rutte",
+    "currentSeats": 34
   },
   {
     "id": "pvda",
@@ -13,7 +14,8 @@
     "fullName": "Partij van de Arbeid",
     "color": "#DC2626",
     "ideology": "Social Democratic",
-    "leader": "Attje Kuiken"
+    "leader": "Attje Kuiken",
+    "currentSeats": 9
   },
   {
     "id": "d66",
@@ -21,7 +23,8 @@
     "fullName": "Democraten 66",
     "color": "#059669",
     "ideology": "Liberal Democratic",
-    "leader": "Sigrid Kaag"
+    "leader": "Sigrid Kaag",
+    "currentSeats": 24
   },
   {
     "id": "cda",
@@ -29,7 +32,8 @@
     "fullName": "Christen-Democratisch Appèl",
     "color": "#7C3AED",
     "ideology": "Christian Democratic",
-    "leader": "Wopke Hoekstra"
+    "leader": "Wopke Hoekstra",
+    "currentSeats": 15
   },
   {
     "id": "sp",
@@ -37,7 +41,8 @@
     "fullName": "Socialistische Partij",
     "color": "#F59E0B",
     "ideology": "Socialist",
-    "leader": "Lilian Marijnissen"
+    "leader": "Lilian Marijnissen",
+    "currentSeats": 9
   },
   {
     "id": "pvv",
@@ -45,7 +50,8 @@
     "fullName": "Partij voor de Vrijheid",
     "color": "#8B5CF6",
     "ideology": "Populist",
-    "leader": "Geert Wilders"
+    "leader": "Geert Wilders",
+    "currentSeats": 17
   },
   {
     "id": "gl",
@@ -53,7 +59,8 @@
     "fullName": "GroenLinks",
     "color": "#10B981",
     "ideology": "Green Left",
-    "leader": "Jesse Klaver"
+    "leader": "Jesse Klaver",
+    "currentSeats": 14
   },
   {
     "id": "fvd",
@@ -61,7 +68,8 @@
     "fullName": "Forum voor Democratie",
     "color": "#92400E",
     "ideology": "National Conservative",
-    "leader": "Thierry Baudet"
+    "leader": "Thierry Baudet",
+    "currentSeats": 8
   },
   {
     "id": "cu",
@@ -69,7 +77,8 @@
     "fullName": "ChristenUnie",
     "color": "#1D4ED8",
     "ideology": "Christian Democratic",
-    "leader": "Gert-Jan Segers"
+    "leader": "Gert-Jan Segers",
+    "currentSeats": 5
   },
   {
     "id": "sgp",
@@ -77,7 +86,8 @@
     "fullName": "Staatkundig Gereformeerde Partij",
     "color": "#1F2937",
     "ideology": "Orthodox Protestant",
-    "leader": "Kees van der Staaij"
+    "leader": "Kees van der Staaij",
+    "currentSeats": 3
   },
   {
     "id": "pvdd",
@@ -85,7 +95,8 @@
     "fullName": "Partij voor de Dieren",
     "color": "#065F46",
     "ideology": "Animal Rights",
-    "leader": "Esther Ouwehand"
+    "leader": "Esther Ouwehand",
+    "currentSeats": 6
   },
   {
     "id": "50plus",
@@ -93,7 +104,8 @@
     "fullName": "50PLUS",
     "color": "#7C2D12",
     "ideology": "Pensioners",
-    "leader": "Liane den Haan"
+    "leader": "Liane den Haan",
+    "currentSeats": 1
   },
   {
     "id": "denk",
@@ -101,7 +113,8 @@
     "fullName": "DENK",
     "color": "#B91C1C",
     "ideology": "Minority Interests",
-    "leader": "Farid Azarkan"
+    "leader": "Farid Azarkan",
+    "currentSeats": 3
   },
   {
     "id": "bij1",
@@ -109,7 +122,8 @@
     "fullName": "BIJ1",
     "color": "#7C3AED",
     "ideology": "Anti-Racism",
-    "leader": "Sylvana Simons"
+    "leader": "Sylvana Simons",
+    "currentSeats": 1
   },
   {
     "id": "volt",
@@ -117,6 +131,7 @@
     "fullName": "Volt Nederland",
     "color": "#5B21B6",
     "ideology": "Pro-European",
-    "leader": "Laurens Dassen"
+    "leader": "Laurens Dassen",
+    "currentSeats": 3
   }
 ]

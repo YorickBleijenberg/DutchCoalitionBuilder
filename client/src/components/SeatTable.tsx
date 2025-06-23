@@ -8,7 +8,7 @@ import PartyRow from './PartyRow';
 
 export default function SeatTable() {
   const { t } = useTranslation();
-  const { parties, totalSeats, coalitionSeats, hasMajority } = useApp();
+  const { parties, totalSeats } = useApp();
 
   const seatStatus = calculateSeatDifference(totalSeats);
 
@@ -23,7 +23,7 @@ export default function SeatTable() {
         {/* Total Seats Indicator */}
         <div className="mb-6 p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
           <div className="flex justify-between items-center">
-            <span className="font-medium">{t('seats.total')}</span>
+            <span className="font-medium">{t('seats.total')}: 150</span>
             <span className="text-xl font-bold">{totalSeats}</span>
           </div>
           <div className="mt-2">
@@ -36,7 +36,7 @@ export default function SeatTable() {
               ) : (
                 <AlertTriangle className="mr-1 h-3 w-3" />
               )}
-              {seatStatus.message}
+              {t(`seats.${seatStatus.isComplete ? 'complete' : seatStatus.isUnder ? 'unassigned' : 'overassigned'}`)} {seatStatus.isComplete ? '' : Math.abs(seatStatus.difference)}
             </Badge>
           </div>
         </div>
@@ -44,29 +44,8 @@ export default function SeatTable() {
         {/* Party List */}
         <div className="space-y-3">
           {parties.map((party) => (
-            <PartyRow key={party.id} party={party} />
+            <PartyRow key={party.id} party={party} mode="prediction" />
           ))}
-        </div>
-        
-        {/* Coalition Summary */}
-        <div className="mt-6 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-600/30">
-          <div className="flex justify-between items-center">
-            <span className="font-medium">{t('coalition.selected')}</span>
-            <span className="text-xl font-bold text-blue-600 dark:text-blue-400">{coalitionSeats}</span>
-          </div>
-          <div className="mt-2">
-            <Badge 
-              variant={hasMajority ? "default" : "destructive"}
-              className="inline-flex items-center"
-            >
-              {hasMajority ? (
-                <CheckCircle className="mr-1 h-3 w-3" />
-              ) : (
-                <AlertTriangle className="mr-1 h-3 w-3" />
-              )}
-              {hasMajority ? t('coalition.majority') : t('coalition.noMajority')}
-            </Badge>
-          </div>
         </div>
       </CardContent>
     </Card>

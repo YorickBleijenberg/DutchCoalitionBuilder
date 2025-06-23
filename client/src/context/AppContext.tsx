@@ -10,6 +10,7 @@ export interface Party {
   color: string;
   ideology: string;
   leader: string;
+  currentSeats: number;
 }
 
 export interface Coalition {
@@ -33,12 +34,23 @@ interface AppContextType {
   hasMajority: boolean;
   language: string;
   setLanguage: (lang: string) => void;
+  loadCurrentSeats: () => void;
+  resetSeats: () => void;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
 export function AppProvider({ children }: { children: React.ReactNode }) {
-  const [partySeats, setPartySeats] = useLocalStorage<Record<string, number>>('coalition-party-seats', {});
+  // Initialize with current seats as default
+  const getInitialSeats = () => {
+    const currentSeats: Record<string, number> = {};
+    partiesData.forEach(party => {
+      currentSeats[party.id] = party.currentSeats;
+    });
+    return currentSeats;
+  };
+
+  const [partySeats, setPartySeats] = useLocalStorage<Record<string, number>>('coalition-party-seats', getInitialSeats());
   const [selectedParties, setSelectedParties] = useLocalStorage<string[]>('coalition-selected-parties', []);
   const [darkMode, setDarkMode] = useLocalStorage<boolean>('coalition-dark-mode', false);
   const [ideologyFilter, setIdeologyFilter] = useLocalStorage<boolean>('coalition-ideology-filter', false);
@@ -59,6 +71,18 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
 
   const toggleDarkMode = () => {
     setDarkMode(!darkMode);
+  };
+
+  const loadCurrentSeats = () => {
+    const currentSeats: Record<string, number> = {};
+    parties.forEach(party => {
+      currentSeats[party.id] = party.currentSeats;
+    });
+    setPartySeats(currentSeats);
+  };
+
+  const resetSeats = () => {
+    setPartySeats({});
   };
 
   useEffect(() => {
@@ -88,6 +112,8 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     hasMajority,
     language,
     setLanguage,
+    loadCurrentSeats,
+    resetSeats,
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

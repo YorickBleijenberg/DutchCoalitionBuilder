@@ -45,5 +45,11 @@
   "language": {
     "english": "Engels",
     "dutch": "Nederlands"
+  },
+  "tabs": {
+    "predictions": "Zetel Voorspellingen",
+    "coalitions": "Coalitie Builder",
+    "loadCurrent": "Laad Huidige",
+    "reset": "Reset Alles"
   }
 }
