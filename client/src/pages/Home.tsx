@@ -25,7 +25,7 @@ import { RotateCcw, Download, Settings, Moon, Sun, Calendar } from 'lucide-react
 
 export default function Home() {
   const { t } = useTranslation();
-  const { loadCurrentSeats, resetSeats, darkMode, toggleDarkMode, language, setLanguage } = useApp();
+  const { loadCurrentSeats, resetSeats, darkMode, toggleDarkMode, language, setLanguage, selectedParties } = useApp();
   const [activeTab, setActiveTab] = useState('predictions');
 
   return (
@@ -35,17 +35,22 @@ export default function Home() {
       {/* Election Countdown Banner */}
       <div className="bg-blue-600 dark:bg-blue-800 text-white py-3">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-center">
-            <Calendar className="mr-2 h-5 w-5" />
+          <div className="flex items-center justify-between">
             <span className="text-lg font-semibold">
-              {(() => {
-                const electionDate = new Date('2025-10-29');
-                const today = new Date();
-                const diffTime = electionDate.getTime() - today.getTime();
-                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-                return diffDays > 0 ? `Nog ${diffDays} dagen tot de verkiezingen` : 'Verkiezingen vandaag!';
-              })()}
+              Nederland Coalitieland
             </span>
+            <div className="flex items-center">
+              <Calendar className="mr-2 h-5 w-5" />
+              <span className="text-lg font-semibold">
+                {(() => {
+                  const electionDate = new Date('2025-10-29');
+                  const today = new Date();
+                  const diffTime = electionDate.getTime() - today.getTime();
+                  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                  return diffDays > 0 ? `Dagen tot de verkiezingen: ${diffDays}` : 'Verkiezingen vandaag!';
+                })()}
+              </span>
+            </div>
           </div>
         </div>
       </div>
@@ -117,7 +122,7 @@ export default function Home() {
 
           {/* Seat Predictions Tab */}
           <TabsContent value="predictions" className="space-y-8 bg-blue-50/30 dark:bg-blue-900/10 rounded-lg p-6">
-            <CoalitionPredictionBar />
+            {selectedParties.length > 0 && <CoalitionPredictionBar />}
             <SeatTable />
             <div className="w-full">
               <ComparisonBarChart />
