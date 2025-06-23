@@ -95,6 +95,9 @@ Changelog:
 - June 23, 2025. Implemented tab-based interface separating seat predictions from coalition building
 - June 23, 2025. Added current Dutch parliament seats data and scenario save/load functionality
 - June 23, 2025. Enhanced UI with real-time seat comparison and localStorage persistence
+- June 23, 2025. Redesigned seat predictions with horizontal comparison chart and mobile-responsive controls
+- June 23, 2025. Implemented sticky total seats indicator and simplified header interface
+- June 23, 2025. Added settings dropdown menu with dark mode and language options
 ```
 
 ## User Preferences
