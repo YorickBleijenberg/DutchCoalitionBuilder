@@ -28,18 +28,24 @@ export default function Home() {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
           {/* Tab Navigation */}
-          <div className="flex justify-between items-center mb-8">
-            <TabsList className="grid w-auto grid-cols-2 bg-gray-100 dark:bg-gray-700">
-              <TabsTrigger value="predictions" className="px-6 py-2">
+          <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center mb-8 space-y-4 lg:space-y-0">
+            <TabsList className="grid w-auto grid-cols-2 bg-gray-200 dark:bg-gray-600 p-1 rounded-lg shadow-sm">
+              <TabsTrigger 
+                value="predictions" 
+                className="px-4 py-2 data-[state=active]:bg-blue-500 data-[state=active]:text-white data-[state=active]:shadow-md transition-all duration-200"
+              >
                 {t('tabs.predictions')}
               </TabsTrigger>
-              <TabsTrigger value="coalitions" className="px-6 py-2">
+              <TabsTrigger 
+                value="coalitions" 
+                className="px-4 py-2 data-[state=active]:bg-green-500 data-[state=active]:text-white data-[state=active]:shadow-md transition-all duration-200"
+              >
                 {t('tabs.coalitions')}
               </TabsTrigger>
             </TabsList>
             
             {/* Election Countdown and Action Buttons */}
-            <div className="flex items-center space-x-3">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-2 sm:space-y-0 sm:space-x-3">
               {/* Election Countdown */}
               <div className="flex items-center px-3 py-2 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-md">
                 <Calendar className="mr-2 h-4 w-4" />
@@ -53,57 +59,64 @@ export default function Home() {
                   })()}
                 </span>
               </div>
-              <Button
-                variant="outline"
-                onClick={loadCurrentSeats}
-                className="flex items-center"
-              >
-                <Download className="mr-2 h-4 w-4" />
-                {t('tabs.loadCurrent')}
-              </Button>
-              <Button
-                variant="outline"
-                onClick={resetSeats}
-                className="flex items-center text-red-600 hover:text-red-700"
-              >
-                <RotateCcw className="mr-2 h-4 w-4" />
-                {t('tabs.reset')}
-              </Button>
               
-              {/* Settings Dropdown */}
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="outline" className="flex items-center">
-                    <Settings className="mr-2 h-4 w-4" />
-                    Instellingen
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-48">
-                  <DropdownMenuItem onClick={toggleDarkMode}>
-                    {darkMode ? <Sun className="mr-2 h-4 w-4" /> : <Moon className="mr-2 h-4 w-4" />}
-                    {darkMode ? 'Lichte modus' : 'Donkere modus'}
-                  </DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={() => setLanguage('nl')} className={language === 'nl' ? 'bg-gray-100 dark:bg-gray-700' : ''}>
-                    🇳🇱 Nederlands
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => setLanguage('en')} className={language === 'en' ? 'bg-gray-100 dark:bg-gray-700' : ''}>
-                    🇬🇧 English
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
+              <div className="flex flex-wrap gap-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={loadCurrentSeats}
+                  className="flex items-center"
+                >
+                  <Download className="mr-2 h-4 w-4" />
+                  <span className="hidden sm:inline">{t('tabs.loadCurrent')}</span>
+                  <span className="sm:hidden">Current</span>
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={resetSeats}
+                  className="flex items-center text-red-600 hover:text-red-700"
+                >
+                  <RotateCcw className="mr-2 h-4 w-4" />
+                  <span className="hidden sm:inline">{t('tabs.reset')}</span>
+                  <span className="sm:hidden">Reset</span>
+                </Button>
+                
+                {/* Settings Dropdown */}
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="outline" size="sm" className="flex items-center">
+                      <Settings className="mr-2 h-4 w-4" />
+                      <span className="hidden sm:inline">Instellingen</span>
+                      <span className="sm:hidden">Menu</span>
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="w-48">
+                    <DropdownMenuItem onClick={toggleDarkMode}>
+                      {darkMode ? <Sun className="mr-2 h-4 w-4" /> : <Moon className="mr-2 h-4 w-4" />}
+                      {darkMode ? 'Lichte modus' : 'Donkere modus'}
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem onClick={() => setLanguage('nl')} className={language === 'nl' ? 'bg-gray-100 dark:bg-gray-700' : ''}>
+                      🇳🇱 Nederlands
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => setLanguage('en')} className={language === 'en' ? 'bg-gray-100 dark:bg-gray-700' : ''}>
+                      🇬🇧 English
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
             </div>
           </div>
 
           {/* Seat Predictions Tab */}
-          <TabsContent value="predictions" className="space-y-8">
+          <TabsContent value="predictions" className="space-y-8 bg-blue-50/30 dark:bg-blue-900/10 rounded-lg p-6">
             <SeatTable />
-            <PartyBar />
             <ComparisonBarChart />
           </TabsContent>
 
           {/* Coalition Builder Tab */}
-          <TabsContent value="coalitions" className="space-y-8">
+          <TabsContent value="coalitions" className="space-y-8 bg-green-50/30 dark:bg-green-900/10 rounded-lg p-6">
             <CoalitionPredictionBar />
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               {/* Left Column: Coalition Builder and Scenario Manager */}

@@ -112,6 +112,9 @@ Changelog:
 - June 23, 2025. Enhanced Seat Predictions with integrated progress bar in sticky header
 - June 23, 2025. Added hold-to-increment functionality for plus/minus seat adjustment buttons
 - June 23, 2025. Repositioned poll data buttons to header top-right for better accessibility
+- June 23, 2025. Implemented color-coded tab themes (blue predictions, green coalitions) with enhanced contrast
+- June 23, 2025. Made party containers fully clickable for streamlined coalition building
+- June 23, 2025. Improved mobile responsiveness with stacked navigation and responsive button labels
 ```
 
 ## User Preferences

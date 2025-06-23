@@ -103,7 +103,11 @@ export default function CoalitionBuilder() {
             <h3 className="font-medium mb-3 coalition-text">Available Parties</h3>
             <div className="space-y-2">
               {availableParties.map((party) => (
-                <div key={party.id} className="flex items-center justify-between p-3 border border-gray-200 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                <div 
+                  key={party.id} 
+                  onClick={() => handlePartyToggle(party.id, true)}
+                  className="flex items-center justify-between p-3 border border-gray-200 dark:border-gray-600 rounded-lg hover:bg-green-50 dark:hover:bg-green-900/20 hover:border-green-300 dark:hover:border-green-600 transition-colors cursor-pointer"
+                >
                   <div className="flex items-center space-x-3">
                     <div 
                       className="w-4 h-4 rounded-full"
@@ -116,14 +120,9 @@ export default function CoalitionBuilder() {
                       </div>
                     </div>
                   </div>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => handlePartyToggle(party.id, true)}
-                    className="text-green-600 hover:text-green-700 hover:bg-green-50 dark:hover:bg-green-900/20"
-                  >
-                    Add
-                  </Button>
+                  <div className="text-green-600 dark:text-green-400 text-sm font-medium">
+                    Click to add
+                  </div>
                 </div>
               ))}
             </div>
