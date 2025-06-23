@@ -24,7 +24,8 @@ export default function ExportShare() {
     try {
       const dataUrl = await html2canvas.toPng(cardRef.current, {
         quality: 0.95,
-        backgroundColor: '#ffffff'
+        backgroundColor: '#ffffff',
+        pixelRatio: 2
       });
       
       const link = document.createElement('a');
@@ -42,7 +43,8 @@ export default function ExportShare() {
     try {
       const dataUrl = await html2canvas.toPng(cardRef.current, {
         quality: 0.95,
-        backgroundColor: '#ffffff'
+        backgroundColor: '#ffffff',
+        pixelRatio: 2
       });
       
       if (navigator.share) {
@@ -158,7 +160,8 @@ export default function ExportShare() {
         {/* Prediction Card */}
         <div 
           ref={predictionCardRef}
-          className="bg-gradient-to-br from-blue-50 to-indigo-100 p-8 rounded-2xl shadow-xl border-2 border-blue-200 max-w-2xl mx-auto"
+          className="bg-gradient-to-br from-blue-50 to-indigo-100 p-6 rounded-2xl shadow-xl border-2 border-blue-200 w-[600px] mx-auto"
+          style={{ width: '600px', maxWidth: '600px' }}
         >
           <div className="text-center mb-6">
             <h1 className="text-3xl font-bold text-blue-900 mb-2">Dutch Election Prediction 2025</h1>
@@ -174,18 +177,16 @@ export default function ExportShare() {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-3 mb-6">
+          <div className="grid grid-cols-2 gap-2 mb-6">
             {topParties.map((party, index) => (
-              <div key={party.id} className="flex items-center justify-between bg-white/70 p-3 rounded-lg">
-                <div className="flex items-center gap-3">
-                  <div className="flex items-center gap-2">
-                    <span className="text-sm font-bold text-gray-500">#{index + 1}</span>
-                    <div 
-                      className="w-4 h-4 rounded-full"
-                      style={{ backgroundColor: party.color }}
-                    />
-                  </div>
-                  <span className="font-medium text-gray-900">{party.name}</span>
+              <div key={party.id} className="flex items-center justify-between bg-white/70 p-2 rounded-lg">
+                <div className="flex items-center gap-2">
+                  <span className="text-xs font-bold text-gray-500">#{index + 1}</span>
+                  <div 
+                    className="w-3 h-3 rounded-full"
+                    style={{ backgroundColor: party.color }}
+                  />
+                  <span className="font-medium text-gray-900 text-sm truncate">{party.name}</span>
                 </div>
                 <span className="font-bold text-lg text-blue-900">{partySeats[party.id] || 0}</span>
               </div>
@@ -207,7 +208,8 @@ export default function ExportShare() {
         {selectedParties.length > 0 && (
           <div 
             ref={coalitionCardRef}
-            className="bg-gradient-to-br from-green-50 to-emerald-100 p-8 rounded-2xl shadow-xl border-2 border-green-200 max-w-2xl mx-auto"
+            className="bg-gradient-to-br from-green-50 to-emerald-100 p-6 rounded-2xl shadow-xl border-2 border-green-200 w-[600px] mx-auto"
+            style={{ width: '600px', maxWidth: '600px' }}
           >
             <div className="text-center mb-6">
               <h1 className="text-3xl font-bold text-green-900 mb-2">Coalition Analysis</h1>
@@ -222,17 +224,17 @@ export default function ExportShare() {
               </div>
             </div>
 
-            <div className="space-y-3 mb-6">
+            <div className="space-y-2 mb-6">
               {selectedPartiesData.map((party) => (
-                <div key={party.id} className="flex items-center justify-between bg-white/70 p-4 rounded-lg">
-                  <div className="flex items-center gap-3">
+                <div key={party.id} className="flex items-center justify-between bg-white/70 p-3 rounded-lg">
+                  <div className="flex items-center gap-2">
                     <div 
-                      className="w-5 h-5 rounded-full"
+                      className="w-4 h-4 rounded-full"
                       style={{ backgroundColor: party.color }}
                     />
                     <div>
-                      <div className="font-medium text-gray-900">{party.name}</div>
-                      <div className="text-sm text-gray-600">{party.fullName}</div>
+                      <div className="font-medium text-gray-900 text-sm">{party.name}</div>
+                      <div className="text-xs text-gray-600 truncate max-w-[200px]">{party.fullName}</div>
                     </div>
                   </div>
                   <div className="text-right">
