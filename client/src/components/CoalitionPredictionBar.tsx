@@ -14,7 +14,9 @@ export default function CoalitionPredictionBar() {
     hasMajority 
   } = useApp();
 
-  const selectedPartiesData = parties.filter(party => selectedParties.includes(party.id));
+  const selectedPartiesData = parties
+    .filter(party => selectedParties.includes(party.id))
+    .sort((a, b) => (partySeats[b.id] || 0) - (partySeats[a.id] || 0));
 
   return (
     <Card className="bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-600 shadow-md">
