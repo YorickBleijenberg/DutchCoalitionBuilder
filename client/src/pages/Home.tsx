@@ -85,12 +85,12 @@ export default function Home() {
           {/* Seat Predictions Tab */}
           <TabsContent value="predictions" className="space-y-8">
             <SeatTable />
+            <CoalitionPredictionBar />
             <ComparisonBarChart />
           </TabsContent>
 
           {/* Coalition Builder Tab */}
           <TabsContent value="coalitions" className="space-y-8">
-            <CoalitionPredictionBar />
             <PartyBar />
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               {/* Left Column: Coalition Builder and Scenario Manager */}
