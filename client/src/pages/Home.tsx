@@ -11,11 +11,12 @@ import CoalitionBuilder from '../components/CoalitionBuilder';
 import ScenarioManager from '../components/ScenarioManager';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
-import { RotateCcw, Download } from 'lucide-react';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { RotateCcw, Download, Settings, Moon, Sun } from 'lucide-react';
 
 export default function Home() {
   const { t } = useTranslation();
-  const { loadCurrentSeats, resetSeats } = useApp();
+  const { loadCurrentSeats, resetSeats, darkMode, toggleDarkMode, language, setLanguage } = useApp();
   const [activeTab, setActiveTab] = useState('predictions');
 
   return (
@@ -53,6 +54,29 @@ export default function Home() {
                 <RotateCcw className="mr-2 h-4 w-4" />
                 {t('tabs.reset')}
               </Button>
+              
+              {/* Settings Dropdown */}
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline" className="flex items-center">
+                    <Settings className="mr-2 h-4 w-4" />
+                    Instellingen
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-48">
+                  <DropdownMenuItem onClick={toggleDarkMode}>
+                    {darkMode ? <Sun className="mr-2 h-4 w-4" /> : <Moon className="mr-2 h-4 w-4" />}
+                    {darkMode ? 'Lichte modus' : 'Donkere modus'}
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={() => setLanguage('nl')} className={language === 'nl' ? 'bg-gray-100 dark:bg-gray-700' : ''}>
+                    🇳🇱 Nederlands
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => setLanguage('en')} className={language === 'en' ? 'bg-gray-100 dark:bg-gray-700' : ''}>
+                    🇬🇧 English
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
           </div>
 

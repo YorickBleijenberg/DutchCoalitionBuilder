@@ -1,13 +1,13 @@
 import { useTranslation } from 'react-i18next';
 import { useApp } from '../context/AppContext';
 import { Button } from '@/components/ui/button';
-import { Moon, Sun, Download, Landmark } from 'lucide-react';
+import { Download, Landmark, Moon, Sun } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { toPng } from 'html-to-image';
 
 export default function Header() {
   const { t } = useTranslation();
-  const { darkMode, toggleDarkMode, language, setLanguage } = useApp();
+  const { darkMode } = useApp();
   const { toast } = useToast();
 
   const downloadSnapshot = async () => {
@@ -48,7 +48,7 @@ export default function Header() {
   };
 
   return (
-    <header className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 sticky top-0 z-50 backdrop-blur-sm bg-white/95 dark:bg-gray-800/95">
+    <header className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center">
@@ -59,41 +59,6 @@ export default function Header() {
           </div>
           
           <div className="flex items-center space-x-4">
-            {/* Language Toggle */}
-            <div className="flex items-center bg-gray-100 dark:bg-gray-700 rounded-lg p-1">
-              <button
-                onClick={() => setLanguage('en')}
-                className={`px-3 py-1 rounded-md text-sm font-medium transition-colors ${
-                  language === 'en'
-                    ? 'bg-white dark:bg-gray-600 text-gray-900 dark:text-white shadow-sm'
-                    : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white'
-                }`}
-              >
-                🇬🇧 EN
-              </button>
-              <button
-                onClick={() => setLanguage('nl')}
-                className={`px-3 py-1 rounded-md text-sm font-medium transition-colors ${
-                  language === 'nl'
-                    ? 'bg-white dark:bg-gray-600 text-gray-900 dark:text-white shadow-sm'
-                    : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white'
-                }`}
-              >
-                🇳🇱 NL
-              </button>
-            </div>
-            
-            {/* Dark Mode Toggle */}
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={toggleDarkMode}
-              className="p-2"
-              title={t('darkMode.toggle')}
-            >
-              {darkMode ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
-            </Button>
-            
             {/* Export Button */}
             <Button
               onClick={downloadSnapshot}
