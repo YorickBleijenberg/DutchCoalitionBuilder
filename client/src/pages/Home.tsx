@@ -4,6 +4,7 @@ import { useApp } from '../context/AppContext';
 import Header from '../components/Header';
 import SeatTable from '../components/SeatTable';
 import CoalitionBarChart from '../components/CoalitionBarChart';
+import ComparisonBarChart from '../components/ComparisonBarChart';
 import PartyBar from '../components/PartyBar';
 import CoalitionSuggestions from '../components/CoalitionSuggestions';
 import CoalitionBuilder from '../components/CoalitionBuilder';
@@ -57,16 +58,16 @@ export default function Home() {
 
           {/* Seat Predictions Tab */}
           <TabsContent value="predictions" className="space-y-8">
-            <PartyBar />
+            <ComparisonBarChart />
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               {/* Left Column: Seat Prediction Panel */}
               <div className="lg:col-span-1">
                 <SeatTable />
               </div>
               
-              {/* Right Column: Coalition Bar Chart */}
+              {/* Right Column: Empty space or additional content */}
               <div className="lg:col-span-2">
-                <CoalitionBarChart />
+                {/* Additional content can go here if needed */}
               </div>
             </div>
           </TabsContent>
