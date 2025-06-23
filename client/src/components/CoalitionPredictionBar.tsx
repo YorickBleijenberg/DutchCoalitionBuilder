@@ -90,7 +90,7 @@ export default function CoalitionPredictionBar() {
         {/* Majority threshold indicator */}
         <div className="flex justify-center mt-1">
           <span className="text-xs text-red-600 dark:text-red-400">
-            ↑ {t('parliament.majorityThreshold')}
+            {t('parliament.majorityThreshold')}
           </span>
         </div>
         

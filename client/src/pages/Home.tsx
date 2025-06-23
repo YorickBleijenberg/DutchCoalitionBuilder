@@ -43,7 +43,7 @@ export default function Home() {
                 const today = new Date();
                 const diffTime = electionDate.getTime() - today.getTime();
                 const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-                return diffDays > 0 ? `${diffDays} dagen tot verkiezing` : 'Verkiezing vandaag!';
+                return diffDays > 0 ? `Nog ${diffDays} dagen tot de verkiezingen` : 'Verkiezingen vandaag!';
               })()}
             </span>
           </div>
@@ -86,7 +86,7 @@ export default function Home() {
             </TabsList>
             
             {/* Action Buttons */}
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-2 mt-2 lg:mt-0">
               <GuidedBuilder />
               
               {/* Settings Dropdown */}
@@ -159,7 +159,9 @@ export default function Home() {
               <CoalitionTimeline />
               <MediaSentiment />
             </div>
-            <ParliamentChart />
+            <div className="w-full">
+              <ParliamentChart />
+            </div>
           </TabsContent>
 
           {/* Export & Share Tab */}
