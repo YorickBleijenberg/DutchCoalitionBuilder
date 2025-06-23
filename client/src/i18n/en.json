@@ -1,0 +1,49 @@
+{
+  "app": {
+    "title": "Dutch Election Coalition Builder"
+  },
+  "seats": {
+    "title": "Seat Predictions",
+    "subtitle": "Predict seats for each party (0-150)",
+    "total": "Total Seats",
+    "complete": "Complete",
+    "unassigned": "Unassigned",
+    "overassigned": "Over-assigned"
+  },
+  "coalition": {
+    "selected": "Coalition Seats",
+    "majority": "Majority",
+    "noMajority": "No Majority (Need 76)",
+    "builder": "Coalition Builder"
+  },
+  "parliament": {
+    "title": "Parliament Visualization",
+    "subtitle": "Interactive view of the 150-seat Tweede Kamer",
+    "majorityLine": "Majority: 76 seats"
+  },
+  "suggestions": {
+    "title": "Coalition Suggestions",
+    "subtitle": "Top 5 viable coalitions (≥76 seats)",
+    "ideologyLock": "Ideology Lock",
+    "select": "Select",
+    "noViable": "No Viable Coalitions",
+    "noViableDesc": "No combinations reach the 76-seat majority threshold"
+  },
+  "export": {
+    "download": "Download",
+    "downloading": "Downloading...",
+    "success": "Snapshot downloaded successfully",
+    "error": "Failed to download snapshot"
+  },
+  "footer": {
+    "description": "Dutch Election Coalition Builder - Political Analysis Tool",
+    "update": "Last updated:"
+  },
+  "darkMode": {
+    "toggle": "Toggle dark mode"
+  },
+  "language": {
+    "english": "English",
+    "dutch": "Dutch"
+  }
+}

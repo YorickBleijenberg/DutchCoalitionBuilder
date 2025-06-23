@@ -1,0 +1,122 @@
+[
+  {
+    "id": "vvd",
+    "name": "VVD",
+    "fullName": "Volkspartij voor Vrijheid en Democratie",
+    "color": "#1E40AF",
+    "ideology": "Liberal",
+    "leader": "Mark Rutte"
+  },
+  {
+    "id": "pvda",
+    "name": "PvdA",
+    "fullName": "Partij van de Arbeid",
+    "color": "#DC2626",
+    "ideology": "Social Democratic",
+    "leader": "Attje Kuiken"
+  },
+  {
+    "id": "d66",
+    "name": "D66",
+    "fullName": "Democraten 66",
+    "color": "#059669",
+    "ideology": "Liberal Democratic",
+    "leader": "Sigrid Kaag"
+  },
+  {
+    "id": "cda",
+    "name": "CDA",
+    "fullName": "Christen-Democratisch Appèl",
+    "color": "#7C3AED",
+    "ideology": "Christian Democratic",
+    "leader": "Wopke Hoekstra"
+  },
+  {
+    "id": "sp",
+    "name": "SP",
+    "fullName": "Socialistische Partij",
+    "color": "#F59E0B",
+    "ideology": "Socialist",
+    "leader": "Lilian Marijnissen"
+  },
+  {
+    "id": "pvv",
+    "name": "PVV",
+    "fullName": "Partij voor de Vrijheid",
+    "color": "#8B5CF6",
+    "ideology": "Populist",
+    "leader": "Geert Wilders"
+  },
+  {
+    "id": "gl",
+    "name": "GroenLinks",
+    "fullName": "GroenLinks",
+    "color": "#10B981",
+    "ideology": "Green Left",
+    "leader": "Jesse Klaver"
+  },
+  {
+    "id": "fvd",
+    "name": "FvD",
+    "fullName": "Forum voor Democratie",
+    "color": "#92400E",
+    "ideology": "National Conservative",
+    "leader": "Thierry Baudet"
+  },
+  {
+    "id": "cu",
+    "name": "ChristenUnie",
+    "fullName": "ChristenUnie",
+    "color": "#1D4ED8",
+    "ideology": "Christian Democratic",
+    "leader": "Gert-Jan Segers"
+  },
+  {
+    "id": "sgp",
+    "name": "SGP",
+    "fullName": "Staatkundig Gereformeerde Partij",
+    "color": "#1F2937",
+    "ideology": "Orthodox Protestant",
+    "leader": "Kees van der Staaij"
+  },
+  {
+    "id": "pvdd",
+    "name": "PvdD",
+    "fullName": "Partij voor de Dieren",
+    "color": "#065F46",
+    "ideology": "Animal Rights",
+    "leader": "Esther Ouwehand"
+  },
+  {
+    "id": "50plus",
+    "name": "50PLUS",
+    "fullName": "50PLUS",
+    "color": "#7C2D12",
+    "ideology": "Pensioners",
+    "leader": "Liane den Haan"
+  },
+  {
+    "id": "denk",
+    "name": "DENK",
+    "fullName": "DENK",
+    "color": "#B91C1C",
+    "ideology": "Minority Interests",
+    "leader": "Farid Azarkan"
+  },
+  {
+    "id": "bij1",
+    "name": "BIJ1",
+    "fullName": "BIJ1",
+    "color": "#7C3AED",
+    "ideology": "Anti-Racism",
+    "leader": "Sylvana Simons"
+  },
+  {
+    "id": "volt",
+    "name": "Volt",
+    "fullName": "Volt Nederland",
+    "color": "#5B21B6",
+    "ideology": "Pro-European",
+    "leader": "Laurens Dassen"
+  }
+]

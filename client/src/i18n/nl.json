@@ -1,0 +1,49 @@
+{
+  "app": {
+    "title": "Nederlandse Verkiezingen Coalitie Builder"
+  },
+  "seats": {
+    "title": "Zetel Voorspellingen",
+    "subtitle": "Voorspel zetels voor elke partij (0-150)",
+    "total": "Totaal Zetels",
+    "complete": "Compleet",
+    "unassigned": "Niet toegewezen",
+    "overassigned": "Teveel toegewezen"
+  },
+  "coalition": {
+    "selected": "Coalitie Zetels",
+    "majority": "Meerderheid",
+    "noMajority": "Geen Meerderheid (76 nodig)",
+    "builder": "Coalitie Builder"
+  },
+  "parliament": {
+    "title": "Parlement Visualisatie",
+    "subtitle": "Interactieve weergave van de 150-zetel Tweede Kamer",
+    "majorityLine": "Meerderheid: 76 zetels"
+  },
+  "suggestions": {
+    "title": "Coalitie Suggesties",
+    "subtitle": "Top 5 haalbare coalities (≥76 zetels)",
+    "ideologyLock": "Ideologie Vergrendeling",
+    "select": "Selecteer",
+    "noViable": "Geen Haalbare Coalities",
+    "noViableDesc": "Geen combinaties bereiken de 76-zetel meerderheidsdrempel"
+  },
+  "export": {
+    "download": "Download",
+    "downloading": "Downloaden...",
+    "success": "Momentopname succesvol gedownload",
+    "error": "Fout bij downloaden momentopname"
+  },
+  "footer": {
+    "description": "Nederlandse Verkiezingen Coalitie Builder - Politieke Analyse Tool",
+    "update": "Laatst bijgewerkt:"
+  },
+  "darkMode": {
+    "toggle": "Schakel donkere modus"
+  },
+  "language": {
+    "english": "Engels",
+    "dutch": "Nederlands"
+  }
+}
