@@ -34,18 +34,34 @@ export default function Home() {
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
           {/* Tab Navigation */}
           <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center mb-8 space-y-4 lg:space-y-0">
-            <TabsList className="grid w-auto grid-cols-2 bg-gray-200 dark:bg-gray-600 p-1 rounded-lg shadow-sm">
+            <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 bg-gray-200 dark:bg-gray-600 p-1 rounded-lg shadow-sm">
               <TabsTrigger 
                 value="predictions" 
-                className="px-4 py-2 data-[state=active]:bg-blue-500 data-[state=active]:text-white data-[state=active]:shadow-md transition-all duration-200"
+                className="px-2 sm:px-4 py-2 text-xs sm:text-sm data-[state=active]:bg-blue-500 data-[state=active]:text-white data-[state=active]:shadow-md transition-all duration-200"
               >
-                {t('tabs.predictions')}
+                <span className="hidden sm:inline">{t('tabs.predictions')}</span>
+                <span className="sm:hidden">Zetels</span>
               </TabsTrigger>
               <TabsTrigger 
                 value="coalitions" 
-                className="px-4 py-2 data-[state=active]:bg-green-500 data-[state=active]:text-white data-[state=active]:shadow-md transition-all duration-200"
+                className="px-2 sm:px-4 py-2 text-xs sm:text-sm data-[state=active]:bg-green-500 data-[state=active]:text-white data-[state=active]:shadow-md transition-all duration-200"
               >
-                {t('tabs.coalitions')}
+                <span className="hidden sm:inline">{t('tabs.coalitions')}</span>
+                <span className="sm:hidden">Coalitie</span>
+              </TabsTrigger>
+              <TabsTrigger 
+                value="analytics" 
+                className="px-2 sm:px-4 py-2 text-xs sm:text-sm data-[state=active]:bg-purple-500 data-[state=active]:text-white data-[state=active]:shadow-md transition-all duration-200"
+              >
+                <span className="hidden sm:inline">{t('tabs.analytics')}</span>
+                <span className="sm:hidden">Analytics</span>
+              </TabsTrigger>
+              <TabsTrigger 
+                value="export" 
+                className="px-2 sm:px-4 py-2 text-xs sm:text-sm data-[state=active]:bg-orange-500 data-[state=active]:text-white data-[state=active]:shadow-md transition-all duration-200"
+              >
+                <span className="hidden sm:inline">{t('tabs.export')}</span>
+                <span className="sm:hidden">Export</span>
               </TabsTrigger>
             </TabsList>
             
@@ -120,9 +136,8 @@ export default function Home() {
             <SeatTable />
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               <ComparisonBarChart />
-              <SwingAnalysis />
+              <PartyBar />
             </div>
-            <ExportShare />
           </TabsContent>
 
           {/* Coalition Builder Tab */}
@@ -135,14 +150,28 @@ export default function Home() {
                 <ScenarioManager />
               </div>
               
-              {/* Right Column: Timeline, Media, Suggestions and Stability Analysis */}
+              {/* Right Column: Coalition Suggestions */}
               <div className="lg:col-span-2 space-y-8">
-                <CoalitionTimeline />
-                <MediaSentiment />
                 <CoalitionSuggestions />
-                <StabilityAnalysis />
               </div>
             </div>
+          </TabsContent>
+
+          {/* Analytics Tab */}
+          <TabsContent value="analytics" className="space-y-8 bg-purple-50/30 dark:bg-purple-900/10 rounded-lg p-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              <SwingAnalysis />
+              <StabilityAnalysis />
+            </div>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              <CoalitionTimeline />
+              <MediaSentiment />
+            </div>
+          </TabsContent>
+
+          {/* Export & Share Tab */}
+          <TabsContent value="export" className="space-y-8 bg-orange-50/30 dark:bg-orange-900/10 rounded-lg p-6">
+            <ExportShare />
           </TabsContent>
         </Tabs>
       </main>

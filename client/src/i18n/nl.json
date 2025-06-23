@@ -49,6 +49,8 @@
   "tabs": {
     "predictions": "Zetel Voorspellingen",
     "coalitions": "Coalitie Builder",
+    "analytics": "Analytics",
+    "export": "Export & Delen",
     "loadCurrent": "Laad Huidige",
     "reset": "Reset Alles"
   },

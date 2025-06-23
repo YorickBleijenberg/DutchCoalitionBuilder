@@ -49,6 +49,8 @@
   "tabs": {
     "predictions": "Seat Predictions",
     "coalitions": "Coalition Builder",
+    "analytics": "Analytics",
+    "export": "Export & Share",
     "loadCurrent": "Load Current",
     "reset": "Reset All"
   },

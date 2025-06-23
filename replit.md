@@ -123,6 +123,10 @@ Changelog:
 - June 23, 2025. Fixed export functionality for desktop by positioning cards off-screen during generation
 - June 23, 2025. Enhanced prediction export to show all parties with predicted seats instead of just top parties
 - June 23, 2025. Improved Coalition Suggestions mobile layout with full-width select buttons placed underneath options
+- June 23, 2025. Reorganized interface into 4 tabs: Seat Predictions, Coalition Builder, Analytics, and Export & Share
+- June 23, 2025. Created dedicated Analytics tab with Swing Analysis, Stability Analysis, Coalition Timeline, and Media Sentiment
+- June 23, 2025. Created dedicated Export & Share tab containing export functionality and preview cards
+- June 23, 2025. Enhanced mobile responsiveness with 2x2 grid layout for tabs on small screens
 ```
 
 ## User Preferences
