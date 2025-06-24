@@ -44,7 +44,7 @@ export default function CoalitionPredictionBarSimple() {
         </div>
 
         {/* Bar Visualization */}
-        <div className="relative h-12 bg-gray-200 dark:bg-gray-700 rounded-lg overflow-hidden">
+        <div className="relative h-8 bg-gray-200 dark:bg-gray-700 rounded-lg overflow-hidden">
           {/* Majority line */}
           <div
             className="absolute top-0 bottom-0 w-0.5 bg-red-500 z-10"
