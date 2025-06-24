@@ -132,19 +132,24 @@ export default function Home() {
           <TabsContent value="coalitions" className="space-y-8 bg-green-50/30 dark:bg-green-900/10 rounded-lg p-6">
             <CoalitionPredictionBar />
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              {/* Left Column: Coalition Builder */}
+              {/* Left Column: Coalition Builder + Ideological Coalitions */}
               <div className="space-y-8">
                 <CoalitionBuilder />
+                {/* Ideological Coalitions - Desktop: under Coalition Builder, Mobile: after CoalitionSuggestions */}
+                <div className="hidden lg:block">
+                  <IdeologicalCoalitions />
+                </div>
               </div>
               
               {/* Right Column: Coalition Suggestions */}
               <div className="space-y-8">
                 <CoalitionSuggestions />
+                {/* Ideological Coalitions - Mobile: after Coalition Suggestions */}
+                <div className="lg:hidden">
+                  <IdeologicalCoalitions />
+                </div>
               </div>
             </div>
-            
-            {/* Ideological Coalitions - Separate Block */}
-            <IdeologicalCoalitions />
             
             {/* Scenario Manager - Always at bottom */}
             <ScenarioManager />

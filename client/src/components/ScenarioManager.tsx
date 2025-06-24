@@ -158,7 +158,7 @@ export default function ScenarioManager() {
             {savedScenarios.map((scenario) => (
               <div
                 key={scenario.id}
-                className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg"
+                className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg space-y-3 sm:space-y-0"
               >
                 <div className="flex-1">
                   <div className="flex items-center space-x-2">
@@ -176,12 +176,12 @@ export default function ScenarioManager() {
                   </div>
                 </div>
                 
-                <div className="flex items-center space-x-2">
+                <div className="flex items-center space-x-2 w-full sm:w-auto">
                   <Button
                     size="sm"
                     variant="outline"
                     onClick={() => loadScenario(scenario)}
-                    className="flex items-center"
+                    className="flex items-center flex-1 sm:flex-none justify-center"
                   >
                     <Upload className="mr-1 h-3 w-3" />
                     Load
@@ -190,7 +190,7 @@ export default function ScenarioManager() {
                     size="sm"
                     variant="outline"
                     onClick={() => deleteScenario(scenario.id)}
-                    className="text-red-600 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-900/20"
+                    className="text-red-600 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-900/20 flex-shrink-0"
                   >
                     <Trash2 className="h-3 w-3" />
                   </Button>
