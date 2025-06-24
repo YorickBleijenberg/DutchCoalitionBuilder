@@ -2,7 +2,7 @@ import { useApp } from '@/context/AppContext';
 import { useTranslation } from 'react-i18next';
 import { Card, CardContent } from '@/components/ui/card';
 
-export default function CoalitionBarChart() {
+export default function CoalitionBarChart({ showLegend = true }: { showLegend?: boolean }) {
   const { parties, partySeats, selectedParties, coalitionSeats } = useApp();
   const { t } = useTranslation();
 
@@ -86,6 +86,23 @@ export default function CoalitionBarChart() {
               })
             )}
           </div>
+
+          {/* Legend - conditional */}
+          {showLegend && coalitionParties.length > 0 && (
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 mb-4">
+              {coalitionParties.map((party) => (
+                <div key={party.id} className="flex items-center gap-2">
+                  <div 
+                    className="w-3 h-3 rounded-full"
+                    style={{ backgroundColor: party.color }}
+                  />
+                  <span className="text-xs font-medium text-gray-700 dark:text-gray-300">
+                    {party.name}
+                  </span>
+                </div>
+              ))}
+            </div>
+          )}
 
           {/* Majority indicator */}
           {coalitionParties.length > 0 && (

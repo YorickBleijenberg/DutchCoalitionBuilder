@@ -24,7 +24,7 @@ interface Step {
   content: React.ReactNode;
 }
 
-export default function GuidedBuilder({ iconOnly = false }: { iconOnly?: boolean }) {
+export default function GuidedBuilder({ iconOnly = false, menuItem = false }: { iconOnly?: boolean; menuItem?: boolean }) {
   const { 
     parties, 
     partySeats, 
@@ -331,78 +331,102 @@ export default function GuidedBuilder({ iconOnly = false }: { iconOnly?: boolean
 
   const progress = ((currentStep + 1) / steps.length) * 100;
 
+  const dialogContent = (
+    <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+      <DialogHeader>
+        <DialogTitle className="flex items-center gap-2">
+          {steps[currentStep].icon}
+          {steps[currentStep].title}
+        </DialogTitle>
+      </DialogHeader>
+      
+      <div className="space-y-6">
+        {/* Progress */}
+        <div className="space-y-2">
+          <div className="flex justify-between text-sm">
+            <span>Step {currentStep + 1} of {steps.length}</span>
+            <span>{Math.round(progress)}% complete</span>
+          </div>
+          <Progress value={progress} className="w-full" />
+        </div>
+        
+        {/* Step Content */}
+        <div className="min-h-[300px]">
+          <p className="text-gray-600 dark:text-gray-400 mb-6">
+            {steps[currentStep].description}
+          </p>
+          {steps[currentStep].content}
+        </div>
+        
+        {/* Navigation */}
+        <div className="flex justify-between items-center pt-4 border-t">
+          <Button
+            variant="outline"
+            onClick={prevStep}
+            disabled={currentStep === 0}
+            className="flex items-center gap-2"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            Previous
+          </Button>
+          
+          <div className="flex gap-2">
+            {steps.map((_, index) => (
+              <div
+                key={index}
+                className={`w-2 h-2 rounded-full ${
+                  index <= currentStep ? 'bg-blue-600' : 'bg-gray-300'
+                }`}
+              />
+            ))}
+          </div>
+          
+          {currentStep < steps.length - 1 ? (
+            <Button onClick={nextStep} className="flex items-center gap-2">
+              Next
+              <ArrowRight className="h-4 w-4" />
+            </Button>
+          ) : (
+            <Button onClick={() => setIsOpen(false)} className="flex items-center gap-2">
+              <CheckCircle className="h-4 w-4" />
+              Complete
+            </Button>
+          )}
+        </div>
+      </div>
+    </DialogContent>
+  );
+
+  if (menuItem) {
+    return (
+      <Dialog open={isOpen} onOpenChange={setIsOpen}>
+        <DialogTrigger asChild>
+          <div className="relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors hover:bg-accent hover:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50 cursor-pointer">
+            <HelpCircle className="mr-2 h-4 w-4" />
+            Gidsfunctie
+          </div>
+        </DialogTrigger>
+        {dialogContent}
+      </Dialog>
+    );
+  }
+
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline" className="flex items-center gap-2">
-          <Lightbulb className="h-4 w-4" />
-          Guided Tutorial
-        </Button>
+        {iconOnly ? (
+          <Button variant="ghost" size="sm" className="h-8 w-8 p-0 text-white hover:bg-blue-700 dark:hover:bg-blue-700">
+            <HelpCircle className="h-4 w-4" />
+          </Button>
+        ) : (
+          <Button variant="outline" size="sm" className="flex items-center">
+            <HelpCircle className="mr-2 h-4 w-4" />
+            <span className="hidden sm:inline">Gids</span>
+            <span className="sm:hidden">?</span>
+          </Button>
+        )}
       </DialogTrigger>
-      
-      <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
-        <DialogHeader>
-          <DialogTitle className="flex items-center gap-2">
-            {steps[currentStep].icon}
-            {steps[currentStep].title}
-          </DialogTitle>
-        </DialogHeader>
-        
-        <div className="space-y-6">
-          {/* Progress */}
-          <div className="space-y-2">
-            <div className="flex justify-between text-sm">
-              <span>Step {currentStep + 1} of {steps.length}</span>
-              <span>{Math.round(progress)}% complete</span>
-            </div>
-            <Progress value={progress} className="w-full" />
-          </div>
-          
-          {/* Step Content */}
-          <div className="min-h-[300px]">
-            <p className="text-gray-600 dark:text-gray-400 mb-6">
-              {steps[currentStep].description}
-            </p>
-            {steps[currentStep].content}
-          </div>
-          
-          {/* Navigation */}
-          <div className="flex justify-between items-center pt-4 border-t">
-            <Button
-              variant="outline"
-              onClick={prevStep}
-              disabled={currentStep === 0}
-              className="flex items-center gap-2"
-            >
-              <ArrowLeft className="h-4 w-4" />
-              Previous
-            </Button>
-            
-            <div className="flex gap-2">
-              {steps.map((_, index) => (
-                <div
-                  key={index}
-                  className={`w-2 h-2 rounded-full ${
-                    index <= currentStep ? 'bg-blue-600' : 'bg-gray-300'
-                  }`}
-                />
-              ))}
-            </div>
-            
-            {currentStep < steps.length - 1 ? (
-              <Button onClick={nextStep} className="flex items-center gap-2">
-                Next
-                <ArrowRight className="h-4 w-4" />
-              </Button>
-            ) : (
-              <Button onClick={() => setIsOpen(false)} className="flex items-center gap-2">
-                <CheckCircle className="h-4 w-4" />
-                Complete
-              </Button>
-            )}
-          </div>
-        </div>
-      </DialogContent>
+      {dialogContent}
     </Dialog>
   );
 }
