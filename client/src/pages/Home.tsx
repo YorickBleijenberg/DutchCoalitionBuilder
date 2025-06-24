@@ -41,9 +41,8 @@ export default function Home() {
             <span className="text-lg font-semibold">
               Nederland Coalitieland
             </span>
-            <div className="flex items-center">
-              <Calendar className="mr-2 h-5 w-5" />
-              <span className="text-lg font-semibold">
+            <div className="flex items-center gap-4">
+              <span className="text-sm font-medium">
                 {(() => {
                   const electionDate = new Date('2025-10-29');
                   const today = new Date();
@@ -52,6 +51,29 @@ export default function Home() {
                   return diffDays > 0 ? `Dagen tot de verkiezingen: ${diffDays}` : 'Verkiezingen vandaag!';
                 })()}
               </span>
+              <div className="flex items-center gap-2">
+                <GuidedBuilder iconOnly />
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" size="sm" className="h-8 w-8 p-0 text-white hover:bg-blue-700 dark:hover:bg-blue-700">
+                      <Settings className="h-4 w-4" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="w-48">
+                    <DropdownMenuItem onClick={toggleDarkMode}>
+                      {darkMode ? <Sun className="mr-2 h-4 w-4" /> : <Moon className="mr-2 h-4 w-4" />}
+                      {darkMode ? 'Lichte modus' : 'Donkere modus'}
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem onClick={() => setLanguage('nl')} className={language === 'nl' ? 'bg-gray-100 dark:bg-gray-700' : ''}>
+                      🇳🇱 Nederlands
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => setLanguage('en')} className={language === 'en' ? 'bg-gray-100 dark:bg-gray-700' : ''}>
+                      🇬🇧 English
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
             </div>
           </div>
         </div>

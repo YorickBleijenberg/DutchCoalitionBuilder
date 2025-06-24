@@ -24,7 +24,7 @@ interface Step {
   content: React.ReactNode;
 }
 
-export default function GuidedBuilder() {
+export default function GuidedBuilder({ iconOnly = false }: { iconOnly?: boolean }) {
   const { 
     parties, 
     partySeats, 

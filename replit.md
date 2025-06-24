@@ -140,6 +140,7 @@ Changelog:
 - June 23, 2025. Made Totaal Zetels progress bar sticky when scrolling and updated banner with "Nederland Coalitieland"
 - June 23, 2025. Conditional display of CoalitionPredictionBar only when parties are selected in Seat Predictions
 - June 24, 2025. Implemented mobile-first bottom tab navigation for native app feel on phones while keeping desktop tabs at top
+- June 24, 2025. Enhanced top banner with smaller countdown font, moved guided tour and settings to banner with icon-only buttons, fixed mobile seat increment bug
 ```
 
 ## User Preferences

@@ -33,6 +33,9 @@ export default function SeatTable() {
   };
 
   const startIncrement = useCallback((partyId: string, direction: 'up' | 'down') => {
+    // Prevent double execution if interval is already running
+    if (intervalRef.current) return;
+    
     const increment = () => {
       const currentSeats = partySeats[partyId] || 0;
       const newSeats = direction === 'up' ? currentSeats + 1 : currentSeats - 1;
@@ -237,8 +240,14 @@ export default function SeatTable() {
                         onMouseDown={() => startIncrement(party.id, 'up')}
                         onMouseUp={stopIncrement}
                         onMouseLeave={stopIncrement}
-                        onTouchStart={() => startIncrement(party.id, 'up')}
-                        onTouchEnd={stopIncrement}
+                        onTouchStart={(e) => {
+                          e.preventDefault();
+                          startIncrement(party.id, 'up');
+                        }}
+                        onTouchEnd={(e) => {
+                          e.preventDefault();
+                          stopIncrement();
+                        }}
                         className="w-8 h-8 p-0 select-none bg-white dark:bg-gray-700 border-2 border-gray-400 dark:border-gray-500 hover:bg-green-50 dark:hover:bg-green-900 hover:border-green-500 dark:hover:border-green-400 text-gray-700 dark:text-gray-300 hover:text-green-700 dark:hover:text-green-300"
                       >
                         <Plus className="h-3 w-3" />
@@ -249,8 +258,14 @@ export default function SeatTable() {
                         onMouseDown={() => startIncrement(party.id, 'down')}
                         onMouseUp={stopIncrement}
                         onMouseLeave={stopIncrement}
-                        onTouchStart={() => startIncrement(party.id, 'down')}
-                        onTouchEnd={stopIncrement}
+                        onTouchStart={(e) => {
+                          e.preventDefault();
+                          startIncrement(party.id, 'down');
+                        }}
+                        onTouchEnd={(e) => {
+                          e.preventDefault();
+                          stopIncrement();
+                        }}
                         className="w-8 h-8 p-0 select-none bg-white dark:bg-gray-700 border-2 border-gray-400 dark:border-gray-500 hover:bg-red-50 dark:hover:bg-red-900 hover:border-red-500 dark:hover:border-red-400 text-gray-700 dark:text-gray-300 hover:text-red-700 dark:hover:text-red-300"
                       >
                         <Minus className="h-3 w-3" />
