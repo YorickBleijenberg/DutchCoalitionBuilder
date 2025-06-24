@@ -24,14 +24,14 @@ export default function CoalitionPredictionBarSimple() {
       <div className="p-4">
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
-            Huidige Voorspelling
+            Coalitie
           </h3>
+          <div className={`text-sm font-medium ${hasMajority ? 'text-green-600' : 'text-red-600'}`}>
+            {hasMajority ? 'Meerderheid' : `Nog ${majoritySeats - coalitionSeats} zetels nodig`}
+          </div>
           <div className="text-right">
             <div className="text-sm text-gray-600 dark:text-gray-400">
               Coalitie zetels: <span className="font-bold text-lg text-gray-900 dark:text-gray-100">{coalitionSeats}</span>
-            </div>
-            <div className={`text-sm font-medium ${hasMajority ? 'text-green-600' : 'text-red-600'}`}>
-              {hasMajority ? 'Meerderheid' : `Nog ${majoritySeats - coalitionSeats} zetels nodig`}
             </div>
           </div>
         </div>
@@ -72,12 +72,7 @@ export default function CoalitionPredictionBarSimple() {
           }, [] as JSX.Element[])}
         </div>
 
-        {/* Progress indicator */}
-        <div className="mt-2 flex justify-between text-xs text-gray-600 dark:text-gray-400">
-          <span>0 zetels</span>
-          <span className="font-medium text-red-600">Meerderheid: {majoritySeats}</span>
-          <span>150 zetels</span>
-        </div>
+
       </div>
     </Card>
   );
