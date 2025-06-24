@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApp } from '../context/AppContext';
 import { getTopCoalitions } from '../lib/coalition';
@@ -6,7 +7,6 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Users, Layers, CheckCircle, AlertCircle, X } from 'lucide-react';
-import { useState } from 'react';
 
 export default function CoalitionSuggestions() {
   const { t } = useTranslation();
@@ -86,7 +86,7 @@ export default function CoalitionSuggestions() {
           
           {/* Party Include/Exclude Controls */}
           <div className="flex items-center space-x-2">
-            <Select onValueChange={handleExcludeParty}>
+            <Select onValueChange={handleExcludeParty} value="">
               <SelectTrigger className="w-32">
                 <SelectValue placeholder="Exclude" />
               </SelectTrigger>
@@ -98,7 +98,7 @@ export default function CoalitionSuggestions() {
                 ))}
               </SelectContent>
             </Select>
-            <Select onValueChange={(partyId) => handleIncludeParty(partyId)}>
+            <Select onValueChange={(partyId) => handleIncludeParty(partyId)} value="">
               <SelectTrigger className="w-32">
                 <SelectValue placeholder="Include" />
               </SelectTrigger>

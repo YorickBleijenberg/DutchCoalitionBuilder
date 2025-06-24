@@ -34,6 +34,7 @@ export default function IdeologicalCoalitions() {
   const handleSelectCoalition = (coalitionParties: string[]) => {
     // Filter only parties that have seats > 0
     const validParties = coalitionParties.filter(partyId => (partySeats[partyId] || 0) > 0);
+    console.log('Selecting coalition parties:', validParties);
     setSelectedParties(validParties);
   };
 
@@ -98,7 +99,11 @@ export default function IdeologicalCoalitions() {
                 
                 <Button
                   size="sm"
-                  onClick={() => handleSelectCoalition(coalition.parties.map(p => p.id))}
+                  onClick={() => {
+                    console.log('Button clicked for coalition:', coalition.name);
+                    console.log('Coalition parties:', coalition.parties.map(p => p.id));
+                    handleSelectCoalition(coalition.parties.map(p => p.id));
+                  }}
                   className="coalition-primary w-full"
                 >
                   Select Coalition
