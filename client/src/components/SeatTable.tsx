@@ -225,15 +225,70 @@ export default function SeatTable() {
                         </div>
                       </div>
                       
-                      {/* Predicted Seats */}
-                      <div className="text-center">
-                        <div className="text-xs text-gray-600 dark:text-gray-400">Voorspelling</div>
-                        <div className="font-bold text-blue-600">{predictedSeats}</div>
+                      {/* Input Stepper Group */}
+                      <div className="flex items-center border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800">
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="h-8 w-8 p-0 rounded-none border-0 hover:bg-gray-100 dark:hover:bg-gray-700"
+                          onMouseDown={(e) => {
+                            e.preventDefault();
+                            startIncrement(party.id, 'down');
+                          }}
+                          onMouseUp={stopIncrement}
+                          onMouseLeave={stopIncrement}
+                          onTouchStart={(e) => {
+                            e.preventDefault();
+                            startIncrement(party.id, 'down');
+                          }}
+                          onTouchEnd={stopIncrement}
+                        >
+                          <Minus className="h-3 w-3" />
+                        </Button>
+                        <input
+                          type="number"
+                          min="0"
+                          max="150"
+                          value={partySeats[party.id] || 0}
+                          onChange={(e) => {
+                            const value = parseInt(e.target.value) || 0;
+                            updatePartySeats(party.id, value);
+                          }}
+                          className="w-12 h-8 text-center text-sm font-bold border-0 border-l border-r border-gray-300 dark:border-gray-600 bg-transparent focus:outline-none focus:ring-1 focus:ring-blue-500"
+                        />
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="h-8 w-8 p-0 rounded-none border-0 hover:bg-gray-100 dark:hover:bg-gray-700"
+                          onMouseDown={(e) => {
+                            e.preventDefault();
+                            startIncrement(party.id, 'up');
+                          }}
+                          onMouseUp={stopIncrement}
+                          onMouseLeave={stopIncrement}
+                          onTouchStart={(e) => {
+                            e.preventDefault();
+                            startIncrement(party.id, 'up');
+                          }}
+                          onTouchEnd={stopIncrement}
+                        >
+                          <Plus className="h-3 w-3" />
+                        </Button>
                       </div>
+                      
+                      {/* Reset Button */}
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="h-8 w-8 p-0"
+                        onClick={() => resetPartySeats(party.id)}
+                      >
+                        <RotateCcw className="h-4 w-4" />
+                      </Button>
                     </div>
                     
                     {/* Controls - Center on mobile, right on desktop */}
-                    <div className="flex items-center justify-center sm:justify-end gap-1">
+                    <div className="flex items-center justify-center sm:justify-end gap-1 hidden">
                       <Button
                         variant="outline"
                         size="sm"
