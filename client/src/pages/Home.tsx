@@ -19,6 +19,7 @@ import ExportShare from '../components/ExportShare';
 import GuidedBuilder from '../components/GuidedBuilder';
 import MediaSentiment from '../components/MediaSentiment';
 import IdeologicalCoalitions from '../components/IdeologicalCoalitions';
+import PoliticalPredictor from '../components/PoliticalPredictor';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
@@ -175,6 +176,7 @@ export default function Home() {
 
           {/* Export & Share Tab */}
           <TabsContent value="export" className="space-y-8 bg-orange-50/30 dark:bg-orange-900/10 rounded-lg p-6">
+            <PoliticalPredictor />
             <ExportShare />
           </TabsContent>
         </Tabs>

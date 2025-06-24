@@ -12,21 +12,21 @@ export default function IdeologicalCoalitions() {
     setSelectedParties 
   } = useApp();
 
-  // Define ideological coalitions
+  // Define ideological coalitions - always show all coalitions
   const getIdeologicalCoalitions = () => {
     const ideologyGroups = {
-      purple: parties.filter(p => ['D66', 'VVD', 'PvdA'].includes(p.id) && (partySeats[p.id] || 0) > 0),
-      centre: parties.filter(p => ['CDA', 'ChristenUnie', 'D66', 'VVD'].includes(p.id) && (partySeats[p.id] || 0) > 0),
-      right: parties.filter(p => ['VVD', 'PVV', 'FVD', 'JA21', 'BBB'].includes(p.id) && (partySeats[p.id] || 0) > 0),
-      left: parties.filter(p => ['PvdA', 'SP', 'GL', 'Volt', 'DENK', 'PvdD'].includes(p.id) && (partySeats[p.id] || 0) > 0)
+      purple: parties.filter(p => ['D66', 'VVD', 'PvdA'].includes(p.id)),
+      centre: parties.filter(p => ['CDA', 'ChristenUnie', 'D66', 'VVD'].includes(p.id)),
+      right: parties.filter(p => ['VVD', 'PVV', 'FVD', 'JA21', 'BBB'].includes(p.id)),
+      left: parties.filter(p => ['PvdA', 'SP', 'GL', 'Volt', 'DENK', 'PvdD'].includes(p.id))
     };
 
-    return Object.entries(ideologyGroups).map(([ideology, parties]) => ({
+    return Object.entries(ideologyGroups).map(([ideology, coalitionParties]) => ({
       name: ideology,
-      parties,
-      totalSeats: parties.reduce((sum, p) => sum + (partySeats[p.id] || 0), 0),
-      isViable: parties.reduce((sum, p) => sum + (partySeats[p.id] || 0), 0) >= 76
-    })).filter(coalition => coalition.parties.length > 0);
+      parties: coalitionParties,
+      totalSeats: coalitionParties.reduce((sum, p) => sum + (partySeats[p.id] || 0), 0),
+      isViable: coalitionParties.reduce((sum, p) => sum + (partySeats[p.id] || 0), 0) >= 76
+    }));
   };
 
   const ideologicalCoalitions = getIdeologicalCoalitions();
@@ -35,9 +35,7 @@ export default function IdeologicalCoalitions() {
     setSelectedParties(coalitionParties);
   };
 
-  if (ideologicalCoalitions.length === 0) {
-    return null;
-  }
+  // Always show the component, even if no coalitions are viable
 
   return (
     <Card className="bg-white dark:bg-gray-800 shadow-lg border border-gray-200 dark:border-gray-700">
