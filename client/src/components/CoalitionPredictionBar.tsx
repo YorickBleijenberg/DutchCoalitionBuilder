@@ -93,27 +93,7 @@ export default function CoalitionPredictionBar() {
           </span>
         </div>
         
-        {/* Legend for selected parties */}
-        {selectedParties.length > 0 && (
-          <div className="mt-4 pt-3 border-t border-gray-300 dark:border-gray-600">
-            <div className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              Coalitie partijen:
-            </div>
-            <div className="flex flex-wrap gap-3">
-              {selectedPartiesData.map((party) => (
-                <div key={party.id} className="flex items-center gap-2">
-                  <div
-                    className="w-3 h-3 rounded-full"
-                    style={{ backgroundColor: party.color }}
-                  />
-                  <span className="text-sm text-gray-700 dark:text-gray-300">
-                    {party.name} {partySeats[party.id] || 0}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
+        
       </CardContent>
     </Card>
   );
