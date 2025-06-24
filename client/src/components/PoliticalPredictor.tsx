@@ -191,7 +191,7 @@ export default function PoliticalPredictor() {
                 variant={hasMajority ? "default" : "destructive"} 
                 className="px-2 py-1 text-xs"
               >
-                {hasMajority ? 'Majority Coalition' : 'No Majority'}
+                {hasMajority ? `+${coalitionSeats - 76} headroom` : `${76 - coalitionSeats} seats needed`}
               </Badge>
             </div>
             <div className="flex items-center justify-between">
@@ -211,9 +211,6 @@ export default function PoliticalPredictor() {
               <div className="text-right">
                 <div className="text-lg font-bold text-blue-900 dark:text-blue-100">
                   {coalitionSeats} seats
-                </div>
-                <div className="text-xs text-gray-600 dark:text-gray-400">
-                  out of 150
                 </div>
               </div>
             </div>

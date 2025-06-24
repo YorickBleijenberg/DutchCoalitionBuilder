@@ -177,7 +177,6 @@ export default function Home() {
           {/* Export & Share Tab */}
           <TabsContent value="export" className="space-y-8 bg-orange-50/30 dark:bg-orange-900/10 rounded-lg p-6">
             <PoliticalPredictor />
-            <ExportShare />
           </TabsContent>
         </Tabs>
       </main>
