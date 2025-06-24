@@ -44,17 +44,7 @@ export default function CoalitionBuilder() {
             </CardTitle>
 
           </div>
-          {selectedParties.length > 0 && (
-            <Button 
-              variant="outline" 
-              size="sm" 
-              onClick={clearCoalition}
-              className="text-red-600 hover:text-red-700"
-            >
-              <X className="mr-1 h-4 w-4" />
-              Clear
-            </Button>
-          )}
+          
         </div>
       </CardHeader>
       
