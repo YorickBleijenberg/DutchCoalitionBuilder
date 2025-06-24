@@ -143,7 +143,6 @@ Changelog:
 - June 24, 2025. Enhanced top banner with smaller countdown font, moved guided tour and settings to banner with icon-only buttons, fixed mobile seat increment bug
 - June 24, 2025. Streamlined interface by removing clear button from Coalition Builder and settings buttons next to tabs for cleaner design
 - June 24, 2025. Optimized mobile layout with full-width design using minimal margins for better screen utilization
-- June 24, 2025. Refactored SeatTable party rows with integrated input stepper for intuitive seat number adjustment
 ```
 
 ## User Preferences
