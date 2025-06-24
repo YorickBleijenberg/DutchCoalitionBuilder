@@ -15,10 +15,10 @@ export default function IdeologicalCoalitions() {
   // Define ideological coalitions - always show all coalitions
   const getIdeologicalCoalitions = () => {
     const ideologyGroups = {
-      purple: parties.filter(p => ['D66', 'VVD', 'PvdA'].includes(p.id)),
-      centre: parties.filter(p => ['CDA', 'ChristenUnie', 'D66', 'VVD'].includes(p.id)),
-      right: parties.filter(p => ['VVD', 'PVV', 'FVD', 'JA21', 'BBB'].includes(p.id)),
-      left: parties.filter(p => ['PvdA', 'SP', 'GL', 'Volt', 'DENK', 'PvdD'].includes(p.id))
+      purple: parties.filter(p => ['d66', 'vvd', 'gl-pvda'].includes(p.id)),
+      centre: parties.filter(p => ['cda', 'cu', 'd66', 'vvd', 'nsc'].includes(p.id)),
+      right: parties.filter(p => ['vvd', 'pvv', 'fvd', 'ja21', 'bbb'].includes(p.id)),
+      left: parties.filter(p => ['gl-pvda', 'sp', 'volt', 'denk', 'pvdd'].includes(p.id))
     };
 
     return Object.entries(ideologyGroups).map(([ideology, coalitionParties]) => ({
@@ -34,7 +34,6 @@ export default function IdeologicalCoalitions() {
   const handleSelectCoalition = (coalitionParties: string[]) => {
     // Filter only parties that have seats > 0
     const validParties = coalitionParties.filter(partyId => (partySeats[partyId] || 0) > 0);
-    console.log('Selecting coalition parties:', validParties);
     setSelectedParties(validParties);
   };
 
@@ -99,11 +98,7 @@ export default function IdeologicalCoalitions() {
                 
                 <Button
                   size="sm"
-                  onClick={() => {
-                    console.log('Button clicked for coalition:', coalition.name);
-                    console.log('Coalition parties:', coalition.parties.map(p => p.id));
-                    handleSelectCoalition(coalition.parties.map(p => p.id));
-                  }}
+                  onClick={() => handleSelectCoalition(coalition.parties.map(p => p.id))}
                   className="coalition-primary w-full"
                 >
                   Select Coalition
