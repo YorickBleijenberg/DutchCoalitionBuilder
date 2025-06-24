@@ -149,14 +149,12 @@ export default function PoliticalPredictor() {
           <p className="text-blue-700 dark:text-blue-300">
             {format(new Date(), 'EEEE, d MMMM yyyy', { locale: nl })}
           </p>
-          <p className="text-sm text-blue-600 dark:text-blue-400 mt-1">
-            Total Predicted Seats: {predictionData.totalPredictedSeats}/150
-          </p>
+
         </div>
 
         {/* Top Predictions */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {predictionData.predictions.slice(0, 6).map((party, index) => (
+          {predictionData.predictions.slice(0, 9).map((party, index) => (
             <div 
               key={party.id}
               className="bg-white/80 dark:bg-gray-800/80 p-4 rounded-lg border border-blue-200 dark:border-blue-600"
@@ -202,28 +200,12 @@ export default function PoliticalPredictor() {
           ))}
         </div>
 
-        {/* Key Insights */}
-        <div className="bg-white/60 dark:bg-gray-800/60 p-4 rounded-lg border border-blue-200 dark:border-blue-600">
-          <h3 className="font-semibold text-blue-900 dark:text-blue-100 mb-3 flex items-center">
-            <Eye className="mr-2 h-4 w-4" />
-            Key Insights
-          </h3>
-          <div className="space-y-2">
-            {predictionData.insights.map((insight, index) => (
-              <div key={index} className="flex items-center text-sm text-blue-800 dark:text-blue-200">
-                <div className="w-2 h-2 bg-blue-500 rounded-full mr-3 flex-shrink-0" />
-                {insight}
-              </div>
-            ))}
-          </div>
-        </div>
-
         {/* Coalition Summary */}
         {selectedParties.length > 0 && (
           <div className="bg-white/60 dark:bg-gray-800/60 p-4 rounded-lg border border-blue-200 dark:border-blue-600">
             <h3 className="font-semibold text-blue-900 dark:text-blue-100 mb-3 flex items-center">
               <Users className="mr-2 h-4 w-4" />
-              My Coalition Choice
+              My Coalition Prediction
             </h3>
             <div className="flex items-center justify-between">
               <div className="flex flex-wrap gap-2">
@@ -250,6 +232,22 @@ export default function PoliticalPredictor() {
             </div>
           </div>
         )}
+
+        {/* Key Insights */}
+        <div className="bg-white/60 dark:bg-gray-800/60 p-4 rounded-lg border border-blue-200 dark:border-blue-600">
+          <h3 className="font-semibold text-blue-900 dark:text-blue-100 mb-3 flex items-center">
+            <Eye className="mr-2 h-4 w-4" />
+            Key Insights
+          </h3>
+          <div className="space-y-2">
+            {predictionData.insights.map((insight, index) => (
+              <div key={index} className="flex items-center text-sm text-blue-800 dark:text-blue-200">
+                <div className="w-2 h-2 bg-blue-500 rounded-full mr-3 flex-shrink-0" />
+                {insight}
+              </div>
+            ))}
+          </div>
+        </div>
 
         {/* Footer */}
         <div className="text-center text-xs text-blue-600 dark:text-blue-400 border-t border-blue-200 dark:border-blue-700 pt-4">
