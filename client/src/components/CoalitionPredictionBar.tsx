@@ -22,7 +22,7 @@ export default function CoalitionPredictionBar() {
     <Card className="sticky top-4 z-20 bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-600 shadow-md">
       <CardContent className="p-4">
         <div className="flex justify-between items-center mb-3">
-          <span className="font-medium text-gray-900 dark:text-gray-100">Current Prediction</span>
+          <span className="font-medium text-gray-900 dark:text-gray-100">Coalitie</span>
           <div className="text-right">
             <div className="text-sm text-gray-600 dark:text-gray-400">
               Coalitie zetels: <span className="font-bold text-lg text-gray-900 dark:text-gray-100">{coalitionSeats}</span>
@@ -67,8 +67,7 @@ export default function CoalitionPredictionBar() {
                   >
                     {widthPercent > 8 && (
                       <div className="text-white text-xs font-bold text-center px-1">
-                        <div className="leading-tight">{party.name}</div>
-                        <div className="text-xs">{seats}</div>
+                        <div className="leading-tight">{party.name} {seats}</div>
                       </div>
                     )}
                   </div>
@@ -98,7 +97,7 @@ export default function CoalitionPredictionBar() {
         {selectedParties.length > 0 && (
           <div className="mt-4 pt-3 border-t border-gray-300 dark:border-gray-600">
             <div className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              Coalition Parties:
+              Coalitie partijen:
             </div>
             <div className="flex flex-wrap gap-3">
               {selectedPartiesData.map((party) => (
@@ -108,7 +107,7 @@ export default function CoalitionPredictionBar() {
                     style={{ backgroundColor: party.color }}
                   />
                   <span className="text-sm text-gray-700 dark:text-gray-300">
-                    {party.name}: {partySeats[party.id] || 0} seats
+                    {party.name} {partySeats[party.id] || 0}
                   </span>
                 </div>
               ))}

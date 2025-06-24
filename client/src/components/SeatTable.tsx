@@ -241,7 +241,7 @@ export default function SeatTable() {
                         onMouseLeave={stopIncrement}
                         onTouchStart={() => startIncrement(party.id, 'up')}
                         onTouchEnd={stopIncrement}
-                        className="w-8 h-8 p-0 select-none"
+                        className="w-8 h-8 p-0 select-none bg-white dark:bg-gray-700 border-2 border-gray-400 dark:border-gray-500 hover:bg-green-50 dark:hover:bg-green-900 hover:border-green-500 dark:hover:border-green-400 text-gray-700 dark:text-gray-300 hover:text-green-700 dark:hover:text-green-300"
                       >
                         <Plus className="h-3 w-3" />
                       </Button>
@@ -253,7 +253,7 @@ export default function SeatTable() {
                         onMouseLeave={stopIncrement}
                         onTouchStart={() => startIncrement(party.id, 'down')}
                         onTouchEnd={stopIncrement}
-                        className="w-8 h-8 p-0 select-none"
+                        className="w-8 h-8 p-0 select-none bg-white dark:bg-gray-700 border-2 border-gray-400 dark:border-gray-500 hover:bg-red-50 dark:hover:bg-red-900 hover:border-red-500 dark:hover:border-red-400 text-gray-700 dark:text-gray-300 hover:text-red-700 dark:hover:text-red-300"
                       >
                         <Minus className="h-3 w-3" />
                       </Button>
@@ -261,7 +261,7 @@ export default function SeatTable() {
                         variant="outline"
                         size="sm"
                         onClick={() => resetPartySeats(party.id)}
-                        className="w-8 h-8 p-0"
+                        className="w-8 h-8 p-0 bg-white dark:bg-gray-700 border-2 border-gray-400 dark:border-gray-500 hover:bg-blue-50 dark:hover:bg-blue-900 hover:border-blue-500 dark:hover:border-blue-400 text-gray-700 dark:text-gray-300 hover:text-blue-700 dark:hover:text-blue-300"
                         title="Reset naar huidige zetels"
                       >
                         <RotateCcw className="h-3 w-3" />

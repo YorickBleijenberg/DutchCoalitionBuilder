@@ -73,7 +73,7 @@ export default function Home() {
                 value="coalitions" 
                 className="px-2 sm:px-4 py-2 text-xs sm:text-sm data-[state=active]:bg-green-500 data-[state=active]:text-white data-[state=active]:shadow-md transition-all duration-200"
               >
-                <span className="hidden sm:inline">{t('tabs.coalitions')}</span>
+                <span className="hidden sm:inline">Coalitie zoeker</span>
                 <span className="sm:hidden">Coalitie</span>
               </TabsTrigger>
               <TabsTrigger 
