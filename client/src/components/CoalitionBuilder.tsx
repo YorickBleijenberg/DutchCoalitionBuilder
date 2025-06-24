@@ -49,8 +49,8 @@ export default function CoalitionBuilder() {
       </CardHeader>
       
       <CardContent className="p-6">
-        {/* All Parties in Two Columns */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        {/* All Parties - Mobile: 2 Columns, Desktop: 3 Columns */}
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-3">
           {parties.filter(party => (seatData[party.id] || 0) > 0).map((party) => {
             const isSelected = selectedParties.includes(party.id);
             return (
@@ -76,7 +76,7 @@ export default function CoalitionBuilder() {
                   </div>
                 </div>
                 {isSelected && (
-                  <CheckCircle className="h-4 w-4 text-green-600 dark:text-green-400" />
+                  <CheckCircle className="hidden md:block h-4 w-4 text-green-600 dark:text-green-400" />
                 )}
               </div>
             );

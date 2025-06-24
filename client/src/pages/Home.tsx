@@ -37,7 +37,7 @@ export default function Home() {
       
       {/* Election Countdown Banner */}
       <div className="bg-blue-600 dark:bg-blue-800 text-white py-3">
-        <div className="max-w-none mx-auto px-2 sm:px-4 lg:px-6">
+        <div className="max-w-none mx-auto px-1 sm:px-4 lg:px-6">
           <div className="flex items-center justify-between">
             <span className="text-lg font-semibold">
               Nederland Coalitieland
@@ -79,7 +79,7 @@ export default function Home() {
         </div>
       </div>
       
-      <main className="max-w-none mx-auto px-2 sm:px-4 lg:px-6 py-8 pb-20 md:pb-8">
+      <main className="max-w-none mx-auto px-1 sm:px-4 lg:px-6 py-8 pb-20 md:pb-8">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
           {/* Desktop Tab Navigation - Hidden on Mobile, Sticky on Desktop */}
           <div className="hidden md:flex flex-row justify-between items-center mb-8 sticky top-0 z-50 bg-gray-50 dark:bg-gray-900 py-4">
@@ -213,7 +213,7 @@ export default function Home() {
 
       {/* Footer */}
       <footer className="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 mt-12 pb-20 md:pb-0">
-        <div className="max-w-none mx-auto px-2 sm:px-4 lg:px-6 py-6">
+        <div className="max-w-none mx-auto px-1 sm:px-4 lg:px-6 py-6">
           <div className="flex justify-between items-center">
             <div className="text-sm coalition-neutral">
               {t('footer.description')}
