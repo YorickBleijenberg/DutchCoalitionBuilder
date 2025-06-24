@@ -192,10 +192,107 @@ export default function SeatTable() {
               
               return (
                 <div key={party.id} className="border border-gray-200 dark:border-gray-700 rounded-lg p-3">
-                  {/* Mobile-first responsive layout */}
-                  <div className="flex flex-col sm:flex-row sm:items-center gap-3">
-                    {/* Party Name - Full width on mobile */}
-                    <div className="flex items-center gap-2 sm:min-w-0 sm:flex-1">
+                  {/* Mobile Layout */}
+                  <div className="sm:hidden space-y-3">
+                    {/* First Row: Party Name with Current and Difference */}
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center space-x-3">
+                        <div 
+                          className="w-4 h-4 rounded"
+                          style={{ backgroundColor: party.color }}
+                        />
+                        <span className="font-medium text-gray-900 dark:text-gray-100">
+                          {party.name}
+                        </span>
+                      </div>
+                      
+                      <div className="flex items-center space-x-4">
+                        <div className="text-right">
+                          <div className="text-xs text-gray-600 dark:text-gray-400">Huidig</div>
+                          <div className="font-bold text-gray-900 dark:text-gray-100">{currentSeats}</div>
+                        </div>
+                        <div className="text-right">
+                          <div className="text-xs text-gray-600 dark:text-gray-400">+/-</div>
+                          <div className={`font-bold ${
+                            difference > 0 ? 'text-green-600' : 
+                            difference < 0 ? 'text-red-600' : 
+                            'text-gray-500'
+                          }`}>
+                            {difference > 0 ? `+${difference}` : difference}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    {/* Second Row: Input Stepper and Reset */}
+                    <div className="flex items-center justify-center space-x-3">
+                      {/* Input Stepper Group */}
+                      <div className="flex items-center border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800">
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="h-8 w-8 p-0 rounded-none border-0 hover:bg-gray-100 dark:hover:bg-gray-700"
+                          onMouseDown={(e) => {
+                            e.preventDefault();
+                            startIncrement(party.id, 'down');
+                          }}
+                          onMouseUp={stopIncrement}
+                          onMouseLeave={stopIncrement}
+                          onTouchStart={(e) => {
+                            e.preventDefault();
+                            startIncrement(party.id, 'down');
+                          }}
+                          onTouchEnd={stopIncrement}
+                        >
+                          <Minus className="h-3 w-3" />
+                        </Button>
+                        <input
+                          type="number"
+                          min="0"
+                          max="150"
+                          value={partySeats[party.id] || 0}
+                          onChange={(e) => {
+                            const value = parseInt(e.target.value) || 0;
+                            updatePartySeats(party.id, value);
+                          }}
+                          className="w-12 h-8 text-center text-sm font-bold border-0 border-l border-r border-gray-300 dark:border-gray-600 bg-transparent focus:outline-none focus:ring-1 focus:ring-blue-500"
+                        />
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="h-8 w-8 p-0 rounded-none border-0 hover:bg-gray-100 dark:hover:bg-gray-700"
+                          onMouseDown={(e) => {
+                            e.preventDefault();
+                            startIncrement(party.id, 'up');
+                          }}
+                          onMouseUp={stopIncrement}
+                          onMouseLeave={stopIncrement}
+                          onTouchStart={(e) => {
+                            e.preventDefault();
+                            startIncrement(party.id, 'up');
+                          }}
+                          onTouchEnd={stopIncrement}
+                        >
+                          <Plus className="h-3 w-3" />
+                        </Button>
+                      </div>
+                      
+                      {/* Reset Button */}
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="h-8 w-8 p-0"
+                        onClick={() => resetPartySeats(party.id)}
+                      >
+                        <RotateCcw className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  </div>
+
+                  {/* Desktop Layout */}
+                  <div className="hidden sm:flex sm:items-center gap-3">
+                    {/* Party Name */}
+                    <div className="flex items-center gap-2 min-w-0 flex-1">
                       <div 
                         className="w-4 h-4 rounded"
                         style={{ backgroundColor: party.color }}
@@ -205,8 +302,8 @@ export default function SeatTable() {
                       </span>
                     </div>
                     
-                    {/* Numbers row - Horizontal on mobile, continues horizontal on desktop */}
-                    <div className="flex justify-between sm:justify-end sm:gap-6">
+                    {/* Numbers and Controls */}
+                    <div className="flex justify-end gap-6">
                       {/* Current Seats */}
                       <div className="text-center">
                         <div className="text-xs text-gray-600 dark:text-gray-400">Huidig</div>
@@ -284,55 +381,6 @@ export default function SeatTable() {
                         onClick={() => resetPartySeats(party.id)}
                       >
                         <RotateCcw className="h-4 w-4" />
-                      </Button>
-                    </div>
-                    
-                    {/* Controls - Center on mobile, right on desktop */}
-                    <div className="flex items-center justify-center sm:justify-end gap-1 hidden">
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onMouseDown={() => startIncrement(party.id, 'up')}
-                        onMouseUp={stopIncrement}
-                        onMouseLeave={stopIncrement}
-                        onTouchStart={(e) => {
-                          e.preventDefault();
-                          startIncrement(party.id, 'up');
-                        }}
-                        onTouchEnd={(e) => {
-                          e.preventDefault();
-                          stopIncrement();
-                        }}
-                        className="w-8 h-8 p-0 select-none bg-white dark:bg-gray-700 border-2 border-gray-400 dark:border-gray-500 hover:bg-green-50 dark:hover:bg-green-900 hover:border-green-500 dark:hover:border-green-400 text-gray-700 dark:text-gray-300 hover:text-green-700 dark:hover:text-green-300"
-                      >
-                        <Plus className="h-3 w-3" />
-                      </Button>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onMouseDown={() => startIncrement(party.id, 'down')}
-                        onMouseUp={stopIncrement}
-                        onMouseLeave={stopIncrement}
-                        onTouchStart={(e) => {
-                          e.preventDefault();
-                          startIncrement(party.id, 'down');
-                        }}
-                        onTouchEnd={(e) => {
-                          e.preventDefault();
-                          stopIncrement();
-                        }}
-                        className="w-8 h-8 p-0 select-none bg-white dark:bg-gray-700 border-2 border-gray-400 dark:border-gray-500 hover:bg-red-50 dark:hover:bg-red-900 hover:border-red-500 dark:hover:border-red-400 text-gray-700 dark:text-gray-300 hover:text-red-700 dark:hover:text-red-300"
-                      >
-                        <Minus className="h-3 w-3" />
-                      </Button>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => resetPartySeats(party.id)}
-                        className="w-8 h-8 p-0 bg-white dark:bg-gray-700 border-2 border-gray-400 dark:border-gray-500 hover:bg-blue-50 dark:hover:bg-blue-900 hover:border-blue-500 dark:hover:border-blue-400 text-gray-700 dark:text-gray-300 hover:text-blue-700 dark:hover:text-blue-300"
-                        title="Reset naar huidige zetels"
-                      >
-                        <RotateCcw className="h-3 w-3" />
                       </Button>
                     </div>
                   </div>
