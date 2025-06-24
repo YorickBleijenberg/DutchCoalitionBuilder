@@ -12,7 +12,8 @@ export function getTopCoalitions(
   partySeats: Record<string, number>,
   majority: number = 76,
   ideologyFilter: boolean = false,
-  excludedParties: string[] = []
+  excludedParties: string[] = [],
+  maxResults: number = 5
 ): CoalitionSuggestion[] {
   const partiesWithSeats = parties.filter(party => 
     (partySeats[party.id] || 0) > 0 && !excludedParties.includes(party.id)
@@ -26,11 +27,12 @@ export function getTopCoalitions(
 
   // Generate all possible combinations
   function generateCombinations(startIndex: number, currentCombination: Party[], currentSeats: number) {
-    if (currentSeats >= majority) {
+    // Always add combinations that meet minimum criteria, not just those that reach majority
+    if (currentCombination.length > 0 && (majority === 0 || currentSeats >= majority || currentCombination.length >= 2)) {
       const suggestion: CoalitionSuggestion = {
         parties: [...currentCombination],
         totalSeats: currentSeats,
-        isViable: true,
+        isViable: currentSeats >= 76, // Always check against actual majority threshold
         partyCount: currentCombination.length
       };
 
@@ -43,18 +45,21 @@ export function getTopCoalitions(
       }
 
       combinations.push(suggestion);
-      return;
     }
 
-    for (let i = startIndex; i < partiesWithSeats.length; i++) {
-      const party = partiesWithSeats[i];
-      const seats = partySeats[party.id] || 0;
-      
-      generateCombinations(
-        i + 1,
-        [...currentCombination, party],
-        currentSeats + seats
-      );
+    // Continue building combinations if we haven't reached majority or if we want all combinations
+    if (majority === 0 || currentSeats < majority || currentCombination.length < 4) {
+
+      for (let i = startIndex; i < partiesWithSeats.length; i++) {
+        const party = partiesWithSeats[i];
+        const seats = partySeats[party.id] || 0;
+        
+        generateCombinations(
+          i + 1,
+          [...currentCombination, party],
+          currentSeats + seats
+        );
+      }
     }
   }
 
@@ -68,8 +73,8 @@ export function getTopCoalitions(
     return b.totalSeats - a.totalSeats;
   });
 
-  // Return top 5
-  return sorted.slice(0, 5);
+  // Return top results based on maxResults parameter
+  return sorted.slice(0, maxResults);
 }
 
 export function calculateSeatDifference(totalSeats: number, target: number = 150) {

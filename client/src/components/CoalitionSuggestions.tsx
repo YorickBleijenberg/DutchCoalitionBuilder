@@ -23,11 +23,24 @@ export default function CoalitionSuggestions() {
 
   let coalitionSuggestions = getTopCoalitions(parties, partySeats, 76, false, excludedParties);
   
-  // Filter by included party if one is selected
+  // Generate new suggestions that must include the selected party
   if (includedParty) {
-    coalitionSuggestions = coalitionSuggestions.filter(coalition => 
+    // Get all possible coalitions that include the required party
+    const allCoalitions = getTopCoalitions(parties, partySeats, 0, false, excludedParties, 50);
+    const filteredCoalitions = allCoalitions.filter(coalition => 
       coalition.parties.some(party => party.id === includedParty)
     );
+    
+    // Sort by viability and seat count, then take top 5
+    coalitionSuggestions = filteredCoalitions
+      .sort((a, b) => {
+        // Prioritize viable coalitions first
+        if (a.isViable && !b.isViable) return -1;
+        if (!a.isViable && b.isViable) return 1;
+        // Then by total seats (descending)
+        return b.totalSeats - a.totalSeats;
+      })
+      .slice(0, 5);
   }
   
   // Define ideological coalitions
