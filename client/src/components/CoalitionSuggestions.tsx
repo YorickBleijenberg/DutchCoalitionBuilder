@@ -23,22 +23,23 @@ export default function CoalitionSuggestions() {
 
   let coalitionSuggestions = getTopCoalitions(parties, partySeats, 76, false, excludedParties);
   
-  // Generate new suggestions that must include the selected party
+  // Generate new suggestions that must include the selected party AND have majority
   if (includedParty) {
-    // Get all possible coalitions that include the required party
-    const allCoalitions = getTopCoalitions(parties, partySeats, 0, false, excludedParties, 50);
+    // Get all possible coalitions that include the required party and have majority
+    const allCoalitions = getTopCoalitions(parties, partySeats, 76, false, excludedParties, 100);
     const filteredCoalitions = allCoalitions.filter(coalition => 
-      coalition.parties.some(party => party.id === includedParty)
+      coalition.parties.some(party => party.id === includedParty) && coalition.isViable
     );
     
-    // Sort by viability and seat count, then take top 5
+    // Sort by fewest parties first (most efficient coalitions), then by seat count
     coalitionSuggestions = filteredCoalitions
       .sort((a, b) => {
-        // Prioritize viable coalitions first
-        if (a.isViable && !b.isViable) return -1;
-        if (!a.isViable && b.isViable) return 1;
-        // Then by total seats (descending)
-        return b.totalSeats - a.totalSeats;
+        // Prioritize coalitions with fewer parties (more efficient)
+        if (a.partyCount !== b.partyCount) {
+          return a.partyCount - b.partyCount;
+        }
+        // Then by total seats (ascending for most efficient)
+        return a.totalSeats - b.totalSeats;
       })
       .slice(0, 5);
   }
