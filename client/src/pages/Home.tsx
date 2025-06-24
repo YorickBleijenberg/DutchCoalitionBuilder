@@ -57,43 +57,43 @@ export default function Home() {
         </div>
       </div>
       
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pb-20 md:pb-8">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          {/* Tab Navigation */}
-          <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center mb-8 space-y-4 lg:space-y-0">
-            <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 bg-gray-200 dark:bg-gray-600 p-1 rounded-lg shadow-sm">
+          {/* Desktop Tab Navigation - Hidden on Mobile */}
+          <div className="hidden md:flex flex-row justify-between items-center mb-8">
+            <TabsList className="grid w-full grid-cols-4 bg-white dark:bg-gray-800 p-1 rounded-lg border border-gray-200 dark:border-gray-700">
               <TabsTrigger 
                 value="predictions" 
-                className="px-2 sm:px-4 py-2 text-xs sm:text-sm data-[state=active]:bg-blue-500 data-[state=active]:text-white data-[state=active]:shadow-md transition-all duration-200"
+                className="text-sm font-medium data-[state=active]:bg-blue-500 data-[state=active]:text-white data-[state=inactive]:text-blue-700 dark:data-[state=inactive]:text-blue-300 hover:bg-blue-100 dark:hover:bg-blue-900 transition-colors"
               >
-                <span className="hidden sm:inline">Voorspelling uitslag</span>
-                <span className="sm:hidden">Zetels</span>
+                <TrendingUp className="mr-1 h-4 w-4" />
+                Voorspelling uitslag
               </TabsTrigger>
               <TabsTrigger 
                 value="coalitions" 
-                className="px-2 sm:px-4 py-2 text-xs sm:text-sm data-[state=active]:bg-green-500 data-[state=active]:text-white data-[state=active]:shadow-md transition-all duration-200"
+                className="text-sm font-medium data-[state=active]:bg-green-500 data-[state=active]:text-white data-[state=inactive]:text-green-700 dark:data-[state=inactive]:text-green-300 hover:bg-green-100 dark:hover:bg-green-900 transition-colors"
               >
-                <span className="hidden sm:inline">Coalitie zoeker</span>
-                <span className="sm:hidden">Coalitie</span>
+                <Users className="mr-1 h-4 w-4" />
+                Coalitie zoeker
               </TabsTrigger>
               <TabsTrigger 
                 value="export" 
-                className="px-2 sm:px-4 py-2 text-xs sm:text-sm data-[state=active]:bg-orange-500 data-[state=active]:text-white data-[state=active]:shadow-md transition-all duration-200"
+                className="text-sm font-medium data-[state=active]:bg-orange-500 data-[state=active]:text-white data-[state=inactive]:text-orange-700 dark:data-[state=inactive]:text-orange-300 hover:bg-orange-100 dark:hover:bg-orange-900 transition-colors"
               >
-                <span className="hidden sm:inline">Share</span>
-                <span className="sm:hidden">Share</span>
+                <Share2 className="mr-1 h-4 w-4" />
+                Share
               </TabsTrigger>
               <TabsTrigger 
                 value="analytics" 
-                className="px-2 sm:px-4 py-2 text-xs sm:text-sm data-[state=active]:bg-purple-500 data-[state=active]:text-white data-[state=active]:shadow-md transition-all duration-200"
+                className="text-sm font-medium data-[state=active]:bg-purple-500 data-[state=active]:text-white data-[state=inactive]:text-purple-700 dark:data-[state=inactive]:text-purple-300 hover:bg-purple-100 dark:hover:bg-purple-900 transition-colors"
               >
-                <span className="hidden sm:inline">Analyses</span>
-                <span className="sm:hidden">Analyses</span>
+                <BarChart className="mr-1 h-4 w-4" />
+                Analyses
               </TabsTrigger>
             </TabsList>
             
             {/* Action Buttons */}
-            <div className="flex flex-wrap gap-2 mt-2 lg:mt-0">
+            <div className="flex flex-wrap gap-2 ml-4">
               <GuidedBuilder />
               
               {/* Settings Dropdown */}
@@ -120,6 +120,35 @@ export default function Home() {
                 </DropdownMenuContent>
               </DropdownMenu>
             </div>
+          </div>
+          
+          {/* Mobile Action Buttons - Only on Mobile */}
+          <div className="md:hidden flex flex-wrap gap-2 mb-6">
+            <GuidedBuilder />
+            
+            {/* Settings Dropdown */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" size="sm" className="flex items-center">
+                  <Settings className="mr-2 h-4 w-4" />
+                  <span className="hidden sm:inline">Instellingen</span>
+                  <span className="sm:hidden">Menu</span>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-48">
+                <DropdownMenuItem onClick={toggleDarkMode}>
+                  {darkMode ? <Sun className="mr-2 h-4 w-4" /> : <Moon className="mr-2 h-4 w-4" />}
+                  {darkMode ? 'Lichte modus' : 'Donkere modus'}
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={() => setLanguage('nl')} className={language === 'nl' ? 'bg-gray-100 dark:bg-gray-700' : ''}>
+                  🇳🇱 Nederlands
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setLanguage('en')} className={language === 'en' ? 'bg-gray-100 dark:bg-gray-700' : ''}>
+                  🇬🇧 English
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
 
           {/* Seat Predictions Tab */}
