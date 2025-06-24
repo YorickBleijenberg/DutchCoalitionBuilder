@@ -122,14 +122,16 @@ export default function PoliticalPredictor() {
           </p>
         </CardHeader>
         <CardContent>
-          <div className="flex gap-3">
+          <div className="flex flex-col sm:flex-row gap-3">
             <Button onClick={exportPrediction} className="flex-1">
               <Download className="mr-2 h-4 w-4" />
-              Exporteer Afbeelding
+              <span className="hidden sm:inline">Exporteer Afbeelding</span>
+              <span className="sm:hidden">Exporteren</span>
             </Button>
             <Button onClick={handleShare} variant="outline" className="flex-1">
               <Share2 className="mr-2 h-4 w-4" />
-              Deel Voorspelling
+              <span className="hidden sm:inline">Deel Voorspelling</span>
+              <span className="sm:hidden">Delen</span>
             </Button>
           </div>
         </CardContent>
@@ -138,33 +140,32 @@ export default function PoliticalPredictor() {
       {/* Shareable Prediction Card */}
       <div 
         id="political-predictor-card"
-        className="bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-blue-900 dark:to-indigo-800 p-8 rounded-xl border-2 border-blue-200 dark:border-blue-700 space-y-6"
+        className="bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-blue-900 dark:to-indigo-800 p-4 sm:p-6 md:p-8 rounded-xl border-2 border-blue-200 dark:border-blue-700 space-y-4 sm:space-y-6"
       >
         {/* Header */}
         <div className="text-center">
-          <h2 className="text-2xl font-bold text-blue-900 dark:text-blue-100 mb-2">
+          <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-blue-900 dark:text-blue-100 mb-2 leading-tight">
             Mijn Nederlandse Verkiezingsvoorspelling
           </h2>
-          <p className="text-blue-700 dark:text-blue-300">
+          <p className="text-sm sm:text-base text-blue-700 dark:text-blue-300">
             {format(new Date(), 'EEEE, d MMMM yyyy', { locale: nl })}
           </p>
-
         </div>
 
-        {/* All Party Predictions - Compact Format */}
-        <div className="grid grid-cols-2 gap-2 mb-6">
+        {/* All Party Predictions - Responsive Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-4 sm:mb-6">
           {predictionData.predictions.map((party, index) => (
-            <div key={party.id} className="flex items-center justify-between bg-white/70 dark:bg-gray-800/70 p-2 rounded-lg border border-blue-200 dark:border-blue-600">
-              <div className="flex items-center gap-2">
-                <span className="text-xs font-bold text-gray-500 dark:text-gray-400">#{index + 1}</span>
+            <div key={party.id} className="flex items-center justify-between bg-white/70 dark:bg-gray-800/70 p-2 sm:p-3 rounded-lg border border-blue-200 dark:border-blue-600">
+              <div className="flex items-center gap-2 min-w-0 flex-1">
+                <span className="text-xs font-bold text-gray-500 dark:text-gray-400 flex-shrink-0">#{index + 1}</span>
                 <div 
-                  className="w-3 h-3 rounded-full"
+                  className="w-3 h-3 rounded-full flex-shrink-0"
                   style={{ backgroundColor: party.color }}
                 />
-                <span className="font-medium text-gray-900 dark:text-gray-100 text-sm truncate">{party.name}</span>
+                <span className="font-medium text-gray-900 dark:text-gray-100 text-xs sm:text-sm truncate">{party.name}</span>
               </div>
-              <div className="flex items-center gap-2">
-                <span className="font-bold text-lg text-blue-900 dark:text-blue-100">{party.predictedSeats}</span>
+              <div className="flex items-center gap-1 sm:gap-2 flex-shrink-0">
+                <span className="font-bold text-sm sm:text-lg text-blue-900 dark:text-blue-100">{party.predictedSeats}</span>
                 <span className={`text-xs font-medium px-1 py-0.5 rounded ${
                   party.predictedSeats > party.currentSeats 
                     ? 'bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300' 
