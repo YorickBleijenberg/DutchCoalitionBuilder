@@ -165,15 +165,15 @@ export default function PoliticalPredictor() {
               </div>
               <div className="flex items-center gap-2">
                 <span className="font-bold text-lg text-blue-900 dark:text-blue-100">{party.predictedSeats}</span>
-                {party.predictedSeats !== party.currentSeats && (
-                  <span className={`text-xs font-medium px-1 py-0.5 rounded ${
-                    party.predictedSeats > party.currentSeats 
-                      ? 'bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300' 
-                      : 'bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-300'
-                  }`}>
-                    {party.predictedSeats > party.currentSeats ? '+' : ''}{party.predictedSeats - party.currentSeats}
-                  </span>
-                )}
+                <span className={`text-xs font-medium px-1 py-0.5 rounded ${
+                  party.predictedSeats > party.currentSeats 
+                    ? 'bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300' 
+                    : party.predictedSeats < party.currentSeats
+                    ? 'bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-300'
+                    : 'bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300'
+                }`}>
+                  {party.predictedSeats > party.currentSeats ? '+' : party.predictedSeats < party.currentSeats ? '' : '-'}{party.predictedSeats - party.currentSeats || '0'}
+                </span>
               </div>
             </div>
           ))}
@@ -182,10 +182,18 @@ export default function PoliticalPredictor() {
         {/* Coalition Summary */}
         {selectedParties.length > 0 && (
           <div className="bg-white/60 dark:bg-gray-800/60 p-4 rounded-lg border border-blue-200 dark:border-blue-600">
-            <h3 className="font-semibold text-blue-900 dark:text-blue-100 mb-3 flex items-center">
-              <Users className="mr-2 h-4 w-4" />
-              My Coalition Prediction
-            </h3>
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="font-semibold text-blue-900 dark:text-blue-100 flex items-center">
+                <Users className="mr-2 h-4 w-4" />
+                My Coalition Prediction
+              </h3>
+              <Badge 
+                variant={hasMajority ? "default" : "destructive"} 
+                className="px-2 py-1 text-xs"
+              >
+                {hasMajority ? 'Majority Coalition' : 'No Majority'}
+              </Badge>
+            </div>
             <div className="flex items-center justify-between">
               <div className="flex flex-wrap gap-2">
                 {predictionData.selectedCoalition.map(party => (
@@ -204,8 +212,8 @@ export default function PoliticalPredictor() {
                 <div className="text-lg font-bold text-blue-900 dark:text-blue-100">
                   {coalitionSeats} seats
                 </div>
-                <div className={`text-xs ${hasMajority ? 'text-green-600' : 'text-red-600'}`}>
-                  {hasMajority ? 'Majority' : 'Minority'}
+                <div className="text-xs text-gray-600 dark:text-gray-400">
+                  out of 150
                 </div>
               </div>
             </div>
