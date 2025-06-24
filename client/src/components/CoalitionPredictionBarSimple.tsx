@@ -20,7 +20,7 @@ export default function CoalitionPredictionBarSimple() {
   if (selectedPartiesData.length === 0) return null;
 
   return (
-    <Card className="bg-white dark:bg-gray-800 shadow-lg border border-gray-200 dark:border-gray-700 sticky top-0 z-20">
+    <Card className="bg-white dark:bg-gray-800 shadow-lg border border-gray-200 dark:border-gray-700 sticky top-16 md:top-28 z-20">
       <div className="p-4">
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
