@@ -20,18 +20,24 @@ export default function CoalitionPredictionBarSimple() {
   if (selectedPartiesData.length === 0) return null;
 
   return (
-    <Card className="bg-white dark:bg-gray-800 shadow-lg border border-gray-200 dark:border-gray-700 sticky top-16 md:top-28 z-20">
+    <Card className="bg-white dark:bg-gray-800 shadow-lg border border-gray-200 dark:border-gray-700 sticky top-16 md:top-28 z-30">
       <div className="p-4">
         <div className="flex items-center justify-between mb-4">
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
-            Coalitie
-          </h3>
-          <div
-            className={`text-sm font-medium ${hasMajority ? "text-green-600" : "text-red-600"}`}
-          >
-            {hasMajority
-              ? "Meerderheid"
-              : `Nog ${majoritySeats - coalitionSeats} zetels nodig`}
+          <div className="flex items-center gap-3">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+              Coalitie
+            </h3>
+            <div
+              className={`text-sm font-medium px-2 py-1 rounded ${
+                hasMajority 
+                  ? "bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300" 
+                  : "bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-300"
+              }`}
+            >
+              {hasMajority
+                ? `Meerderheid (+${coalitionSeats - majoritySeats})`
+                : `${majoritySeats - coalitionSeats} zetels nodig`}
+            </div>
           </div>
           <div className="text-right">
             <div className="text-sm text-gray-600 dark:text-gray-400">
