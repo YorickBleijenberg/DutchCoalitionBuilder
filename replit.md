@@ -142,6 +142,7 @@ Changelog:
 - June 24, 2025. Implemented mobile-first bottom tab navigation for native app feel on phones while keeping desktop tabs at top
 - June 24, 2025. Enhanced top banner with smaller countdown font, moved guided tour and settings to banner with icon-only buttons, fixed mobile seat increment bug
 - June 24, 2025. Streamlined interface by removing clear button from Coalition Builder and settings buttons next to tabs for cleaner design
+- June 24, 2025. Optimized mobile layout with full-width design using minimal margins for better screen utilization
 ```
 
 ## User Preferences
