@@ -32,7 +32,9 @@ export default function IdeologicalCoalitions() {
   const ideologicalCoalitions = getIdeologicalCoalitions();
 
   const handleSelectCoalition = (coalitionParties: string[]) => {
-    setSelectedParties(coalitionParties);
+    // Filter only parties that have seats > 0
+    const validParties = coalitionParties.filter(partyId => (partySeats[partyId] || 0) > 0);
+    setSelectedParties(validParties);
   };
 
   // Always show the component, even if no coalitions are viable

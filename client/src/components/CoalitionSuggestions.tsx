@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Users, Layers, CheckCircle, AlertCircle, X } from 'lucide-react';
+import { useState } from 'react';
 
 export default function CoalitionSuggestions() {
   const { t } = useTranslation();
@@ -17,7 +18,16 @@ export default function CoalitionSuggestions() {
     setSelectedParties 
   } = useApp();
 
-  const coalitionSuggestions = getTopCoalitions(parties, partySeats, 76, false, excludedParties);
+  const [includedParty, setIncludedParty] = useState<string | null>(null);
+
+  let coalitionSuggestions = getTopCoalitions(parties, partySeats, 76, false, excludedParties);
+  
+  // Filter by included party if one is selected
+  if (includedParty) {
+    coalitionSuggestions = coalitionSuggestions.filter(coalition => 
+      coalition.parties.some(party => party.id === includedParty)
+    );
+  }
   
   // Define ideological coalitions
   const getIdeologicalCoalitions = () => {
@@ -52,6 +62,15 @@ export default function CoalitionSuggestions() {
     setExcludedParties(excludedParties.filter(id => id !== partyId));
   };
 
+  const handleIncludeParty = (partyId: string) => {
+    // Remove from excluded if it was excluded
+    if (excludedParties.includes(partyId)) {
+      setExcludedParties(excludedParties.filter(id => id !== partyId));
+    }
+    // Set to show only coalitions that include this party
+    setIncludedParty(partyId);
+  };
+
   const availableParties = parties.filter(party => 
     (partySeats[party.id] || 0) > 0 && !excludedParties.includes(party.id)
   );
@@ -65,11 +84,11 @@ export default function CoalitionSuggestions() {
             <p className="text-sm coalition-neutral mt-1">{t('suggestions.subtitle')}</p>
           </div>
           
-          {/* Party Exclusion Dropdown */}
+          {/* Party Include/Exclude Controls */}
           <div className="flex items-center space-x-2">
             <Select onValueChange={handleExcludeParty}>
-              <SelectTrigger className="w-48">
-                <SelectValue placeholder="Exclude party from suggestions" />
+              <SelectTrigger className="w-32">
+                <SelectValue placeholder="Exclude" />
               </SelectTrigger>
               <SelectContent>
                 {availableParties.map((party) => (
@@ -79,11 +98,23 @@ export default function CoalitionSuggestions() {
                 ))}
               </SelectContent>
             </Select>
+            <Select onValueChange={(partyId) => handleIncludeParty(partyId)}>
+              <SelectTrigger className="w-32">
+                <SelectValue placeholder="Include" />
+              </SelectTrigger>
+              <SelectContent>
+                {parties.filter(party => (partySeats[party.id] || 0) > 0).map((party) => (
+                  <SelectItem key={party.id} value={party.id}>
+                    {party.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
         </div>
         
-        {/* Excluded Parties Display */}
-        {excludedParties.length > 0 && (
+        {/* Active Filters Display */}
+        {(excludedParties.length > 0 || includedParty) && (
           <div className="mt-3 flex flex-wrap gap-2">
             {excludedParties.map((partyId) => {
               const party = parties.find(p => p.id === partyId);
@@ -107,6 +138,22 @@ export default function CoalitionSuggestions() {
                 </Badge>
               );
             })}
+            {includedParty && (
+              <Badge 
+                variant="default" 
+                className="inline-flex items-center space-x-1"
+              >
+                <span>Including: {parties.find(p => p.id === includedParty)?.name}</span>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setIncludedParty(null)}
+                  className="h-4 w-4 p-0 hover:bg-transparent"
+                >
+                  <X className="h-3 w-3" />
+                </Button>
+              </Badge>
+            )}
           </div>
         )}
       </CardHeader>
