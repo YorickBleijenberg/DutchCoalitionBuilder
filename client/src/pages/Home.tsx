@@ -18,6 +18,7 @@ import CoalitionTimeline from '../components/CoalitionTimeline';
 import ExportShare from '../components/ExportShare';
 import GuidedBuilder from '../components/GuidedBuilder';
 import MediaSentiment from '../components/MediaSentiment';
+import IdeologicalCoalitions from '../components/IdeologicalCoalitions';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
@@ -152,6 +153,9 @@ export default function Home() {
             <div className="lg:hidden">
               <ScenarioManager />
             </div>
+            
+            {/* Ideological Coalitions - Separate Block */}
+            <IdeologicalCoalitions />
           </TabsContent>
 
           {/* Analytics Tab */}
