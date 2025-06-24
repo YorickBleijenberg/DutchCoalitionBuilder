@@ -25,23 +25,62 @@ export default function CoalitionSuggestions() {
   
   // Generate new suggestions that must include the selected party AND have majority
   if (includedParty) {
-    // Get all possible coalitions that include the required party and have majority
-    const allCoalitions = getTopCoalitions(parties, partySeats, 76, false, excludedParties, 100);
-    const filteredCoalitions = allCoalitions.filter(coalition => 
-      coalition.parties.some(party => party.id === includedParty) && coalition.isViable
+    // Generate coalitions that must include the selected party
+    const partiesWithSeats = parties.filter(party => 
+      (partySeats[party.id] || 0) > 0 && !excludedParties.includes(party.id)
     );
     
-    // Sort by fewest parties first (most efficient coalitions), then by seat count
-    coalitionSuggestions = filteredCoalitions
-      .sort((a, b) => {
-        // Prioritize coalitions with fewer parties (more efficient)
-        if (a.partyCount !== b.partyCount) {
-          return a.partyCount - b.partyCount;
+    const targetParty = partiesWithSeats.find(p => p.id === includedParty);
+    if (targetParty) {
+      const otherParties = partiesWithSeats.filter(p => p.id !== includedParty);
+      const targetSeats = partySeats[includedParty] || 0;
+      const neededSeats = Math.max(0, 76 - targetSeats);
+      
+      // Generate coalitions starting with the included party
+      const includedCoalitions: CoalitionSuggestion[] = [];
+      
+      // Helper function to generate combinations with the included party
+      function generateWithIncludedParty(
+        startIndex: number, 
+        currentParties: Party[], 
+        currentSeats: number
+      ) {
+        if (currentSeats >= 76) {
+          includedCoalitions.push({
+            parties: currentParties,
+            totalSeats: currentSeats,
+            isViable: true,
+            partyCount: currentParties.length
+          });
+          return;
         }
-        // Then by total seats (ascending for most efficient)
-        return a.totalSeats - b.totalSeats;
-      })
-      .slice(0, 5);
+        
+        if (includedCoalitions.length >= 20) return; // Limit to prevent too many combinations
+        
+        for (let i = startIndex; i < otherParties.length; i++) {
+          const party = otherParties[i];
+          const seats = partySeats[party.id] || 0;
+          
+          generateWithIncludedParty(
+            i + 1,
+            [...currentParties, party],
+            currentSeats + seats
+          );
+        }
+      }
+      
+      generateWithIncludedParty(0, [targetParty], targetSeats);
+      
+      // Sort and take top 5
+      coalitionSuggestions = includedCoalitions
+        .sort((a, b) => {
+          if (a.partyCount !== b.partyCount) {
+            return a.partyCount - b.partyCount;
+          }
+          return a.totalSeats - b.totalSeats;
+        })
+        .slice(0, 5);
+    }
   }
   
   // Define ideological coalitions

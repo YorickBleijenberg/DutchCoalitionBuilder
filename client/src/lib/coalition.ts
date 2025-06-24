@@ -27,12 +27,11 @@ export function getTopCoalitions(
 
   // Generate all possible combinations
   function generateCombinations(startIndex: number, currentCombination: Party[], currentSeats: number) {
-    // Always add combinations that meet minimum criteria, not just those that reach majority
-    if (currentCombination.length > 0 && (majority === 0 || currentSeats >= majority || currentCombination.length >= 2)) {
+    if (currentSeats >= majority) {
       const suggestion: CoalitionSuggestion = {
         parties: [...currentCombination],
         totalSeats: currentSeats,
-        isViable: currentSeats >= 76, // Always check against actual majority threshold
+        isViable: true,
         partyCount: currentCombination.length
       };
 
@@ -45,21 +44,18 @@ export function getTopCoalitions(
       }
 
       combinations.push(suggestion);
+      return;
     }
 
-    // Continue building combinations if we haven't reached majority or if we want all combinations
-    if (majority === 0 || currentSeats < majority || currentCombination.length < 4) {
-
-      for (let i = startIndex; i < partiesWithSeats.length; i++) {
-        const party = partiesWithSeats[i];
-        const seats = partySeats[party.id] || 0;
-        
-        generateCombinations(
-          i + 1,
-          [...currentCombination, party],
-          currentSeats + seats
-        );
-      }
+    for (let i = startIndex; i < partiesWithSeats.length; i++) {
+      const party = partiesWithSeats[i];
+      const seats = partySeats[party.id] || 0;
+      
+      generateCombinations(
+        i + 1,
+        [...currentCombination, party],
+        currentSeats + seats
+      );
     }
   }
 
