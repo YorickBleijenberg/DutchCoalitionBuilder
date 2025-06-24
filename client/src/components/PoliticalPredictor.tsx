@@ -16,10 +16,9 @@ export default function PoliticalPredictor() {
     hasMajority 
   } = useApp();
 
-  // Get predictions with insights
+  // Get predictions with insights - show all parties
   const getPredictionInsights = () => {
     const predictions = parties
-      .filter(p => (partySeats[p.id] || 0) > 0)
       .map(p => ({ ...p, predictedSeats: partySeats[p.id] || 0 }))
       .sort((a, b) => b.predictedSeats - a.predictedSeats);
 
@@ -152,49 +151,29 @@ export default function PoliticalPredictor() {
 
         </div>
 
-        {/* Top Predictions */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {predictionData.predictions.slice(0, 9).map((party, index) => (
-            <div 
-              key={party.id}
-              className="bg-white/80 dark:bg-gray-800/80 p-4 rounded-lg border border-blue-200 dark:border-blue-600"
-            >
-              <div className="flex items-center justify-between mb-2">
-                <div className="flex items-center space-x-2">
-                  <div
-                    className="w-4 h-4 rounded-full"
-                    style={{ backgroundColor: party.color }}
-                  />
-                  <span className="font-medium text-gray-900 dark:text-gray-100">
-                    {party.name}
-                  </span>
-                </div>
-                {index < 3 && (
-                  <Badge variant={index === 0 ? "default" : "secondary"}>
-                    #{index + 1}
-                  </Badge>
-                )}
+        {/* All Party Predictions - Compact Format */}
+        <div className="grid grid-cols-2 gap-2 mb-6">
+          {predictionData.predictions.map((party, index) => (
+            <div key={party.id} className="flex items-center justify-between bg-white/70 dark:bg-gray-800/70 p-2 rounded-lg border border-blue-200 dark:border-blue-600">
+              <div className="flex items-center gap-2">
+                <span className="text-xs font-bold text-gray-500 dark:text-gray-400">#{index + 1}</span>
+                <div 
+                  className="w-3 h-3 rounded-full"
+                  style={{ backgroundColor: party.color }}
+                />
+                <span className="font-medium text-gray-900 dark:text-gray-100 text-sm truncate">{party.name}</span>
               </div>
-              
-              <div className="flex items-center justify-between text-sm">
-                <span className="text-2xl font-bold text-blue-900 dark:text-blue-100">
-                  {party.predictedSeats}
-                </span>
-                <div className="text-right">
-                  <div className="text-gray-600 dark:text-gray-400">
-                    Current: {party.currentSeats}
-                  </div>
-                  {party.predictedSeats !== party.currentSeats && (
-                    <div className={`text-xs ${
-                      party.predictedSeats > party.currentSeats 
-                        ? 'text-green-600 dark:text-green-400' 
-                        : 'text-red-600 dark:text-red-400'
-                    }`}>
-                      {party.predictedSeats > party.currentSeats ? '+' : ''}
-                      {party.predictedSeats - party.currentSeats}
-                    </div>
-                  )}
-                </div>
+              <div className="flex items-center gap-2">
+                <span className="font-bold text-lg text-blue-900 dark:text-blue-100">{party.predictedSeats}</span>
+                {party.predictedSeats !== party.currentSeats && (
+                  <span className={`text-xs font-medium px-1 py-0.5 rounded ${
+                    party.predictedSeats > party.currentSeats 
+                      ? 'bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300' 
+                      : 'bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-300'
+                  }`}>
+                    {party.predictedSeats > party.currentSeats ? '+' : ''}{party.predictedSeats - party.currentSeats}
+                  </span>
+                )}
               </div>
             </div>
           ))}
