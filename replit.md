@@ -135,6 +135,10 @@ Changelog:
 - June 23, 2025. Improved Coalition Suggestions responsive layout with side buttons on wide screens
 - June 23, 2025. Repositioned Scenario Manager to bottom on narrow screens for better mobile experience
 - June 23, 2025. Moved Parliament Chart (Zetelverdeling Tweede Kamer) to Analytics tab for better organization
+- June 23, 2025. Updated poll data button labels: TK2023, Peilingwijzer, Peil.nl, added 1V button with official seat data
+- June 23, 2025. Added ideological coalition options (Purple, Centre, Right, Left) as additional suggestions in Coalition Builder
+- June 23, 2025. Made Totaal Zetels progress bar sticky when scrolling and updated banner with "Nederland Coalitieland"
+- June 23, 2025. Conditional display of CoalitionPredictionBar only when parties are selected in Seat Predictions
 ```
 
 ## User Preferences

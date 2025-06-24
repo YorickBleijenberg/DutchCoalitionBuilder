@@ -37,7 +37,7 @@ interface AppContextType {
   language: string;
   setLanguage: (lang: string) => void;
   loadCurrentSeats: () => void;
-  loadPollData: (pollSource: 'current' | 'peilingwijzer' | 'peil') => void;
+  loadPollData: (pollSource: 'current' | 'peilingwijzer' | 'peil' | '1v') => void;
   resetSeats: () => void;
 }
 
@@ -85,7 +85,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     setPartySeats(currentSeats);
   };
 
-  const loadPollData = (pollSource: 'current' | 'peilingwijzer' | 'peil') => {
+  const loadPollData = (pollSource: 'current' | 'peilingwijzer' | 'peil' | '1v') => {
     const pollData: Record<string, Record<string, number>> = {
       current: {},
       peilingwijzer: {
@@ -121,6 +121,23 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         'denk': 4,
         'bbb': 3,
         'nsc': 0
+      },
+      '1v': {
+        'vvd': 26,
+        'd66': 10,
+        'gl-pvda': 25,
+        'pvv': 33,
+        'cda': 20,
+        'sp': 6,
+        'fvd': 3,
+        'pvdd': 5,
+        'cu': 5,
+        'volt': 4,
+        'ja21': 2,
+        'sgp': 3,
+        'denk': 4,
+        'bbb': 3,
+        'nsc': 1
       }
     };
 

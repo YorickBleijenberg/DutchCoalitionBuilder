@@ -143,7 +143,7 @@ export default function SeatTable() {
                 onClick={() => loadPollData('current')}
                 className="text-xs"
               >
-                Current Seats
+                TK2023
               </Button>
               <Button
                 variant="outline"
@@ -151,7 +151,7 @@ export default function SeatTable() {
                 onClick={() => loadPollData('peilingwijzer')}
                 className="text-xs"
               >
-                Poll Peilingwijzer
+                Peilingwijzer
               </Button>
               <Button
                 variant="outline"
@@ -159,7 +159,15 @@ export default function SeatTable() {
                 onClick={() => loadPollData('peil')}
                 className="text-xs"
               >
-                Poll Peil.nl
+                Peil.nl
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => loadPollData('1v')}
+                className="text-xs"
+              >
+                1V
               </Button>
               <Button
                 variant="outline"
