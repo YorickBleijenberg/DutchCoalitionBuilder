@@ -1,0 +1,34 @@
+Prompt for Replit Developer
+Objective: Please refactor a specific part of the provided React component, SeatTable.tsx, to improve the user interface for adjusting party seat numbers.
+
+Context:
+The current UI displays the predicted seat count ("Voorspelling") as a static number, visually separated from the +, -, and reset buttons that control it. The goal is to implement a more intuitive and efficient "input stepper" design, as described below.
+
+Detailed Instructions:
+
+Locate the Target Code: In the SeatTable.tsx file, find the div that contains the list of parties, specifically inside the parties.map(...) function.
+
+Change the Layout and Order: Rearrange the elements within each party row (<div key={party.id} ...>). The new logical order should be:
+a. Party Name/Info (already on the left, this is fine).
+b. The "Numbers row" (Huidig, +/-, and the new Voorspelling stepper) should be grouped together.
+c. The Reset button (RotateCcw icon) should be the final element on the right.
+
+Create the "Input Stepper" for "Voorspelling":
+
+The current div that displays the predictedSeats value should be replaced.
+Create a new wrapper div with flex items-center.
+Inside this wrapper, place the following elements in order: i. The "Minus" (-) button. ii. An <input type="number" /> element. iii. The "Plus" (+) button.
+Implement Input Functionality:
+
+The <input> element's value must be bound to the predictedSeats variable.
+Create an onChange handler for the input. This handler should:
+Read the value from e.target.value.
+Parse it into an integer (using parseInt(value, 10)).
+Handle potential empty input (e.g., treat it as 0).
+Call the existing updatePartySeats(party.id, newSeats) function with the parsed value.
+The existing onMouseDown, onMouseUp, onMouseLeave, onTouchStart, and onTouchEnd handlers on the + and - buttons should be kept as they are.
+Styling with Tailwind CSS:
+
+Input Field: Style the <input> to match the theme. Use classes like: w-16 text-center font-bold text-blue-600 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md.
+Buttons: The + and - buttons can largely keep their styling.
+Reset Button: The reset button should be visually distinct and positioned to the right of the stepper. A small gap (gap-2 or gap-3) between the stepper and the reset button would be good.
