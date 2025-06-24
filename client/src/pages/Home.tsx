@@ -135,10 +135,6 @@ export default function Home() {
               {/* Left Column: Coalition Builder */}
               <div className="space-y-8">
                 <CoalitionBuilder />
-                {/* Scenario Manager - visible on wide screens */}
-                <div className="hidden lg:block">
-                  <ScenarioManager />
-                </div>
               </div>
               
               {/* Right Column: Coalition Suggestions */}
@@ -147,13 +143,11 @@ export default function Home() {
               </div>
             </div>
             
-            {/* Scenario Manager - visible on narrow screens at bottom */}
-            <div className="lg:hidden">
-              <ScenarioManager />
-            </div>
-            
             {/* Ideological Coalitions - Separate Block */}
             <IdeologicalCoalitions />
+            
+            {/* Scenario Manager - Always at bottom */}
+            <ScenarioManager />
           </TabsContent>
 
           {/* Export & Share Tab */}

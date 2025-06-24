@@ -3,11 +3,13 @@ import { useApp } from '../context/AppContext';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { X, Users, CheckCircle, AlertTriangle } from 'lucide-react';
+import { X, Users, CheckCircle, AlertTriangle, Save } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
 
 
 export default function CoalitionBuilder() {
   const { t } = useTranslation();
+  const { toast } = useToast();
   const { 
     parties, 
     partySeats: seatData, 
@@ -29,6 +31,41 @@ export default function CoalitionBuilder() {
     setSelectedParties([]);
   };
 
+  const handleSaveScenario = () => {
+    if (selectedParties.length === 0) {
+      toast({
+        title: "No coalition selected",
+        description: "Please select parties before saving.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    const coalitionName = selectedParties
+      .map(id => parties.find(p => p.id === id)?.name)
+      .filter(Boolean)
+      .join(' + ');
+
+    const scenario = {
+      id: Date.now().toString(),
+      name: coalitionName,
+      description: `Coalition: ${coalitionSeats} seats ${hasMajority ? '(Majority)' : '(Minority)'}`,
+      partySeats: { ...seatData },
+      selectedParties: [...selectedParties],
+      savedAt: new Date().toISOString()
+    };
+
+    // Save to localStorage
+    const savedScenarios = JSON.parse(localStorage.getItem('coalition-scenarios') || '[]');
+    savedScenarios.push(scenario);
+    localStorage.setItem('coalition-scenarios', JSON.stringify(savedScenarios));
+
+    toast({
+      title: "Coalition saved",
+      description: `"${coalitionName}" has been saved to scenarios.`,
+    });
+  };
+
   const selectedPartiesData = parties.filter(party => selectedParties.includes(party.id));
   const availableParties = parties.filter(party => 
     !selectedParties.includes(party.id) && (seatData[party.id] || 0) > 0
@@ -42,9 +79,14 @@ export default function CoalitionBuilder() {
             <CardTitle className="text-lg font-inter font-semibold">
               {t('coalition.builder')}
             </CardTitle>
-
           </div>
-          
+          <Button
+            onClick={handleSaveScenario}
+            size="sm"
+            className="bg-blue-600 hover:bg-blue-700 text-white"
+          >
+            Save Coalition
+          </Button>
         </div>
       </CardHeader>
       

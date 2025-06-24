@@ -144,6 +144,9 @@ Changelog:
 - June 24, 2025. Streamlined interface by removing clear button from Coalition Builder and settings buttons next to tabs for cleaner design
 - June 24, 2025. Optimized mobile layout with full-width design using minimal margins for better screen utilization
 - June 24, 2025. Made tab bar sticky on desktop with proper z-index layering and adjusted positioning of other sticky elements
+- June 24, 2025. Moved Scenario Manager to bottom of Coalition Builder tab for better organization
+- June 24, 2025. Made Ideological Coalitions more compact with 4-column layout and smaller design
+- June 24, 2025. Added Save Coalition button to CoalitionBuilder header with toast notifications
 ```
 
 ## User Preferences
