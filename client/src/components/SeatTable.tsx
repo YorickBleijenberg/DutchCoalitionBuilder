@@ -9,7 +9,7 @@ import { useRef, useCallback } from 'react';
 
 export default function SeatTable() {
   const { t } = useTranslation();
-  const { parties, partySeats, setPartySeats, totalSeats, loadPollData } = useApp();
+  const { parties, partySeats, setPartySeats, totalSeats, loadPollData, selectedParties } = useApp();
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   const seatStatus = calculateSeatDifference(totalSeats);
@@ -56,7 +56,7 @@ export default function SeatTable() {
   return (
     <div className="space-y-6">
       {/* Sticky Header with Progress Bar */}
-      <div className="sticky top-4 z-20 bg-white dark:bg-gray-900 pb-2">
+      <div className={`sticky ${selectedParties.length > 0 ? 'top-24' : 'top-4'} z-20 bg-white dark:bg-gray-900 pb-2`}>
         <Card className="bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-700">
           <CardContent className="p-4">
             <div className="flex justify-between items-center mb-4">
