@@ -75,7 +75,7 @@ export default function SeatTable() {
             </div>
             
             {/* Progress Bar with Party Segments */}
-            <div className={`relative w-full bg-blue-200 dark:bg-blue-800 rounded-full h-8 overflow-hidden mb-2 border-2 transition-colors ${
+            <div className={`relative w-full bg-blue-200 dark:bg-blue-800 rounded-full h-10 overflow-hidden mb-2 border-2 transition-colors ${
               seatStatus.isComplete ? 'border-green-500' : 'border-transparent'
             }`}>
               {/* Party segments */}
