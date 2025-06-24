@@ -139,8 +139,10 @@ Changelog:
 - June 23, 2025. Added ideological coalition options (Purple, Centre, Right, Left) as additional suggestions in Coalition Builder
 - June 23, 2025. Made Totaal Zetels progress bar sticky when scrolling and updated banner with "Nederland Coalitieland"
 - June 23, 2025. Conditional display of CoalitionPredictionBar only when parties are selected in Seat Predictions
+- June 24, 2025. Implemented mobile-first bottom tab navigation for native app feel on phones while keeping desktop tabs at top
 ```
 
 ## User Preferences
 
 Preferred communication style: Simple, everyday language.
+Mobile-first approach: Tabs should be at bottom on phones for native mobile app experience.

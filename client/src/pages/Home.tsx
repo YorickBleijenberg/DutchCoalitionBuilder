@@ -23,7 +23,7 @@ import PoliticalPredictor from '../components/PoliticalPredictor';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
-import { RotateCcw, Download, Settings, Moon, Sun, Calendar } from 'lucide-react';
+import { RotateCcw, Download, Settings, Moon, Sun, Calendar, TrendingUp, Users, Share2, BarChart } from 'lucide-react';
 
 export default function Home() {
   const { t } = useTranslation();
@@ -178,11 +178,44 @@ export default function Home() {
               <ParliamentChart />
             </div>
           </TabsContent>
+          {/* Mobile Bottom Navigation */}
+          <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700 safe-area-bottom">
+            <TabsList className="grid w-full grid-cols-4 bg-transparent p-0 h-16">
+              <TabsTrigger 
+                value="predictions" 
+                className="flex flex-col items-center justify-center h-full text-xs font-medium data-[state=active]:bg-blue-50 data-[state=active]:text-blue-600 dark:data-[state=active]:bg-blue-900/30 dark:data-[state=active]:text-blue-400 data-[state=inactive]:text-gray-600 dark:data-[state=inactive]:text-gray-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors border-0 rounded-none"
+              >
+                <TrendingUp className="h-5 w-5 mb-1" />
+                <span>Voorspelling</span>
+              </TabsTrigger>
+              <TabsTrigger 
+                value="coalitions" 
+                className="flex flex-col items-center justify-center h-full text-xs font-medium data-[state=active]:bg-green-50 data-[state=active]:text-green-600 dark:data-[state=active]:bg-green-900/30 dark:data-[state=active]:text-green-400 data-[state=inactive]:text-gray-600 dark:data-[state=inactive]:text-gray-400 hover:bg-green-50 dark:hover:bg-green-900/20 transition-colors border-0 rounded-none"
+              >
+                <Users className="h-5 w-5 mb-1" />
+                <span>Coalitie</span>
+              </TabsTrigger>
+              <TabsTrigger 
+                value="export" 
+                className="flex flex-col items-center justify-center h-full text-xs font-medium data-[state=active]:bg-orange-50 data-[state=active]:text-orange-600 dark:data-[state=active]:bg-orange-900/30 dark:data-[state=active]:text-orange-400 data-[state=inactive]:text-gray-600 dark:data-[state=inactive]:text-gray-400 hover:bg-orange-50 dark:hover:bg-orange-900/20 transition-colors border-0 rounded-none"
+              >
+                <Share2 className="h-5 w-5 mb-1" />
+                <span>Share</span>
+              </TabsTrigger>
+              <TabsTrigger 
+                value="analytics" 
+                className="flex flex-col items-center justify-center h-full text-xs font-medium data-[state=active]:bg-purple-50 data-[state=active]:text-purple-600 dark:data-[state=active]:bg-purple-900/30 dark:data-[state=active]:text-purple-400 data-[state=inactive]:text-gray-600 dark:data-[state=inactive]:text-gray-400 hover:bg-purple-50 dark:hover:bg-purple-900/20 transition-colors border-0 rounded-none"
+              >
+                <BarChart className="h-5 w-5 mb-1" />
+                <span>Analyses</span>
+              </TabsTrigger>
+            </TabsList>
+          </div>
         </Tabs>
       </main>
 
       {/* Footer */}
-      <footer className="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 mt-12">
+      <footer className="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 mt-12 pb-20 md:pb-0">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex justify-between items-center">
             <div className="text-sm coalition-neutral">
