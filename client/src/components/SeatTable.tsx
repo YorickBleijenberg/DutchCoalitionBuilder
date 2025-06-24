@@ -57,7 +57,17 @@ export default function SeatTable() {
         <Card className="bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-700">
           <CardContent className="p-4">
             <div className="flex justify-between items-center mb-4">
-              <span className="font-medium text-blue-900 dark:text-blue-100">{t('seats.total')}: 150</span>
+              <Badge 
+                variant={seatStatus.isComplete ? "default" : seatStatus.isUnder ? "secondary" : "destructive"}
+                className="inline-flex items-center"
+              >
+                {seatStatus.isComplete ? (
+                  <CheckCircle className="mr-1 h-3 w-3" />
+                ) : (
+                  <AlertTriangle className="mr-1 h-3 w-3" />
+                )}
+                {t(`seats.${seatStatus.isComplete ? 'complete' : seatStatus.isUnder ? 'unassigned' : 'overassigned'}`)} {seatStatus.isComplete ? '' : Math.abs(seatStatus.difference)}
+              </Badge>
               <span className="text-2xl font-bold text-blue-900 dark:text-blue-100">{totalSeats}</span>
             </div>
             
@@ -114,19 +124,7 @@ export default function SeatTable() {
               )}
             </div>
             
-            <div className="flex justify-center">
-              <Badge 
-                variant={seatStatus.isComplete ? "default" : seatStatus.isUnder ? "secondary" : "destructive"}
-                className="inline-flex items-center"
-              >
-                {seatStatus.isComplete ? (
-                  <CheckCircle className="mr-1 h-3 w-3" />
-                ) : (
-                  <AlertTriangle className="mr-1 h-3 w-3" />
-                )}
-                {t(`seats.${seatStatus.isComplete ? 'complete' : seatStatus.isUnder ? 'unassigned' : 'overassigned'}`)} {seatStatus.isComplete ? '' : Math.abs(seatStatus.difference)}
-              </Badge>
-            </div>
+
           </CardContent>
         </Card>
       </div>
@@ -141,7 +139,7 @@ export default function SeatTable() {
                 variant="outline"
                 size="sm"
                 onClick={() => loadPollData('current')}
-                className="text-xs"
+                className="text-xs bg-blue-100 hover:bg-blue-200 text-blue-800 border-blue-300 hover:border-blue-400 dark:bg-blue-900 dark:text-blue-200 dark:border-blue-700 dark:hover:bg-blue-800 dark:hover:border-blue-600"
               >
                 TK2023
               </Button>
@@ -149,7 +147,7 @@ export default function SeatTable() {
                 variant="outline"
                 size="sm"
                 onClick={() => loadPollData('peilingwijzer')}
-                className="text-xs"
+                className="text-xs bg-green-100 hover:bg-green-200 text-green-800 border-green-300 hover:border-green-400 dark:bg-green-900 dark:text-green-200 dark:border-green-700 dark:hover:bg-green-800 dark:hover:border-green-600"
               >
                 Peilingwijzer
               </Button>
@@ -157,7 +155,7 @@ export default function SeatTable() {
                 variant="outline"
                 size="sm"
                 onClick={() => loadPollData('peil')}
-                className="text-xs"
+                className="text-xs bg-orange-100 hover:bg-orange-200 text-orange-800 border-orange-300 hover:border-orange-400 dark:bg-orange-900 dark:text-orange-200 dark:border-orange-700 dark:hover:bg-orange-800 dark:hover:border-orange-600"
               >
                 Peil.nl
               </Button>
@@ -165,7 +163,7 @@ export default function SeatTable() {
                 variant="outline"
                 size="sm"
                 onClick={() => loadPollData('1v')}
-                className="text-xs"
+                className="text-xs bg-purple-100 hover:bg-purple-200 text-purple-800 border-purple-300 hover:border-purple-400 dark:bg-purple-900 dark:text-purple-200 dark:border-purple-700 dark:hover:bg-purple-800 dark:hover:border-purple-600"
               >
                 1V
               </Button>

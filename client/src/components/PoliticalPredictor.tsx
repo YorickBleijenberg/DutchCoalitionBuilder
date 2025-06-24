@@ -115,21 +115,21 @@ export default function PoliticalPredictor() {
         <CardHeader>
           <CardTitle className="flex items-center">
             <Share2 className="mr-2 h-5 w-5" />
-            Political Predictor
+            Politieke Voorspeller
           </CardTitle>
           <p className="text-sm text-gray-600 dark:text-gray-400">
-            Share your election predictions with personalized insights
+            Deel je verkiezingsvoorspellingen met persoonlijke inzichten
           </p>
         </CardHeader>
         <CardContent>
           <div className="flex gap-3">
             <Button onClick={exportPrediction} className="flex-1">
               <Download className="mr-2 h-4 w-4" />
-              Export Image
+              Exporteer Afbeelding
             </Button>
             <Button onClick={handleShare} variant="outline" className="flex-1">
               <Share2 className="mr-2 h-4 w-4" />
-              Share Prediction
+              Deel Voorspelling
             </Button>
           </div>
         </CardContent>
@@ -143,7 +143,7 @@ export default function PoliticalPredictor() {
         {/* Header */}
         <div className="text-center">
           <h2 className="text-2xl font-bold text-blue-900 dark:text-blue-100 mb-2">
-            My Dutch Election Prediction
+            Mijn Nederlandse Verkiezingsvoorspelling
           </h2>
           <p className="text-blue-700 dark:text-blue-300">
             {format(new Date(), 'EEEE, d MMMM yyyy', { locale: nl })}
@@ -185,7 +185,7 @@ export default function PoliticalPredictor() {
             <div className="flex items-center justify-between mb-3">
               <h3 className="font-semibold text-blue-900 dark:text-blue-100 flex items-center">
                 <Users className="mr-2 h-4 w-4" />
-                My Coalition Prediction
+                Mijn Coalitievoorspelling
               </h3>
               <Badge 
                 variant={hasMajority ? "default" : "destructive"} 
@@ -221,7 +221,7 @@ export default function PoliticalPredictor() {
         <div className="bg-white/60 dark:bg-gray-800/60 p-4 rounded-lg border border-blue-200 dark:border-blue-600">
           <h3 className="font-semibold text-blue-900 dark:text-blue-100 mb-3 flex items-center">
             <Eye className="mr-2 h-4 w-4" />
-            Key Insights
+            Belangrijkste Inzichten
           </h3>
           <div className="space-y-2">
             {predictionData.insights.map((insight, index) => (

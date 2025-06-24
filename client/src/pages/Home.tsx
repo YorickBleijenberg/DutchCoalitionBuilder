@@ -66,7 +66,7 @@ export default function Home() {
                 value="predictions" 
                 className="px-2 sm:px-4 py-2 text-xs sm:text-sm data-[state=active]:bg-blue-500 data-[state=active]:text-white data-[state=active]:shadow-md transition-all duration-200"
               >
-                <span className="hidden sm:inline">{t('tabs.predictions')}</span>
+                <span className="hidden sm:inline">Voorspelling uitslag</span>
                 <span className="sm:hidden">Zetels</span>
               </TabsTrigger>
               <TabsTrigger 
@@ -77,18 +77,18 @@ export default function Home() {
                 <span className="sm:hidden">Coalitie</span>
               </TabsTrigger>
               <TabsTrigger 
-                value="analytics" 
-                className="px-2 sm:px-4 py-2 text-xs sm:text-sm data-[state=active]:bg-purple-500 data-[state=active]:text-white data-[state=active]:shadow-md transition-all duration-200"
-              >
-                <span className="hidden sm:inline">{t('tabs.analytics')}</span>
-                <span className="sm:hidden">Analytics</span>
-              </TabsTrigger>
-              <TabsTrigger 
                 value="export" 
                 className="px-2 sm:px-4 py-2 text-xs sm:text-sm data-[state=active]:bg-orange-500 data-[state=active]:text-white data-[state=active]:shadow-md transition-all duration-200"
               >
-                <span className="hidden sm:inline">{t('tabs.export')}</span>
-                <span className="sm:hidden">Export</span>
+                <span className="hidden sm:inline">Share</span>
+                <span className="sm:hidden">Share</span>
+              </TabsTrigger>
+              <TabsTrigger 
+                value="analytics" 
+                className="px-2 sm:px-4 py-2 text-xs sm:text-sm data-[state=active]:bg-purple-500 data-[state=active]:text-white data-[state=active]:shadow-md transition-all duration-200"
+              >
+                <span className="hidden sm:inline">Analyses</span>
+                <span className="sm:hidden">Analyses</span>
               </TabsTrigger>
             </TabsList>
             
@@ -159,6 +159,11 @@ export default function Home() {
             <IdeologicalCoalitions />
           </TabsContent>
 
+          {/* Export & Share Tab */}
+          <TabsContent value="export" className="space-y-8 bg-orange-50/30 dark:bg-orange-900/10 rounded-lg p-6">
+            <PoliticalPredictor />
+          </TabsContent>
+
           {/* Analytics Tab */}
           <TabsContent value="analytics" className="space-y-8 bg-purple-50/30 dark:bg-purple-900/10 rounded-lg p-6">
             <CoalitionTimeline />
@@ -172,11 +177,6 @@ export default function Home() {
             <div className="w-full">
               <ParliamentChart />
             </div>
-          </TabsContent>
-
-          {/* Export & Share Tab */}
-          <TabsContent value="export" className="space-y-8 bg-orange-50/30 dark:bg-orange-900/10 rounded-lg p-6">
-            <PoliticalPredictor />
           </TabsContent>
         </Tabs>
       </main>

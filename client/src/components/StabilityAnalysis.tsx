@@ -59,18 +59,18 @@ export default function StabilityAnalysis() {
       <CardHeader className="bg-gray-50 dark:bg-gray-700 border-b border-gray-200 dark:border-gray-600">
         <CardTitle className="text-lg font-inter font-semibold flex items-center">
           <Award className="mr-2 h-5 w-5" />
-          Stability Analysis
+          Stabiliteitsanalyse
         </CardTitle>
         <p className="text-sm coalition-neutral mt-1">
-          Advanced coalition stability scoring and predictions
+          Geavanceerde coalitie stabiliteitsscoring en voorspellingen
         </p>
       </CardHeader>
       
       <CardContent className="p-6">
         <Tabs defaultValue="current" className="w-full">
           <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="current">Current Coalition</TabsTrigger>
-            <TabsTrigger value="recommendations">Recommendations</TabsTrigger>
+            <TabsTrigger value="current">Huidige Coalitie</TabsTrigger>
+            <TabsTrigger value="recommendations">Aanbevelingen</TabsTrigger>
           </TabsList>
           
           <TabsContent value="current" className="space-y-6">

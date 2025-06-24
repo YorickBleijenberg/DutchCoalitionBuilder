@@ -81,17 +81,17 @@ export default function SwingAnalysis() {
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <TrendingUp className="h-5 w-5" />
-          Swing Analysis
+          Swing Analyse
         </CardTitle>
         <p className="text-sm text-gray-600 dark:text-gray-400">
-          See how seat changes affect coalition possibilities
+          Bekijk hoe zetelverschuivingen coalitie mogelijkheden beïnvloeden
         </p>
       </CardHeader>
       
       <CardContent className="space-y-6">
         {/* Party Selection */}
         <div>
-          <h4 className="font-medium mb-3">Select party to analyze:</h4>
+          <h4 className="font-medium mb-3">Selecteer partij om te analyseren:</h4>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
             {parties.filter(p => (partySeats[p.id] || 0) > 0).map(party => (
               <Button
@@ -117,7 +117,7 @@ export default function SwingAnalysis() {
           <div className="space-y-4">
             <div>
               <div className="flex justify-between items-center mb-2">
-                <h4 className="font-medium">Seat change:</h4>
+                <h4 className="font-medium">Zetelverandering:</h4>
                 <div className="flex items-center gap-2">
                   {swingAmount[0] > 0 && <TrendingUp className="h-4 w-4 text-green-600" />}
                   {swingAmount[0] < 0 && <TrendingDown className="h-4 w-4 text-red-600" />}

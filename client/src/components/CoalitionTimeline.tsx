@@ -138,10 +138,10 @@ export default function CoalitionTimeline() {
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Clock className="h-5 w-5" />
-          Coalition Formation Timeline
+          Coalitievorming Tijdlijn
         </CardTitle>
         <p className="text-sm text-gray-600 dark:text-gray-400">
-          Historical formation times and current coalition prediction
+          Historische vormingstijden en huidige coalitievoorspelling
         </p>
       </CardHeader>
       
@@ -153,7 +153,7 @@ export default function CoalitionTimeline() {
         {prediction && (
           <div className="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-700">
             <div className="flex items-center justify-between mb-3">
-              <h4 className="font-semibold text-blue-900 dark:text-blue-100">Current Coalition Prediction</h4>
+              <h4 className="font-semibold text-blue-900 dark:text-blue-100">Huidige Coalitievoorspelling</h4>
               <Badge className={getDifficultyColor(prediction.difficulty)}>
                 {prediction.difficulty}
               </Badge>
