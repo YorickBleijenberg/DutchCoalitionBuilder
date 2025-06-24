@@ -141,6 +141,7 @@ Changelog:
 - June 23, 2025. Conditional display of CoalitionPredictionBar only when parties are selected in Seat Predictions
 - June 24, 2025. Implemented mobile-first bottom tab navigation for native app feel on phones while keeping desktop tabs at top
 - June 24, 2025. Enhanced top banner with smaller countdown font, moved guided tour and settings to banner with icon-only buttons, fixed mobile seat increment bug
+- June 24, 2025. Streamlined interface by removing clear button from Coalition Builder and settings buttons next to tabs for cleaner design
 ```
 
 ## User Preferences

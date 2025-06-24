@@ -114,33 +114,7 @@ export default function Home() {
               </TabsTrigger>
             </TabsList>
             
-            {/* Action Buttons */}
-            <div className="flex flex-wrap gap-2 ml-4">
-              
-              {/* Settings Dropdown */}
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="outline" size="sm" className="flex items-center">
-                    <Settings className="mr-2 h-4 w-4" />
-                    <span className="hidden sm:inline">Instellingen</span>
-                    <span className="sm:hidden">Menu</span>
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-48">
-                  <DropdownMenuItem onClick={toggleDarkMode}>
-                    {darkMode ? <Sun className="mr-2 h-4 w-4" /> : <Moon className="mr-2 h-4 w-4" />}
-                    {darkMode ? 'Lichte modus' : 'Donkere modus'}
-                  </DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={() => setLanguage('nl')} className={language === 'nl' ? 'bg-gray-100 dark:bg-gray-700' : ''}>
-                    🇳🇱 Nederlands
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => setLanguage('en')} className={language === 'en' ? 'bg-gray-100 dark:bg-gray-700' : ''}>
-                    🇬🇧 English
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </div>
+
           </div>
           
           
