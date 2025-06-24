@@ -11,7 +11,7 @@ import ParliamentChart from '../components/ParliamentChart';
 import CoalitionSuggestions from '../components/CoalitionSuggestions';
 import CoalitionBuilder from '../components/CoalitionBuilder';
 import CoalitionPredictionBar from '../components/CoalitionPredictionBar';
-import CoalitionPredictionBarSimple from '../components/CoalitionPredictionBarSimple';
+
 import StabilityAnalysis from '../components/StabilityAnalysis';
 import ScenarioManager from '../components/ScenarioManager';
 import SwingAnalysis from '../components/SwingAnalysis';
@@ -121,7 +121,6 @@ export default function Home() {
 
           {/* Seat Predictions Tab */}
           <TabsContent value="predictions" className="space-y-8 bg-blue-50/30 dark:bg-blue-900/10 rounded-lg p-6">
-            {selectedParties.length > 0 && <CoalitionPredictionBarSimple />}
             <SeatTable />
             <div className="w-full">
               <ComparisonBarChart />
