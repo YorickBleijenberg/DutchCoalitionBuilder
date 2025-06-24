@@ -81,9 +81,9 @@ export default function Home() {
       
       <main className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pb-20 md:pb-8">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          {/* Desktop Tab Navigation - Hidden on Mobile */}
-          <div className="hidden md:flex flex-row justify-between items-center mb-8">
-            <TabsList className="grid w-full grid-cols-4 bg-white dark:bg-gray-800 p-1 rounded-lg border border-gray-200 dark:border-gray-700">
+          {/* Desktop Tab Navigation - Hidden on Mobile, Sticky on Desktop */}
+          <div className="hidden md:flex flex-row justify-between items-center mb-8 sticky top-0 z-50 bg-gray-50 dark:bg-gray-900 py-4">
+            <TabsList className="grid w-full grid-cols-4 bg-white dark:bg-gray-800 p-1 rounded-lg border border-gray-200 dark:border-gray-700 shadow-lg">
               <TabsTrigger 
                 value="predictions" 
                 className="text-sm font-medium data-[state=active]:bg-blue-500 data-[state=active]:text-white data-[state=inactive]:text-blue-700 dark:data-[state=inactive]:text-blue-300 hover:bg-blue-100 dark:hover:bg-blue-900 transition-colors"
