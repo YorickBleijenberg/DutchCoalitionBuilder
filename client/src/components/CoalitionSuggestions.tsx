@@ -15,6 +15,7 @@ export default function CoalitionSuggestions() {
     partySeats, 
     excludedParties,
     setExcludedParties,
+    selectedParties,
     setSelectedParties 
   } = useApp();
 

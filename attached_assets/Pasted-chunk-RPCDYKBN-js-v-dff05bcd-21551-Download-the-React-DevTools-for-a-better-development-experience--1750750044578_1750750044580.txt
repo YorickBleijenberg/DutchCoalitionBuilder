@@ -1,0 +1,70 @@
+chunk-RPCDYKBN.js?v=dff05bcd:21551 Download the React DevTools for a better development experience: https://reactjs.org/link/react-devtools
+injected.js:5 [USO] Button detection aborting due to timeout.
+injected.js:5 [USO] Button detection aborting due to timeout.
+injected.js:5 [USO] Button detection aborting due to timeout.
+CoalitionSuggestions.tsx:74 Uncaught ReferenceError: selectedParties is not defined
+    at handleIncludeParty (CoalitionSuggestions.tsx:74:5)
+    at Object.onValueChange [as current] (CoalitionSuggestions.tsx:106:49)
+    at chunk-TGOC7W4Y.js?v=dff05bcd:115:61
+    at Object.onValueChange (chunk-TGOC7W4Y.js?v=dff05bcd:136:30)
+    at handleSelect (@radix-ui_react-select.js?v=dff05bcd:860:17)
+    at @radix-ui_react-select.js?v=dff05bcd:906:59
+    at handleEvent (chunk-TGOC7W4Y.js?v=dff05bcd:22:49)
+    at HTMLUnknownElement.callCallback2 (chunk-RPCDYKBN.js?v=dff05bcd:3674:22)
+    at Object.invokeGuardedCallbackDev (chunk-RPCDYKBN.js?v=dff05bcd:3699:24)
+    at invokeGuardedCallback (chunk-RPCDYKBN.js?v=dff05bcd:3733:39)
+handleIncludeParty @ CoalitionSuggestions.tsx:74
+onValueChange @ CoalitionSuggestions.tsx:106
+(anonymous) @ chunk-TGOC7W4Y.js?v=dff05bcd:115
+(anonymous) @ chunk-TGOC7W4Y.js?v=dff05bcd:136
+handleSelect @ @radix-ui_react-select.js?v=dff05bcd:860
+(anonymous) @ @radix-ui_react-select.js?v=dff05bcd:906
+handleEvent @ chunk-TGOC7W4Y.js?v=dff05bcd:22
+callCallback2 @ chunk-RPCDYKBN.js?v=dff05bcd:3674
+invokeGuardedCallbackDev @ chunk-RPCDYKBN.js?v=dff05bcd:3699
+invokeGuardedCallback @ chunk-RPCDYKBN.js?v=dff05bcd:3733
+invokeGuardedCallbackAndCatchFirstError @ chunk-RPCDYKBN.js?v=dff05bcd:3736
+executeDispatch @ chunk-RPCDYKBN.js?v=dff05bcd:7014
+processDispatchQueueItemsInOrder @ chunk-RPCDYKBN.js?v=dff05bcd:7034
+processDispatchQueue @ chunk-RPCDYKBN.js?v=dff05bcd:7043
+dispatchEventsForPlugins @ chunk-RPCDYKBN.js?v=dff05bcd:7051
+(anonymous) @ chunk-RPCDYKBN.js?v=dff05bcd:7174
+batchedUpdates$1 @ chunk-RPCDYKBN.js?v=dff05bcd:18913
+batchedUpdates @ chunk-RPCDYKBN.js?v=dff05bcd:3579
+dispatchEventForPluginEventSystem @ chunk-RPCDYKBN.js?v=dff05bcd:7173
+dispatchEventWithEnableCapturePhaseSelectiveHydrationWithoutDiscreteEventReplay @ chunk-RPCDYKBN.js?v=dff05bcd:5478
+dispatchEvent @ chunk-RPCDYKBN.js?v=dff05bcd:5472
+dispatchDiscreteEvent @ chunk-RPCDYKBN.js?v=dff05bcd:5449
+chunk-RPCDYKBN.js?v=dff05bcd:3750 Uncaught ReferenceError: selectedParties is not defined
+    at handleIncludeParty (CoalitionSuggestions.tsx:74:5)
+    at Object.onValueChange [as current] (CoalitionSuggestions.tsx:106:49)
+    at chunk-TGOC7W4Y.js?v=dff05bcd:115:61
+    at Object.onValueChange (chunk-TGOC7W4Y.js?v=dff05bcd:136:30)
+    at handleSelect (@radix-ui_react-select.js?v=dff05bcd:860:17)
+    at @radix-ui_react-select.js?v=dff05bcd:906:59
+    at handleEvent (chunk-TGOC7W4Y.js?v=dff05bcd:22:49)
+    at HTMLUnknownElement.callCallback2 (chunk-RPCDYKBN.js?v=dff05bcd:3674:22)
+    at Object.invokeGuardedCallbackDev (chunk-RPCDYKBN.js?v=dff05bcd:3699:24)
+    at invokeGuardedCallback (chunk-RPCDYKBN.js?v=dff05bcd:3733:39)
+handleIncludeParty @ CoalitionSuggestions.tsx:74
+onValueChange @ CoalitionSuggestions.tsx:106
+(anonymous) @ chunk-TGOC7W4Y.js?v=dff05bcd:115
+(anonymous) @ chunk-TGOC7W4Y.js?v=dff05bcd:136
+handleSelect @ @radix-ui_react-select.js?v=dff05bcd:860
+(anonymous) @ @radix-ui_react-select.js?v=dff05bcd:906
+handleEvent @ chunk-TGOC7W4Y.js?v=dff05bcd:22
+callCallback2 @ chunk-RPCDYKBN.js?v=dff05bcd:3674
+invokeGuardedCallbackDev @ chunk-RPCDYKBN.js?v=dff05bcd:3699
+invokeGuardedCallback @ chunk-RPCDYKBN.js?v=dff05bcd:3733
+invokeGuardedCallbackAndCatchFirstError @ chunk-RPCDYKBN.js?v=dff05bcd:3736
+executeDispatch @ chunk-RPCDYKBN.js?v=dff05bcd:7014
+processDispatchQueueItemsInOrder @ chunk-RPCDYKBN.js?v=dff05bcd:7034
+processDispatchQueue @ chunk-RPCDYKBN.js?v=dff05bcd:7043
+dispatchEventsForPlugins @ chunk-RPCDYKBN.js?v=dff05bcd:7051
+(anonymous) @ chunk-RPCDYKBN.js?v=dff05bcd:7174
+batchedUpdates$1 @ chunk-RPCDYKBN.js?v=dff05bcd:18913
+batchedUpdates @ chunk-RPCDYKBN.js?v=dff05bcd:3579
+dispatchEventForPluginEventSystem @ chunk-RPCDYKBN.js?v=dff05bcd:7173
+dispatchEventWithEnableCapturePhaseSelectiveHydrationWithoutDiscreteEventReplay @ chunk-RPCDYKBN.js?v=dff05bcd:5478
+dispatchEvent @ chunk-RPCDYKBN.js?v=dff05bcd:5472
+dispatchDiscreteEvent @ chunk-RPCDYKBN.js?v=dff05bcd:5449
