@@ -179,7 +179,62 @@ export default function PoliticalPredictor() {
           ))}
         </div>
 
+        {/* Coalition Summary */}
+        {selectedParties.length > 0 && (
+          <div className="bg-white/60 dark:bg-gray-800/60 p-4 rounded-lg border border-blue-200 dark:border-blue-600">
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="font-semibold text-blue-900 dark:text-blue-100 flex items-center">
+                <Users className="mr-2 h-4 w-4" />
+                My Coalition Prediction
+              </h3>
+              <Badge 
+                variant={hasMajority ? "default" : "destructive"} 
+                className="px-2 py-1 text-xs"
+              >
+                {hasMajority ? 'Majority Coalition' : 'No Majority'}
+              </Badge>
+            </div>
+            <div className="flex items-center justify-between">
+              <div className="flex flex-wrap gap-2">
+                {predictionData.selectedCoalition.map(party => (
+                  <div key={party.id} className="flex items-center space-x-1 bg-blue-100 dark:bg-blue-800 px-2 py-1 rounded">
+                    <div
+                      className="w-3 h-3 rounded-full"
+                      style={{ backgroundColor: party.color }}
+                    />
+                    <span className="text-xs font-medium text-blue-900 dark:text-blue-100">
+                      {party.name}
+                    </span>
+                  </div>
+                ))}
+              </div>
+              <div className="text-right">
+                <div className="text-lg font-bold text-blue-900 dark:text-blue-100">
+                  {coalitionSeats} seats
+                </div>
+                <div className="text-xs text-gray-600 dark:text-gray-400">
+                  out of 150
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
 
+        {/* Key Insights */}
+        <div className="bg-white/60 dark:bg-gray-800/60 p-4 rounded-lg border border-blue-200 dark:border-blue-600">
+          <h3 className="font-semibold text-blue-900 dark:text-blue-100 mb-3 flex items-center">
+            <Eye className="mr-2 h-4 w-4" />
+            Key Insights
+          </h3>
+          <div className="space-y-2">
+            {predictionData.insights.map((insight, index) => (
+              <div key={index} className="flex items-center text-sm text-blue-800 dark:text-blue-200">
+                <div className="w-2 h-2 bg-blue-500 rounded-full mr-3 flex-shrink-0" />
+                {insight}
+              </div>
+            ))}
+          </div>
+        </div>
 
         {/* Footer */}
         <div className="text-center text-xs text-blue-600 dark:text-blue-400 border-t border-blue-200 dark:border-blue-700 pt-4">
