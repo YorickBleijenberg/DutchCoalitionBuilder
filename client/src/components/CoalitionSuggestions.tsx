@@ -69,6 +69,11 @@ export default function CoalitionSuggestions() {
     }
     // Set to show only coalitions that include this party
     setIncludedParty(partyId);
+    
+    // Also add this party to the current selection if not already selected
+    if (!selectedParties.includes(partyId)) {
+      setSelectedParties([...selectedParties, partyId]);
+    }
   };
 
   const availableParties = parties.filter(party => 

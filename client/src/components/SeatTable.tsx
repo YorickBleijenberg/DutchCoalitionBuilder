@@ -56,7 +56,7 @@ export default function SeatTable() {
   return (
     <div className="space-y-6">
       {/* Sticky Header with Progress Bar */}
-      <div className={`sticky ${selectedParties.length > 0 ? 'top-32 md:top-44' : 'top-16 md:top-28'} z-20 bg-white dark:bg-gray-900 pb-2`}>
+      <div className={`sticky ${selectedParties.length > 0 ? 'top-28 md:top-36' : 'top-16 md:top-28'} z-20 bg-white dark:bg-gray-900 pb-2`}>
         <Card className="bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-700">
           <CardContent className="p-4">
             <div className="flex justify-between items-center mb-4">
