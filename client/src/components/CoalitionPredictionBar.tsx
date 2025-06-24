@@ -22,7 +22,20 @@ export default function CoalitionPredictionBar() {
     <Card className="sticky top-4 md:top-20 z-20 bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-600 shadow-md">
       <CardContent className="p-4">
         <div className="flex justify-between items-center mb-3">
-          <span className="font-medium text-gray-900 dark:text-gray-100">Coalitie</span>
+          <div className="flex items-center gap-3">
+            <span className="font-medium text-gray-900 dark:text-gray-100">Coalitie</span>
+            <div
+              className={`text-sm font-medium px-2 py-1 rounded ${
+                hasMajority 
+                  ? "bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300" 
+                  : "bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-300"
+              }`}
+            >
+              {hasMajority
+                ? `Meerderheid (+${coalitionSeats - 76})`
+                : `${76 - coalitionSeats} zetels nodig`}
+            </div>
+          </div>
           <div className="text-right">
             <div className="text-sm text-gray-600 dark:text-gray-400">
               Coalitie zetels: <span className="font-bold text-lg text-gray-900 dark:text-gray-100">{coalitionSeats}</span>
