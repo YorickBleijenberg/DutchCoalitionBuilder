@@ -147,6 +147,9 @@ Changelog:
 - June 24, 2025. Moved Scenario Manager to bottom of Coalition Builder tab for better organization
 - June 24, 2025. Made Ideological Coalitions more compact with 4-column layout and smaller design
 - June 24, 2025. Added Save Coalition button to CoalitionBuilder header with toast notifications
+- June 24, 2025. Swapped tab order: Coalition Builder now first tab, Seat Predictions second
+- June 24, 2025. Enhanced visual contrast with darker page background (gray-100/gray-800)
+- June 24, 2025. Streamlined CoalitionPredictionBar: removed "Coalitie" label and "Meerderheidslijn" text, centered majority indicator
 ```
 
 ## User Preferences

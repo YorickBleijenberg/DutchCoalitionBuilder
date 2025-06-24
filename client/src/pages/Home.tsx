@@ -29,7 +29,7 @@ import { RotateCcw, Download, Settings, Moon, Sun, Calendar, TrendingUp, Users, 
 export default function Home() {
   const { t } = useTranslation();
   const { loadCurrentSeats, resetSeats, darkMode, toggleDarkMode, language, setLanguage, selectedParties } = useApp();
-  const [activeTab, setActiveTab] = useState('predictions');
+  const [activeTab, setActiveTab] = useState('coalitions');
 
   return (
     <div className="min-h-screen coalition-background coalition-text transition-colors duration-300">
@@ -79,24 +79,24 @@ export default function Home() {
         </div>
       </div>
       
-      <main className="max-w-none mx-auto px-0.5 sm:px-4 lg:px-6 py-8 pb-20 md:pb-8">
+      <main className="max-w-none mx-auto px-0.5 sm:px-4 lg:px-6 py-8 pb-20 md:pb-8 bg-gray-100 dark:bg-gray-800">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
           {/* Desktop Tab Navigation - Hidden on Mobile, Sticky on Desktop */}
           <div className="hidden md:flex flex-row justify-between items-center mb-8 sticky top-0 z-50 bg-gray-50 dark:bg-gray-900 py-4">
             <TabsList className="grid w-full grid-cols-4 bg-white dark:bg-gray-800 p-1 rounded-lg border border-gray-200 dark:border-gray-700 shadow-lg">
-              <TabsTrigger 
-                value="predictions" 
-                className="text-sm font-medium data-[state=active]:bg-blue-500 data-[state=active]:text-white data-[state=inactive]:text-blue-700 dark:data-[state=inactive]:text-blue-300 hover:bg-blue-100 dark:hover:bg-blue-900 transition-colors"
-              >
-                <TrendingUp className="mr-1 h-4 w-4" />
-                Voorspelling uitslag
-              </TabsTrigger>
               <TabsTrigger 
                 value="coalitions" 
                 className="text-sm font-medium data-[state=active]:bg-green-500 data-[state=active]:text-white data-[state=inactive]:text-green-700 dark:data-[state=inactive]:text-green-300 hover:bg-green-100 dark:hover:bg-green-900 transition-colors"
               >
                 <Users className="mr-1 h-4 w-4" />
                 Coalitie zoeker
+              </TabsTrigger>
+              <TabsTrigger 
+                value="predictions" 
+                className="text-sm font-medium data-[state=active]:bg-blue-500 data-[state=active]:text-white data-[state=inactive]:text-blue-700 dark:data-[state=inactive]:text-blue-300 hover:bg-blue-100 dark:hover:bg-blue-900 transition-colors"
+              >
+                <TrendingUp className="mr-1 h-4 w-4" />
+                Voorspelling uitslag
               </TabsTrigger>
               <TabsTrigger 
                 value="export" 
@@ -177,18 +177,18 @@ export default function Home() {
           <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700 safe-area-bottom">
             <TabsList className="grid w-full grid-cols-4 bg-transparent p-0 h-16">
               <TabsTrigger 
-                value="predictions" 
-                className="flex flex-col items-center justify-center h-full text-xs font-medium data-[state=active]:bg-blue-50 data-[state=active]:text-blue-600 dark:data-[state=active]:bg-blue-900/30 dark:data-[state=active]:text-blue-400 data-[state=inactive]:text-gray-600 dark:data-[state=inactive]:text-gray-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors border-0 rounded-none"
-              >
-                <TrendingUp className="h-5 w-5 mb-1" />
-                <span>Voorspelling</span>
-              </TabsTrigger>
-              <TabsTrigger 
                 value="coalitions" 
                 className="flex flex-col items-center justify-center h-full text-xs font-medium data-[state=active]:bg-green-50 data-[state=active]:text-green-600 dark:data-[state=active]:bg-green-900/30 dark:data-[state=active]:text-green-400 data-[state=inactive]:text-gray-600 dark:data-[state=inactive]:text-gray-400 hover:bg-green-50 dark:hover:bg-green-900/20 transition-colors border-0 rounded-none"
               >
                 <Users className="h-5 w-5 mb-1" />
                 <span>Coalitie</span>
+              </TabsTrigger>
+              <TabsTrigger 
+                value="predictions" 
+                className="flex flex-col items-center justify-center h-full text-xs font-medium data-[state=active]:bg-blue-50 data-[state=active]:text-blue-600 dark:data-[state=active]:bg-blue-900/30 dark:data-[state=active]:text-blue-400 data-[state=inactive]:text-gray-600 dark:data-[state=inactive]:text-gray-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors border-0 rounded-none"
+              >
+                <TrendingUp className="h-5 w-5 mb-1" />
+                <span>Voorspelling</span>
               </TabsTrigger>
               <TabsTrigger 
                 value="export" 
