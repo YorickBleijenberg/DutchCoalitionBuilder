@@ -36,14 +36,14 @@ export default function Home() {
       <Header />
       
       {/* Election Countdown Banner */}
-      <div className="bg-blue-600 dark:bg-blue-800 text-white py-3">
+      <div className="bg-blue-600 dark:bg-blue-800 text-white py-1.5">
         <div className="max-w-none mx-auto px-0.5 sm:px-4 lg:px-6">
           <div className="flex items-center justify-between">
-            <span className="text-lg font-semibold">
+            <span className="text-sm font-medium">
               Nederland Coalitieland
             </span>
-            <div className="flex items-center gap-4">
-              <span className="text-sm font-medium">
+            <div className="flex items-center gap-3">
+              <span className="text-xs">
                 {(() => {
                   const electionDate = new Date('2025-10-29');
                   const today = new Date();
@@ -54,8 +54,8 @@ export default function Home() {
               </span>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" size="sm" className="h-8 w-8 p-0 text-white hover:bg-blue-700 dark:hover:bg-blue-700">
-                    <Settings className="h-4 w-4" />
+                  <Button variant="ghost" size="sm" className="h-6 w-6 p-0 text-white hover:bg-blue-700 dark:hover:bg-blue-700">
+                    <Settings className="h-3 w-3" />
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-48">
@@ -79,10 +79,10 @@ export default function Home() {
         </div>
       </div>
       
-      <main className="max-w-none mx-auto px-0.5 sm:px-4 lg:px-6 py-8 pb-20 md:pb-8 bg-gray-100 dark:bg-gray-800">
+      <main className="max-w-none mx-auto px-0.5 sm:px-4 lg:px-6 py-0 pb-20 md:pb-8 bg-gray-100 dark:bg-gray-800">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
           {/* Desktop Tab Navigation - Hidden on Mobile, Sticky on Desktop */}
-          <div className="hidden md:flex flex-row justify-between items-center mb-8 sticky top-0 z-50 bg-gray-50 dark:bg-gray-900 py-4">
+          <div className="hidden md:flex flex-row justify-between items-center mb-0 sticky top-0 z-50 bg-gray-100 dark:bg-gray-800 py-2">
             <TabsList className="grid w-full grid-cols-4 bg-white dark:bg-gray-800 p-1 rounded-lg border border-gray-200 dark:border-gray-700 shadow-lg">
               <TabsTrigger 
                 value="coalitions" 
@@ -128,7 +128,7 @@ export default function Home() {
           </TabsContent>
 
           {/* Coalition Builder Tab */}
-          <TabsContent value="coalitions" className="space-y-8 bg-green-50/30 dark:bg-green-900/10 rounded-lg p-6">
+          <TabsContent value="coalitions" className="space-y-6 bg-green-50/30 dark:bg-green-900/10 rounded-lg p-3 md:p-6">
             <CoalitionPredictionBar />
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               {/* Left Column: Coalition Builder + Ideological Coalitions */}

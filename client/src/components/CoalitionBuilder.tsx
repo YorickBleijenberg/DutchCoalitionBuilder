@@ -73,26 +73,24 @@ export default function CoalitionBuilder() {
 
   return (
     <Card className="bg-white dark:bg-gray-800 shadow-lg border border-gray-200 dark:border-gray-700">
-      <CardHeader className="bg-gray-50 dark:bg-gray-700 border-b border-gray-200 dark:border-gray-600">
+      <CardHeader className="bg-gray-50 dark:bg-gray-700 border-b border-gray-200 dark:border-gray-600 py-2">
         <div className="flex justify-between items-center">
-          <div>
-            <CardTitle className="text-lg font-inter font-semibold">
-              {t('coalition.builder')}
-            </CardTitle>
+          <div className="text-sm text-gray-600 dark:text-gray-400">
+            Selecteer partijen om een coalitie te vormen
           </div>
           <Button
             onClick={handleSaveScenario}
             size="sm"
             className="bg-blue-600 hover:bg-blue-700 text-white"
           >
-            Save Coalition
+            Bewaar coalitie
           </Button>
         </div>
       </CardHeader>
       
       <CardContent className="p-6">
-        {/* All Parties - Mobile: 2 Columns, Desktop: 3 Columns */}
-        <div className="grid grid-cols-2 lg:grid-cols-3 gap-3">
+        {/* All Parties - 4 Columns Layout */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
           {parties.filter(party => (seatData[party.id] || 0) > 0).map((party) => {
             const isSelected = selectedParties.includes(party.id);
             return (
@@ -105,20 +103,17 @@ export default function CoalitionBuilder() {
                     : 'border border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700'
                 }`}
               >
-                <div className="flex items-center space-x-3">
+                <div className="flex items-center space-x-2">
                   <div 
-                    className="w-4 h-4 rounded-full"
+                    className="w-3 h-3 rounded-full"
                     style={{ backgroundColor: party.color }}
                   />
                   <div>
-                    <div className="font-medium text-sm">{party.name}</div>
-                    <div className="text-xs coalition-neutral">
-                      {seatData[party.id] || 0} seats
-                    </div>
+                    <div className="font-medium text-sm">{party.name} ({seatData[party.id] || 0})</div>
                   </div>
                 </div>
                 {isSelected && (
-                  <CheckCircle className="hidden md:block h-4 w-4 text-green-600 dark:text-green-400" />
+                  <CheckCircle className="hidden md:block h-3 w-3 text-green-600 dark:text-green-400" />
                 )}
               </div>
             );

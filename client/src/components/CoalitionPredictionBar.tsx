@@ -19,7 +19,7 @@ export default function CoalitionPredictionBar() {
     .sort((a, b) => (partySeats[b.id] || 0) - (partySeats[a.id] || 0));
 
   return (
-    <Card className={`sticky top-4 md:top-20 z-20 ${hasMajority ? 'bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-700' : 'bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-600'} shadow-md`}>
+    <Card className={`sticky top-0 md:top-14 z-20 ${hasMajority ? 'bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-700' : 'bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-600'} shadow-md`}>
       <CardContent className="p-4">
         <div className="flex justify-between items-center mb-3">
           <div className="text-left">
