@@ -36,7 +36,7 @@ export default function Home() {
       <Header />
       
       {/* Election Countdown Banner */}
-      <div className="bg-blue-600 dark:bg-blue-800 text-white py-1.5">
+      <div className="bg-[#374c7a] dark:bg-[#374c7a] text-white py-1.5">
         <div className="max-w-none mx-auto px-0.5 sm:px-4 lg:px-6">
           <div className="flex items-center justify-between">
             <span className="text-sm font-medium">
