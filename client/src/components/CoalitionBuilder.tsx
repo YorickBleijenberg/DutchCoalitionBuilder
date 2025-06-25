@@ -78,20 +78,16 @@ export default function CoalitionBuilder() {
           <div className="text-sm text-gray-600 dark:text-gray-400">
             Selecteer partijen om een coalitie te vormen
           </div>
-          <Button
-            onClick={handleSaveScenario}
-            size="sm"
-            className="bg-blue-600 hover:bg-blue-700 text-white"
-          >
-            Bewaar coalitie
-          </Button>
         </div>
       </CardHeader>
       
       <CardContent className="p-6">
         {/* All Parties - 4 Columns Layout */}
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
-          {parties.filter(party => (seatData[party.id] || 0) > 0).map((party) => {
+          {parties
+            .filter(party => (seatData[party.id] || 0) > 0)
+            .sort((a, b) => (seatData[b.id] || 0) - (seatData[a.id] || 0))
+            .map((party) => {
             const isSelected = selectedParties.includes(party.id);
             return (
               <div 
@@ -133,6 +129,17 @@ export default function CoalitionBuilder() {
           </div>
         )}
       </CardContent>
+      <CardHeader className="bg-gray-50 dark:bg-gray-700 border-b border-gray-200 dark:border-gray-600 py-2">
+        <div className="flex justify-between items-center">          
+          <Button
+            onClick={handleSaveScenario}
+            size="sm"
+            className="ml-auto bg-blue-600 hover:bg-blue-700 text-white"
+          >
+            Bewaar coalitie
+          </Button>
+        </div>
+      </CardHeader>
     </Card>
   );
 }

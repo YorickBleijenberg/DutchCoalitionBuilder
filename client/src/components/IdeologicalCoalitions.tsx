@@ -40,8 +40,8 @@ export default function IdeologicalCoalitions() {
   // Always show the component, even if no coalitions are viable
 
   return (
-    <Card className="bg-white dark:bg-gray-800 shadow-lg border border-gray-200 dark:border-gray-700">
-      <CardHeader className="bg-gray-50 dark:bg-gray-700 border-b border-gray-200 dark:border-gray-600">
+    <Card className="bg-white dark:bg-gray-800 shadow-lg border border-gray-200 dark:border-gray-700 ">
+      <CardHeader className="bg-gray-50 dark:bg-gray-700 border-b border-gray-200 dark:border-gray-600 py-1">
         <CardTitle className="text-lg font-inter font-semibold">
           Ideological Coalitions
         </CardTitle>
