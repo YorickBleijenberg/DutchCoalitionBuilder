@@ -84,10 +84,7 @@ export default function CoalitionBuilder() {
       <CardContent className="p-6">
         {/* All Parties - 4 Columns Layout */}
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
-          {parties
-            .filter(party => (seatData[party.id] || 0) > 0)
-            .sort((a, b) => (seatData[b.id] || 0) - (seatData[a.id] || 0))
-            .map((party) => {
+          {parties.filter(party => (seatData[party.id] || 0) > 0).map((party) => {
             const isSelected = selectedParties.includes(party.id);
             return (
               <div 
