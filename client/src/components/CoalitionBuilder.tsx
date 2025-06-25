@@ -75,7 +75,7 @@ export default function CoalitionBuilder() {
     <Card className="bg-white dark:bg-gray-800 shadow-lg border border-gray-200 dark:border-gray-700">
       <CardHeader className="bg-gray-50 dark:bg-gray-700 border-b border-gray-200 dark:border-gray-600 py-2">
         <div className="flex justify-between items-center">
-          <div className="text-sm text-gray-600 dark:text-gray-400">
+          <div className="text-sm font-bold text-gray-900 dark:text-gray-400">
             Selecteer partijen om een coalitie te vormen
           </div>
         </div>
@@ -84,7 +84,10 @@ export default function CoalitionBuilder() {
       <CardContent className="p-6">
         {/* All Parties - 4 Columns Layout */}
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
-          {parties.filter(party => (seatData[party.id] || 0) > 0).map((party) => {
+          {parties
+            .filter(party => (seatData[party.id] || 0) > 0)
+            .sort((a, b) => (seatData[b.id] || 0) - (seatData[a.id] || 0))
+            .map((party) => {
             const isSelected = selectedParties.includes(party.id);
             return (
               <div 
