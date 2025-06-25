@@ -52,6 +52,16 @@ export default function Home() {
                   return diffDays > 0 ? `Dagen tot de verkiezingen: ${diffDays}` : 'Verkiezingen vandaag!';
                 })()}
               </span>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={toggleDarkMode}
+                className="text-gray-100 dark:text-gray-100
+                hover:text-gray-900 dark:hover:text-white"
+              >
+                {darkMode  ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+              </Button>
+              
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant="ghost" size="sm" className="h-6 w-6 p-0 text-white hover:bg-blue-700 dark:hover:bg-blue-700">
@@ -60,11 +70,7 @@ export default function Home() {
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-48">
                   <GuidedBuilder menuItem />
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={toggleDarkMode}>
-                    {darkMode ? <Sun className="mr-2 h-4 w-4" /> : <Moon className="mr-2 h-4 w-4" />}
-                    {darkMode ? 'Lichte modus' : 'Donkere modus'}
-                  </DropdownMenuItem>
+                  
                   <DropdownMenuSeparator />
                   <DropdownMenuItem onClick={() => setLanguage('nl')} className={language === 'nl' ? 'bg-gray-100 dark:bg-gray-700' : ''}>
                     🇳🇱 Nederlands
