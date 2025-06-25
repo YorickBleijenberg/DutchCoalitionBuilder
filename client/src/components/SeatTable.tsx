@@ -54,7 +54,7 @@ export default function SeatTable() {
   }, []);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-2">
       {/* Sticky Header with Progress Bar */}
       <div className="sticky top-0 md:top-20 z-40 bg-transparent dark:bg-gray-900 pb-2">
         <Card className="bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-700">
@@ -75,7 +75,7 @@ export default function SeatTable() {
             </div>
             
             {/* Progress Bar with Party Segments */}
-            <div className={`relative w-full bg-blue-200 dark:bg-blue-800 rounded-full h-10 overflow-hidden mb-2 border-2 transition-colors ${
+            <div className={`relative w-full bg-blue-200 dark:bg-blue-800 rounded-full h-12 overflow-hidden mb-2 border-2 transition-colors ${
               seatStatus.isComplete ? 'border-green-500' : 'border-transparent'
             }`}>
               {/* Party segments */}
@@ -134,7 +134,7 @@ export default function SeatTable() {
 
       {/* Party List */}
       <Card className="bg-white dark:bg-gray-800 shadow-lg border border-gray-200 dark:border-gray-700">
-        <CardHeader className="bg-gray-50 dark:bg-gray-700 border-b border-gray-200 dark:border-gray-600">
+        <CardHeader className="py-2 bg-gray-50 dark:bg-gray-700 border-b border-gray-200 dark:border-gray-600">
           <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
             <CardTitle className="text-lg font-inter font-semibold">{t('seats.title')}</CardTitle>
             <div className="flex flex-wrap gap-2">

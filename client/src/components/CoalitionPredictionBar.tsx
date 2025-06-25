@@ -48,7 +48,7 @@ export default function CoalitionPredictionBar() {
         </div>
         
         {/* Progress Bar */}
-        <div className="relative w-full bg-gray-200 dark:bg-gray-700 rounded-full h-8 overflow-hidden">
+        <div className="relative w-full bg-gray-200 dark:bg-gray-700 rounded-full h-12 overflow-hidden">
           {/* Majority threshold line */}
           <div 
             className="absolute top-0 bottom-0 w-0.5 bg-red-500 dark:bg-red-400 z-10"

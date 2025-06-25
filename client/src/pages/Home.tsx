@@ -128,7 +128,7 @@ export default function Home() {
           </TabsContent>
 
           {/* Coalition Builder Tab */}
-          <TabsContent value="coalitions" className="space-y-6 bg-green-50/30 dark:bg-green-900/10 rounded-lg p-3 md:p-6">
+          <TabsContent value="coalitions" className="space-y-2 bg-gray-50/30 dark:bg-green-900/10 rounded-lg p-3 md:p-6">
             <CoalitionPredictionBar />
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               {/* Left Column: Coalition Builder + Ideological Coalitions */}
