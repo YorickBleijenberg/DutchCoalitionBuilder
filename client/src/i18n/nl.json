@@ -63,14 +63,14 @@
     "seats": "zetels",
     "gainsmost": "wint het meest:",
     "losesmost": "verliest het meest:",
-    "selectedCoalition": "Geselecteerde coalitie:",
+    "selectedCoalition": "Coalitie:",
     "majority": "Meerderheid",
     "minority": "Minderheid",
     "insights": "Inzichten",
     "noInsights": "Geen inzichten beschikbaar. Begin met het invoeren van zetels om analyses te zien.",
     "export": "Exporteer Voorspelling",
     "share": "Deel Voorspelling",
-    "shareTitle": "Mijn Nederlandse Verkiezingsvoorspelling",
+    "shareTitle": "Mijn Nederlandse Coalitievoorspelling",
     "shareText": "Mijn voorspelling voor de Nederlandse verkiezingen"
   }
 }
