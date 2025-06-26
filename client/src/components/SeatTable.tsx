@@ -4,8 +4,11 @@ import { calculateSeatDifference } from '../lib/coalition';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { CheckCircle, AlertTriangle, Plus, Minus, RotateCcw } from 'lucide-react';
+import { CheckCircle, AlertTriangle, RotateCcw } from 'lucide-react';
 import { useCallback } from 'react';
+import SeatCounter from './common/SeatCounter';
+import { SEAT_CONSTANTS } from '../lib/constants';
+import { formatSeatChange, getSeatChangeColor } from '../lib/formatters';
 
 export default function SeatTable() {
   const { t } = useTranslation();
@@ -13,13 +16,13 @@ export default function SeatTable() {
 
   const seatStatus = calculateSeatDifference(totalSeats);
 
-  const updatePartySeats = (partyId: string, newSeats: number) => {
-    const clampedSeats = Math.max(0, Math.min(150, newSeats));
+  const updatePartySeats = useCallback((partyId: string, newSeats: number) => {
+    const clampedSeats = Math.max(SEAT_CONSTANTS.MIN_SEATS, Math.min(SEAT_CONSTANTS.MAX_SEATS, newSeats));
     setPartySeats({
       ...partySeats,
       [partyId]: clampedSeats
     });
-  };
+  }, [partySeats, setPartySeats]);
 
   const resetPartySeats = (partyId: string) => {
     const party = parties.find(p => p.id === partyId);
@@ -73,7 +76,7 @@ export default function SeatTable() {
                   .sort((a, b) => (partySeats[b.id] || 0) - (partySeats[a.id] || 0))
                   .map((party) => {
                     const seats = partySeats[party.id] || 0;
-                    const widthPercent = (seats / 150) * 100;
+                    const widthPercent = (seats / SEAT_CONSTANTS.TOTAL_SEATS) * 100;
                     
                     return (
                       <div
@@ -82,7 +85,7 @@ export default function SeatTable() {
                         style={{
                           backgroundColor: party.color,
                           width: `${widthPercent}%`,
-                          opacity: totalSeats > 150 ? 0.7 : 0.9
+                          opacity: totalSeats > SEAT_CONSTANTS.TOTAL_SEATS ? 0.7 : 0.9
                         }}
                         title={`${party.name}: ${seats} seats`}
                       >
@@ -97,20 +100,20 @@ export default function SeatTable() {
                   })}
               </div>
               
-              {/* Red overlay when over 150 seats */}
-              {totalSeats > 150 && (
+              {/* Red overlay when over limit */}
+              {totalSeats > SEAT_CONSTANTS.TOTAL_SEATS && (
                 <div className="absolute inset-0 bg-red-500 bg-opacity-30 flex items-center justify-center">
                   <span className="text-sm font-bold text-red-800 drop-shadow-md">
-                    OVER LIMIT: {totalSeats}/150
+                    OVER LIMIT: {totalSeats}/{SEAT_CONSTANTS.TOTAL_SEATS}
                   </span>
                 </div>
               )}
               
               {/* Center text when no parties or under limit */}
-              {(totalSeats === 0 || (totalSeats <= 150 && parties.filter(party => (partySeats[party.id] || 0) > 0).length === 0)) && (
+              {(totalSeats === 0 || (totalSeats <= SEAT_CONSTANTS.TOTAL_SEATS && parties.filter(party => (partySeats[party.id] || 0) > 0).length === 0)) && (
                 <div className="absolute inset-0 flex items-center justify-center">
                   <span className="text-sm font-medium text-blue-800 dark:text-blue-200">
-                    {totalSeats}/150 seats
+                    {totalSeats}/{SEAT_CONSTANTS.TOTAL_SEATS} seats
                   </span>
                 </div>
               )}
@@ -202,12 +205,8 @@ export default function SeatTable() {
                         </div>
                         <div className="text-right">
                           <div className="text-xs text-gray-600 dark:text-gray-400">+/-</div>
-                          <div className={`font-bold ${
-                            difference > 0 ? 'text-green-600' : 
-                            difference < 0 ? 'text-red-600' : 
-                            'text-gray-500'
-                          }`}>
-                            {difference > 0 ? `+${difference}` : difference}
+                          <div className={`font-bold ${getSeatChangeColor(difference)}`}>
+                            {formatSeatChange(difference)}
                           </div>
                         </div>
                       </div>
@@ -215,36 +214,14 @@ export default function SeatTable() {
                     
                     {/* Second Row: Input Stepper and Reset */}
                     <div className="flex items-center justify-center space-x-3">
-                      {/* Input Stepper Group */}
-                      <div className="flex items-center border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800">
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          className="h-8 w-8 p-0 rounded-none border-0 hover:bg-gray-100 dark:hover:bg-gray-700"
-                          onClick={() => handleIncrement(party.id, 'down')}
-                        >
-                          <Minus className="h-3 w-3" />
-                        </Button>
-                        <input
-                          type="number"
-                          min="0"
-                          max="150"
-                          value={partySeats[party.id] || 0}
-                          onChange={(e) => {
-                            const value = parseInt(e.target.value) || 0;
-                            updatePartySeats(party.id, value);
-                          }}
-                          className="w-12 h-8 text-center text-sm font-bold border-0 border-l border-r border-gray-300 dark:border-gray-600 bg-transparent focus:outline-none focus:ring-1 focus:ring-blue-500"
-                        />
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          className="h-8 w-8 p-0 rounded-none border-0 hover:bg-gray-100 dark:hover:bg-gray-700"
-                          onClick={() => handleIncrement(party.id, 'up')}
-                        >
-                          <Plus className="h-3 w-3" />
-                        </Button>
-                      </div>
+                      <SeatCounter
+                        value={partySeats[party.id] || 0}
+                        onIncrement={() => handleIncrement(party.id, 'up')}
+                        onDecrement={() => handleIncrement(party.id, 'down')}
+                        onChange={(value) => updatePartySeats(party.id, value)}
+                        min={SEAT_CONSTANTS.MIN_SEATS}
+                        max={SEAT_CONSTANTS.MAX_SEATS}
+                      />
                       
                       {/* Reset Button */}
                       <Button
@@ -282,45 +259,19 @@ export default function SeatTable() {
                       {/* Gain/Loss */}
                       <div className="text-center">
                         <div className="text-xs text-gray-600 dark:text-gray-400">+/-</div>
-                        <div className={`font-bold ${
-                          difference > 0 ? 'text-green-600' : 
-                          difference < 0 ? 'text-red-600' : 
-                          'text-gray-500'
-                        }`}>
-                          {difference > 0 ? `+${difference}` : difference}
+                        <div className={`font-bold ${getSeatChangeColor(difference)}`}>
+                          {formatSeatChange(difference)}
                         </div>
                       </div>
                       
-                      {/* Input Stepper Group */}
-                      <div className="flex items-center border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800">
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          className="h-8 w-8 p-0 rounded-none border-0 hover:bg-gray-100 dark:hover:bg-gray-700"
-                          onClick={() => handleIncrement(party.id, 'down')}
-                        >
-                          <Minus className="h-3 w-3" />
-                        </Button>
-                        <input
-                          type="number"
-                          min="0"
-                          max="150"
-                          value={partySeats[party.id] || 0}
-                          onChange={(e) => {
-                            const value = parseInt(e.target.value) || 0;
-                            updatePartySeats(party.id, value);
-                          }}
-                          className="w-12 h-8 text-center text-sm font-bold border-0 border-l border-r border-gray-300 dark:border-gray-600 bg-transparent focus:outline-none focus:ring-1 focus:ring-blue-500"
-                        />
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          className="h-8 w-8 p-0 rounded-none border-0 hover:bg-gray-100 dark:hover:bg-gray-700"
-                          onClick={() => handleIncrement(party.id, 'up')}
-                        >
-                          <Plus className="h-3 w-3" />
-                        </Button>
-                      </div>
+                      <SeatCounter
+                        value={partySeats[party.id] || 0}
+                        onIncrement={() => handleIncrement(party.id, 'up')}
+                        onDecrement={() => handleIncrement(party.id, 'down')}
+                        onChange={(value) => updatePartySeats(party.id, value)}
+                        min={SEAT_CONSTANTS.MIN_SEATS}
+                        max={SEAT_CONSTANTS.MAX_SEATS}
+                      />
                       
                       {/* Reset Button */}
                       <Button

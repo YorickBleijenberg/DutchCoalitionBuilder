@@ -75,15 +75,30 @@ export function getTopCoalitions(
 
 export function calculateSeatDifference(totalSeats: number, target: number = 150) {
   const difference = target - totalSeats;
+  const isComplete = difference === 0;
+  const isUnder = difference > 0;
+  const isOver = difference < 0;
+  
+  let type: 'complete' | 'unassigned' | 'overassigned';
+  let message: string;
+  
+  if (isComplete) {
+    type = 'complete';
+    message = 'Complete';
+  } else if (isUnder) {
+    type = 'unassigned';
+    message = `Unassigned ${difference}`;
+  } else {
+    type = 'overassigned';
+    message = `Over-assigned ${Math.abs(difference)}`;
+  }
+  
   return {
-    difference,
-    isComplete: difference === 0,
-    isUnder: difference > 0,
-    isOver: difference < 0,
-    message: difference === 0 
-      ? 'Complete' 
-      : difference > 0 
-        ? `Unassigned ${difference}` 
-        : `Over-assigned ${Math.abs(difference)}`
+    difference: Math.abs(difference),
+    isComplete,
+    isUnder,
+    isOver,
+    message,
+    type
   };
 }

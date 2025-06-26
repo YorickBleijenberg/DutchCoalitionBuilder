@@ -150,6 +150,9 @@ Changelog:
 - June 24, 2025. Swapped tab order: Coalition Builder now first tab, Seat Predictions second
 - June 24, 2025. Enhanced visual contrast with darker page background (gray-100/gray-800)
 - June 24, 2025. Streamlined CoalitionPredictionBar: removed "Coalitie" label and "Meerderheidslijn" text, centered majority indicator
+- June 26, 2025. Fixed mobile plus/minus button issue: removed long press logic, now increments by 1 per tap
+- June 26, 2025. Enhanced PoliticalPredictor: fixed insights functionality, swapped badge/seats layout, implemented complete Dutch/English translation
+- June 26, 2025. Comprehensive code refactoring: extracted utility functions, created shared constants, organized components into common folder, improved type safety
 ```
 
 ## User Preferences
