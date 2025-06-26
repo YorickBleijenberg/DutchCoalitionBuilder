@@ -144,7 +144,7 @@ export default function CoalitionSuggestions() {
           </div>
           
           {/* Party Include/Exclude Controls */}
-          <div className="flex items-center space-x-2">
+          <div className="flex flex-wrap items-center space-x-2">
             <Select onValueChange={handleExcludeParty} value="">
               <SelectTrigger className="w-32">
                 <SelectValue placeholder="Exclude" />
