@@ -134,7 +134,7 @@ export default function CoalitionTimeline() {
   };
 
   return (
-    <Card className="bg-white dark:bg-gray-800 shadow-lg border border-gray-200 dark:border-gray-700">
+    <Card className=" flex flex-wrap bg-white dark:bg-gray-800 shadow-lg border border-gray-200 dark:border-gray-700">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Clock className="h-5 w-5" />
@@ -151,9 +151,9 @@ export default function CoalitionTimeline() {
       >
         {/* Current Coalition Prediction */}
         {prediction && (
-          <div className="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-700">
+          <div className="flex flex-wrap p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-700">
             <div className="flex items-center justify-between mb-3">
-              <h4 className="font-semibold text-blue-900 dark:text-blue-100">Huidige Coalitievoorspelling</h4>
+              <h4 className="flex flex-wrap font-semibold text-blue-900 dark:text-blue-100">Huidige Coalitievoorspelling</h4>
               <Badge className={getDifficultyColor(prediction.difficulty)}>
                 {prediction.difficulty}
               </Badge>
@@ -224,7 +224,7 @@ export default function CoalitionTimeline() {
                 className="flex items-center justify-between p-3 border border-gray-200 dark:border-gray-600 rounded-lg"
                 onClick={(e) => e.stopPropagation()}
               >
-                <div className="flex items-center gap-4">
+                <div className="flex flex-wrap items-center gap-4">
                   <div className="text-center">
                     <div className="font-bold text-lg">{coalition.year}</div>
                     <div className="text-xs text-gray-500">Year</div>
@@ -260,11 +260,11 @@ export default function CoalitionTimeline() {
                   </div>
                 </div>
                 
-                <div className="flex items-center gap-2">
+                <div className="flex flex-wrap items-center gap-2">
                   <Badge className={getDifficultyColor(coalition.difficulty)}>
                     {coalition.difficulty}
                   </Badge>
-                  <div className="text-sm text-gray-500">
+                  <div className="flex flex-wrap text-sm text-gray-500">
                     {coalition.duration}yr
                   </div>
                 </div>
