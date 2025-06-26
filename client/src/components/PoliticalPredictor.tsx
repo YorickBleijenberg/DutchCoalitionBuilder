@@ -228,7 +228,7 @@ export default function PoliticalPredictor() {
 
         {/* Coalition Summary */}
         {selectedParties.length > 0 && (
-          <div className="bg-white/60 dark:bg-gray-800/60 p-4 rounded-lg border border-blue-200 dark:border-blue-600">
+          <div className="flex flex-wrap bg-white/60 dark:bg-gray-800/60 p-4 rounded-lg border border-blue-200 dark:border-blue-600">
             <div className="flex items-center justify-between mb-3">
               <h3 className="font-semibold text-blue-900 dark:text-blue-100 flex items-center">
                 <Users className="mr-2 h-4 w-4" />
@@ -282,7 +282,7 @@ export default function PoliticalPredictor() {
 
         {/* Footer */}
         <div className="text-center text-xs text-blue-600 dark:text-blue-400 border-t border-blue-200 dark:border-blue-700 pt-4">
-          Created with Nederland Coalitieland • Election: October 29, 2025
+          Created with Nederland Coalitieland.nl •  {new Date().toLocaleDateString('nl-NL')}
         </div>
       </div>
     </div>
