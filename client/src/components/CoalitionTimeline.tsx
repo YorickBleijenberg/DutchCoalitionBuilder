@@ -3,6 +3,7 @@ import { useApp } from '../context/AppContext';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Clock, Calendar, Users, AlertTriangle } from 'lucide-react';
+import { getDifficultyColor } from '../lib/coalitionUtils';
 
 interface HistoricalCoalition {
   year: number;
