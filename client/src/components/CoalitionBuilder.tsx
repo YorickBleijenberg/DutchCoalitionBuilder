@@ -73,13 +73,7 @@ export default function CoalitionBuilder() {
 
   return (
     <Card className="bg-white dark:bg-gray-800 shadow-lg border border-gray-200 dark:border-gray-700">
-      <CardHeader className="bg-gray-50 dark:bg-gray-700 border-b border-gray-200 dark:border-gray-600 py-2">
-        <div className="flex justify-between items-center">
-          <div className="text-sm font-bold text-gray-900 dark:text-gray-400">
-            Selecteer partijen om een coalitie te vormen
-          </div>
-        </div>
-      </CardHeader>
+      
       
       <CardContent className="p-6">
         {/* All Parties - 4 Columns Layout */}
@@ -134,7 +128,7 @@ export default function CoalitionBuilder() {
           <Button
             onClick={handleSaveScenario}
             size="sm"
-            className="ml-auto bg-blue-600 hover:bg-blue-700 text-white"
+            className="ml-auto bg-blue-500 hover:bg-blue-700 text-white"
           >
             Bewaar coalitie
           </Button>
