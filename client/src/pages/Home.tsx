@@ -32,7 +32,7 @@ export default function Home() {
   const [activeTab, setActiveTab] = useState('coalitions');
 
   return (
-    <div className="min-h-screen coalition-background coalition-text transition-colors duration-300">
+    <div className="sticky top-0 md:top-20 z-40 min-h-screen coalition-background coalition-text transition-colors duration-300">
       <Header />
       
       {/* Election Countdown Banner */}
