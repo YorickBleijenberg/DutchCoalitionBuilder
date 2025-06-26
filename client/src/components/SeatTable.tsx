@@ -5,12 +5,11 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { CheckCircle, AlertTriangle, Plus, Minus, RotateCcw } from 'lucide-react';
-import { useRef, useCallback } from 'react';
+import { useCallback } from 'react';
 
 export default function SeatTable() {
   const { t } = useTranslation();
   const { parties, partySeats, setPartySeats, totalSeats, loadPollData, selectedParties } = useApp();
-  const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   const seatStatus = calculateSeatDifference(totalSeats);
 
@@ -32,53 +31,42 @@ export default function SeatTable() {
     }
   };
 
-  const startIncrement = useCallback((partyId: string, direction: 'up' | 'down') => {
-    // Prevent double execution if interval is already running
-    if (intervalRef.current) return;
-    
-    const increment = () => {
-      const currentSeats = partySeats[partyId] || 0;
-      const newSeats = direction === 'up' ? currentSeats + 1 : currentSeats - 1;
-      updatePartySeats(partyId, newSeats);
-    };
-    
-    increment(); // Initial increment
-    intervalRef.current = setInterval(increment, 150); // Continue incrementing every 150ms
-  }, [partySeats]);
-
-  const stopIncrement = useCallback(() => {
-    if (intervalRef.current) {
-      clearInterval(intervalRef.current);
-      intervalRef.current = null;
-    }
-  }, []);
+  const handleIncrement = useCallback((partyId: string, direction: 'up' | 'down') => {
+    const currentSeats = partySeats[partyId] || 0;
+    const newSeats = direction === 'up' ? currentSeats + 1 : currentSeats - 1;
+    updatePartySeats(partyId, newSeats);
+  }, [partySeats, updatePartySeats]);
 
   return (
     <div className="space-y-2">
       {/* Sticky Header with Progress Bar */}
-      <div className="sticky top-0 md:top-20 z-40 bg-transparent dark:bg-gray-900 pb-2">
-        <Card className="bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-700">
-          <CardContent className="p-4">
-            <div className="flex justify-between items-center mb-4">
-              <Badge 
-                variant={seatStatus.isComplete ? "default" : seatStatus.isUnder ? "secondary" : "destructive"}
-                className="inline-flex items-center"
+      <div className="sticky top-0 z-10 bg-gray-50 dark:bg-gray-900 pb-2">
+        <Card className="bg-white dark:bg-gray-800 shadow-lg border border-gray-200 dark:border-gray-700">
+          <CardContent className="py-3">
+            <div className="flex items-center justify-between mb-2">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+                {t('seats.total')}
+              </h3>
+              <Badge
+                variant={
+                  seatStatus.type === 'complete' ? 'default' :
+                  seatStatus.type === 'unassigned' ? 'secondary' :
+                  'destructive'
+                }
+                className="flex items-center space-x-1"
               >
-                {seatStatus.isComplete ? (
-                  <CheckCircle className="mr-1 h-3 w-3" />
-                ) : (
-                  <AlertTriangle className="mr-1 h-3 w-3" />
-                )}
-                {t(`seats.${seatStatus.isComplete ? 'complete' : seatStatus.isUnder ? 'unassigned' : 'overassigned'}`)} {seatStatus.isComplete ? '' : Math.abs(seatStatus.difference)}
+                {seatStatus.type === 'complete' && <CheckCircle className="w-3 h-3" />}
+                {seatStatus.type === 'overassigned' && <AlertTriangle className="w-3 h-3" />}
+                <span>
+                  {seatStatus.type === 'complete' && t('seats.complete')}
+                  {seatStatus.type === 'unassigned' && `${seatStatus.difference} ${t('seats.unassigned')}`}
+                  {seatStatus.type === 'overassigned' && `${seatStatus.difference} ${t('seats.overassigned')}`}
+                </span>
               </Badge>
-              <span className="text-2xl font-bold text-blue-900 dark:text-blue-100">{totalSeats}</span>
             </div>
             
-            {/* Progress Bar with Party Segments */}
-            <div className={`relative w-full bg-blue-200 dark:bg-blue-800 rounded-full h-12 overflow-hidden mb-2 border-2 transition-colors ${
-              seatStatus.isComplete ? 'border-green-500' : 'border-transparent'
-            }`}>
-              {/* Party segments */}
+            {/* Progress Bar */}
+            <div className="relative w-full h-8 bg-gray-200 dark:bg-gray-700 rounded-lg overflow-hidden border border-gray-300 dark:border-gray-600">
               <div className="absolute inset-0 flex">
                 {parties
                   .filter(party => (partySeats[party.id] || 0) > 0)
@@ -86,10 +74,11 @@ export default function SeatTable() {
                   .map((party) => {
                     const seats = partySeats[party.id] || 0;
                     const widthPercent = (seats / 150) * 100;
+                    
                     return (
                       <div
                         key={party.id}
-                        className="h-full border-r border-white dark:border-gray-800 flex items-center justify-center relative"
+                        className="h-full flex items-center justify-center transition-all duration-300"
                         style={{
                           backgroundColor: party.color,
                           width: `${widthPercent}%`,
@@ -158,7 +147,7 @@ export default function SeatTable() {
                 variant="outline"
                 size="sm"
                 onClick={() => loadPollData('peil')}
-                className="text-xs bg-orange-100 hover:bg-orange-200 text-orange-800 border-orange-300 hover:border-orange-400 dark:bg-orange-900 dark:text-orange-200 dark:border-orange-700 dark:hover:bg-orange-800 dark:hover:border-orange-600"
+                className="text-xs bg-purple-100 hover:bg-purple-200 text-purple-800 border-purple-300 hover:border-purple-400 dark:bg-purple-900 dark:text-purple-200 dark:border-purple-700 dark:hover:bg-purple-800 dark:hover:border-purple-600"
               >
                 Peil.nl
               </Button>
@@ -166,32 +155,32 @@ export default function SeatTable() {
                 variant="outline"
                 size="sm"
                 onClick={() => loadPollData('1v')}
-                className="text-xs bg-purple-100 hover:bg-purple-200 text-purple-800 border-purple-300 hover:border-purple-400 dark:bg-purple-900 dark:text-purple-200 dark:border-purple-700 dark:hover:bg-purple-800 dark:hover:border-purple-600"
+                className="text-xs bg-orange-100 hover:bg-orange-200 text-orange-800 border-orange-300 hover:border-orange-400 dark:bg-orange-900 dark:text-orange-200 dark:border-orange-700 dark:hover:bg-orange-800 dark:hover:border-orange-600"
               >
                 1V
               </Button>
               <Button
                 variant="outline"
                 size="sm"
-                onClick={() => setPartySeats({})}
-                className="text-xs text-red-600 hover:text-red-700"
+                onClick={() => {
+                  setPartySeats({});
+                }}
+                className="text-xs bg-gray-100 hover:bg-gray-200 text-gray-800 border-gray-300 hover:border-gray-400 dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600 dark:hover:bg-gray-600 dark:hover:border-gray-500"
               >
-                <RotateCcw className="mr-1 h-3 w-3" />
                 Blank/Reset
               </Button>
             </div>
           </div>
         </CardHeader>
-        
-        <CardContent className="p-6">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
+        <CardContent className="p-0">
+          <div className="space-y-0">
             {parties.map((party) => {
               const currentSeats = party.currentSeats;
               const predictedSeats = partySeats[party.id] || 0;
               const difference = predictedSeats - currentSeats;
-              
+
               return (
-                <div key={party.id} className="border border-gray-200 dark:border-gray-700 rounded-lg p-3">
+                <div key={party.id} className="p-4 border-b border-gray-200 dark:border-gray-700 last:border-b-0 hover:bg-gray-50 dark:hover:bg-gray-750">
                   {/* Mobile Layout */}
                   <div className="sm:hidden space-y-3">
                     {/* First Row: Party Name with Current and Difference */}
@@ -232,17 +221,7 @@ export default function SeatTable() {
                           variant="ghost"
                           size="sm"
                           className="h-8 w-8 p-0 rounded-none border-0 hover:bg-gray-100 dark:hover:bg-gray-700"
-                          onMouseDown={(e) => {
-                            e.preventDefault();
-                            startIncrement(party.id, 'down');
-                          }}
-                          onMouseUp={stopIncrement}
-                          onMouseLeave={stopIncrement}
-                          onTouchStart={(e) => {
-                            e.preventDefault();
-                            startIncrement(party.id, 'down');
-                          }}
-                          onTouchEnd={stopIncrement}
+                          onClick={() => handleIncrement(party.id, 'down')}
                         >
                           <Minus className="h-3 w-3" />
                         </Button>
@@ -261,17 +240,7 @@ export default function SeatTable() {
                           variant="ghost"
                           size="sm"
                           className="h-8 w-8 p-0 rounded-none border-0 hover:bg-gray-100 dark:hover:bg-gray-700"
-                          onMouseDown={(e) => {
-                            e.preventDefault();
-                            startIncrement(party.id, 'up');
-                          }}
-                          onMouseUp={stopIncrement}
-                          onMouseLeave={stopIncrement}
-                          onTouchStart={(e) => {
-                            e.preventDefault();
-                            startIncrement(party.id, 'up');
-                          }}
-                          onTouchEnd={stopIncrement}
+                          onClick={() => handleIncrement(party.id, 'up')}
                         >
                           <Plus className="h-3 w-3" />
                         </Button>
@@ -328,17 +297,7 @@ export default function SeatTable() {
                           variant="ghost"
                           size="sm"
                           className="h-8 w-8 p-0 rounded-none border-0 hover:bg-gray-100 dark:hover:bg-gray-700"
-                          onMouseDown={(e) => {
-                            e.preventDefault();
-                            startIncrement(party.id, 'down');
-                          }}
-                          onMouseUp={stopIncrement}
-                          onMouseLeave={stopIncrement}
-                          onTouchStart={(e) => {
-                            e.preventDefault();
-                            startIncrement(party.id, 'down');
-                          }}
-                          onTouchEnd={stopIncrement}
+                          onClick={() => handleIncrement(party.id, 'down')}
                         >
                           <Minus className="h-3 w-3" />
                         </Button>
@@ -357,17 +316,7 @@ export default function SeatTable() {
                           variant="ghost"
                           size="sm"
                           className="h-8 w-8 p-0 rounded-none border-0 hover:bg-gray-100 dark:hover:bg-gray-700"
-                          onMouseDown={(e) => {
-                            e.preventDefault();
-                            startIncrement(party.id, 'up');
-                          }}
-                          onMouseUp={stopIncrement}
-                          onMouseLeave={stopIncrement}
-                          onTouchStart={(e) => {
-                            e.preventDefault();
-                            startIncrement(party.id, 'up');
-                          }}
-                          onTouchEnd={stopIncrement}
+                          onClick={() => handleIncrement(party.id, 'up')}
                         >
                           <Plus className="h-3 w-3" />
                         </Button>
