@@ -55,5 +55,22 @@
     "loadCurrent": "Laad Huidige",
     "reset": "Reset Alles"
   },
-  "currentPrediction": "Huidige Voorspelling"
+  "currentPrediction": "Huidige Voorspelling",
+  "predictor": {
+    "title": "Politieke Voorspeller",
+    "description": "Realtime inzichten en analyses van je voorspellingen",
+    "leads": "leidt met",
+    "seats": "zetels",
+    "gainsmost": "wint het meest:",
+    "losesmost": "verliest het meest:",
+    "selectedCoalition": "Geselecteerde coalitie:",
+    "majority": "Meerderheid",
+    "minority": "Minderheid",
+    "insights": "Inzichten",
+    "noInsights": "Geen inzichten beschikbaar. Begin met het invoeren van zetels om analyses te zien.",
+    "export": "Exporteer Voorspelling",
+    "share": "Deel Voorspelling",
+    "shareTitle": "Mijn Nederlandse Verkiezingsvoorspelling",
+    "shareText": "Mijn voorspelling voor de Nederlandse verkiezingen"
+  }
 }

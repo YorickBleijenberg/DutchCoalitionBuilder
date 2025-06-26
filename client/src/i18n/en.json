@@ -55,5 +55,22 @@
     "loadCurrent": "Load Current",
     "reset": "Reset All"
   },
-  "currentPrediction": "Current Prediction"
+  "currentPrediction": "Current Prediction",
+  "predictor": {
+    "title": "Political Predictor",
+    "description": "Real-time insights and analysis of your predictions",
+    "leads": "leads with",
+    "seats": "seats",
+    "gainsmost": "gains most:",
+    "losesmost": "loses most:",
+    "selectedCoalition": "Selected coalition:",
+    "majority": "Majority",
+    "minority": "Minority",
+    "insights": "Insights",
+    "noInsights": "No insights available. Start assigning seats to see analysis.",
+    "export": "Export Prediction",
+    "share": "Share Prediction",
+    "shareTitle": "My Dutch Election Prediction",
+    "shareText": "My prediction for the Dutch elections"
+  }
 }

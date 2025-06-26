@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { useApp } from '../context/AppContext';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -8,6 +9,7 @@ import { nl } from 'date-fns/locale';
 import * as htmlToImage from 'html-to-image';
 
 export default function PoliticalPredictor() {
+  const { t, i18n } = useTranslation();
   const { 
     parties, 
     partySeats,
@@ -43,25 +45,30 @@ export default function PoliticalPredictor() {
   const generateInsights = (predictions: any[], gainers: any[], losers: any[], topParty: any, selectedCoalition: any[]) => {
     const insights = [];
 
-    if (topParty) {
-      insights.push(`${topParty.name} leads with ${topParty.predictedSeats} seats`);
+    if (topParty && topParty.predictedSeats > 0) {
+      insights.push(`${topParty.name} ${t('predictor.leads')} ${topParty.predictedSeats} ${t('predictor.seats')}`);
     }
 
     if (gainers.length > 0) {
       const biggestGainer = gainers[0];
       const gain = biggestGainer.predictedSeats - biggestGainer.currentSeats;
-      insights.push(`${biggestGainer.name} gains most: +${gain} seats`);
+      if (gain > 0) {
+        insights.push(`${biggestGainer.name} ${t('predictor.gainsmost')} +${gain} ${t('predictor.seats')}`);
+      }
     }
 
     if (losers.length > 0) {
       const biggestLoser = losers[0];
       const loss = biggestLoser.currentSeats - biggestLoser.predictedSeats;
-      insights.push(`${biggestLoser.name} loses most: -${loss} seats`);
+      if (loss > 0) {
+        insights.push(`${biggestLoser.name} ${t('predictor.losesmost')} -${loss} ${t('predictor.seats')}`);
+      }
     }
 
     if (selectedCoalition.length > 0) {
       const coalitionSeatsTotal = selectedCoalition.reduce((sum: number, p: any) => sum + p.predictedSeats, 0);
-      insights.push(`Selected coalition: ${coalitionSeatsTotal} seats ${coalitionSeatsTotal >= 76 ? '(Majority)' : '(Minority)'}`);
+      const majorityStatus = coalitionSeatsTotal >= 76 ? t('predictor.majority') : t('predictor.minority');
+      insights.push(`${t('predictor.selectedCoalition')} ${coalitionSeatsTotal} ${t('predictor.seats')} (${majorityStatus})`);
     }
 
     return insights;
@@ -90,8 +97,8 @@ export default function PoliticalPredictor() {
   };
 
   const shareData = {
-    title: 'Mijn Nederlandse Verkiezingsvoorspelling',
-    text: `Mijn voorspelling voor de Nederlandse verkiezingen: ${predictionData.topParty?.name} leidt met ${predictionData.topParty?.predictedSeats} zetels. ${predictionData.insights.join('. ')}.`,
+    title: t('predictor.shareTitle'),
+    text: `${t('predictor.shareText')}: ${predictionData.topParty?.name} ${t('predictor.leads')} ${predictionData.topParty?.predictedSeats} ${t('predictor.seats')}. ${predictionData.insights.join('. ')}.`,
     url: window.location.href
   };
 
@@ -161,22 +168,22 @@ export default function PoliticalPredictor() {
         <CardHeader>
           <CardTitle className="flex items-center">
             <Share2 className="mr-2 h-5 w-5" />
-            Politieke Voorspeller
+            {t('predictor.title')}
           </CardTitle>
           <p className="text-sm text-gray-600 dark:text-gray-400">
-            Deel je verkiezingsvoorspellingen met persoonlijke inzichten
+            {t('predictor.description')}
           </p>
         </CardHeader>
         <CardContent>
           <div className="flex flex-col sm:flex-row gap-3">
             <Button onClick={exportPrediction} className="flex-1">
               <Download className="mr-2 h-4 w-4" />
-              <span className="hidden sm:inline">Exporteer Afbeelding</span>
-              <span className="sm:hidden">Exporteren</span>
+              <span className="hidden sm:inline">{t('predictor.export')}</span>
+              <span className="sm:hidden">{t('export.download')}</span>
             </Button>
             <Button onClick={handleShare} variant="outline" className="flex-1">
               <Share2 className="mr-2 h-4 w-4" />
-              <span className="hidden sm:inline">Deel Voorspelling</span>
+              <span className="hidden sm:inline">{t('predictor.share')}</span>
               <span className="sm:hidden">Delen</span>
             </Button>
           </div>
@@ -191,10 +198,10 @@ export default function PoliticalPredictor() {
         {/* Header */}
         <div className="text-center">
           <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-blue-900 dark:text-blue-100 mb-2 leading-tight">
-            Mijn Nederlandse Verkiezingsvoorspelling
+            {t('predictor.shareTitle')}
           </h2>
           <p className="text-sm sm:text-base text-blue-700 dark:text-blue-300">
-            {format(new Date(), 'EEEE, d MMMM yyyy', { locale: nl })}
+            {format(new Date(), 'EEEE, d MMMM yyyy', { locale: i18n.language === 'nl' ? nl : undefined })}
           </p>
         </div>
 
@@ -232,14 +239,11 @@ export default function PoliticalPredictor() {
             <div className="flex flex-wrap items-center justify-between mb-3">
               <h3 className="font-semibold text-blue-900 dark:text-blue-100 flex items-center">
                 <Users className="mr-2 h-4 w-4" />
-                Mijn Coalitievoorspelling
+                {t('predictor.selectedCoalition')}
               </h3>
-              <Badge 
-                variant={hasMajority ? "default" : "destructive"} 
-                className="px-2 py-1 text-xs"
-              >
-                {hasMajority ? `+${coalitionSeats - 76} headroom` : `${76 - coalitionSeats} seats needed`}
-              </Badge>
+              <div className="text-lg font-bold text-blue-900 dark:text-blue-100">
+                {coalitionSeats} {t('predictor.seats')}
+              </div>
             </div>
             <div className="flex items-center justify-between">
               <div className="flex flex-wrap gap-2">
@@ -255,11 +259,15 @@ export default function PoliticalPredictor() {
                   </div>
                 ))}
               </div>
-              <div className="text-right">
-                <div className="text-lg font-bold text-blue-900 dark:text-blue-100">
-                  {coalitionSeats} seats
-                </div>
-              </div>
+              <Badge 
+                variant={hasMajority ? "default" : "destructive"} 
+                className="px-2 py-1 text-xs"
+              >
+                {hasMajority 
+                  ? (i18n.language === 'nl' ? `+${coalitionSeats - 76} overschot` : `+${coalitionSeats - 76} headroom`)
+                  : (i18n.language === 'nl' ? `${76 - coalitionSeats} ${t('predictor.seats')} nodig` : `${76 - coalitionSeats} seats needed`)
+                }
+              </Badge>
             </div>
           </div>
         )}
@@ -268,15 +276,21 @@ export default function PoliticalPredictor() {
         <div className="bg-white/60 dark:bg-gray-800/60 p-4 rounded-lg border border-blue-200 dark:border-blue-600">
           <h3 className="font-semibold text-blue-900 dark:text-blue-100 mb-3 flex items-center">
             <Eye className="mr-2 h-4 w-4" />
-            Belangrijkste Inzichten
+            {t('predictor.insights')}
           </h3>
           <div className="space-y-2">
-            {predictionData.insights.map((insight, index) => (
-              <div key={index} className="flex items-center text-sm text-blue-800 dark:text-blue-200">
-                <div className="w-2 h-2 bg-blue-500 rounded-full mr-3 flex-shrink-0" />
-                {insight}
+            {predictionData.insights.length > 0 ? (
+              predictionData.insights.map((insight, index) => (
+                <div key={index} className="flex items-center space-x-2 text-sm text-blue-800 dark:text-blue-200">
+                  <TrendingUp className="h-3 w-3 flex-shrink-0" />
+                  <span>{insight}</span>
+                </div>
+              ))
+            ) : (
+              <div className="text-sm text-blue-700 dark:text-blue-300 italic">
+                {t('predictor.noInsights')}
               </div>
-            ))}
+            )}
           </div>
         </div>
 
