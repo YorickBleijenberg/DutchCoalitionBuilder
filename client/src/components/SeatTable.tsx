@@ -124,6 +124,7 @@ export default function SeatTable() {
         </Card>
       </div>
 
+
       {/* Party List */}
       <Card className="bg-white dark:bg-gray-800 shadow-lg border border-gray-200 dark:border-gray-700">
         <CardHeader className="py-2 bg-gray-50 dark:bg-gray-700 border-b border-gray-200 dark:border-gray-600">
@@ -170,11 +171,13 @@ export default function SeatTable() {
                 }}
                 className="text-xs bg-gray-100 hover:bg-gray-200 text-gray-800 border-gray-300 hover:border-gray-400 dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600 dark:hover:bg-gray-600 dark:hover:border-gray-500"
               >
-                Blank/Reset
+                Reset
               </Button>
             </div>
-          </div>
+          </div> 
         </CardHeader>
+
+        {/* Party List Zetel Voorspellingen*/}
         <CardContent className="p-0">
           <div className="space-y-0">
             {parties.map((party) => {
@@ -197,22 +200,9 @@ export default function SeatTable() {
                           {party.name}
                         </span>
                       </div>
-                      
-                      <div className="flex items-center space-x-4">
-                        <div className="text-right">
-                          <div className="text-xs text-gray-600 dark:text-gray-400">Huidig</div>
-                          <div className="font-bold text-gray-900 dark:text-gray-100">{currentSeats}</div>
-                        </div>
-                        <div className="text-right">
-                          <div className="text-xs text-gray-600 dark:text-gray-400">+/-</div>
-                          <div className={`font-bold ${getSeatChangeColor(difference)}`}>
-                            {formatSeatChange(difference)}
-                          </div>
-                        </div>
-                      </div>
                     </div>
                     
-                    {/* Second Row: Input Stepper and Reset */}
+                    {/* Second Row: Input Stepper */}
                     <div className="flex items-center justify-center space-x-3">
                       <SeatCounter
                         value={partySeats[party.id] || 0}
@@ -223,15 +213,7 @@ export default function SeatTable() {
                         max={SEAT_CONSTANTS.MAX_SEATS}
                       />
                       
-                      {/* Reset Button */}
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="h-8 w-8 p-0"
-                        onClick={() => resetPartySeats(party.id)}
-                      >
-                        <RotateCcw className="h-4 w-4" />
-                      </Button>
+                      
                     </div>
                   </div>
 
@@ -251,18 +233,7 @@ export default function SeatTable() {
                     {/* Numbers and Controls */}
                     <div className="flex justify-end gap-6">
                       {/* Current Seats */}
-                      <div className="text-center">
-                        <div className="text-xs text-gray-600 dark:text-gray-400">Huidig</div>
-                        <div className="font-bold text-gray-900 dark:text-gray-100">{currentSeats}</div>
-                      </div>
                       
-                      {/* Gain/Loss */}
-                      <div className="text-center">
-                        <div className="text-xs text-gray-600 dark:text-gray-400">+/-</div>
-                        <div className={`font-bold ${getSeatChangeColor(difference)}`}>
-                          {formatSeatChange(difference)}
-                        </div>
-                      </div>
                       
                       <SeatCounter
                         value={partySeats[party.id] || 0}
@@ -273,17 +244,22 @@ export default function SeatTable() {
                         max={SEAT_CONSTANTS.MAX_SEATS}
                       />
                       
-                      {/* Reset Button */}
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="h-8 w-8 p-0"
-                        onClick={() => resetPartySeats(party.id)}
-                      >
-                        <RotateCcw className="h-4 w-4" />
-                      </Button>
+                      
                     </div>
+                    
                   </div>
+
+                  
+                  <div className="flex items-left justify-left gap-2 text-xs">
+                    <span className="dutch-neutral">
+                      Huidig: {party.currentSeats}  | Verschil: {party.pollingSeats} 
+                    </span>
+                    
+                    <span className={`font-bold ${getSeatChangeColor(difference)}`}>
+                      {formatSeatChange(difference)}
+                    </span>
+                  </div>
+                    
                 </div>
               );
             })}

@@ -57,19 +57,19 @@ const [isDarkMode, setIsDarkMode] = useState(false);
       buttonPrimary: 'bg-blue-600/80 text-white hover:bg-blue-500/90'
     }
   };
-const theme = isDarkMode ? themeClasses.dark : themeClasses.light;
+  const theme = isDarkMode ? themeClasses.dark : themeClasses.light;
   return (
     
     <div className="sticky top-0 md:top-20 z-40 min-h-screen coalition-background coalition-text transition-colors duration-300">
       {/* Animated Background Elements */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className={`absolute -top-40 -right-40 w-80 h-80 rounded-full opacity-20 blur-3xl ${
+      {/*<div className="fixed inset-0 overflow-hidden pointer-events-none">
+         <div className={`absolute -top-40 -right-40 w-80 h-80 rounded-full opacity-20 blur-3xl ${
           isDarkMode ? 'bg-blue-500' : 'bg-blue-300'
-        } animate-pulse`}></div>
+        } animate-pulse`}></div> 
         <div className={`absolute -bottom-40 -left-40 w-80 h-80 rounded-full opacity-20 blur-3xl ${
           isDarkMode ? 'bg-purple-500' : 'bg-indigo-300'
         } animate-pulse delay-1000`}></div>
-      </div>
+      </div> */}
       
       {/* Header */}
       <Header />
@@ -79,7 +79,7 @@ const theme = isDarkMode ? themeClasses.dark : themeClasses.light;
         <div className="max-w-none mx-auto px-0.5 sm:px-4 lg:px-6">
           <div className="flex items-center justify-between">
             <span className="text-sm font-medium">
-              Nederland Coalitieland
+              &nbsp;&nbsp;Nederland Coalitieland
             </span>
             <div className="flex items-center gap-3">
               <span className="text-xs">
@@ -116,6 +116,21 @@ const theme = isDarkMode ? themeClasses.dark : themeClasses.light;
                   </DropdownMenuItem>
                   <DropdownMenuItem onClick={() => setLanguage('en')} className={language === 'en' ? 'bg-gray-100 dark:bg-gray-700' : ''}>
                     🇬🇧 English
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+
+                  {/* Buy Me a Tea Button */}
+                  <DropdownMenuItem 
+                    onClick={() => window.open('https://www.buymeacoffee.com/yorickb', '_blank')}
+                    className="flex items-center gap-2 cursor-pointer hover:bg-yellow-50 dark:hover:bg-yellow-900/20"
+                    style={{ 
+                      backgroundColor: '#FFDD00',
+                      color: '#000000',
+                      fontFamily: 'Cookie, cursive'
+                    }}
+                  >
+                    <span className="text-lg">🍵</span>
+                    <span className="font-medium">Buy me a tea</span>
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
@@ -261,6 +276,7 @@ const theme = isDarkMode ? themeClasses.dark : themeClasses.light;
             <div className="text-sm coalition-neutral">
               {t('footer.description')}
             </div>
+            <a href="https://www.buymeacoffee.com/yorickb"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a tea&emoji=🍵&slug=yorickb&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff" /></a>
             <div className="text-sm coalition-neutral">
               {t('footer.update')} {new Date().toLocaleString()}
             </div>

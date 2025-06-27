@@ -31,17 +31,14 @@ export default function SeatCounter({
       >
         <Minus className="h-3 w-3" />
       </Button>
-      <input
-        type="number"
-        min={min}
-        max={max}
-        value={value}
-        onChange={(e) => {
-          const newValue = parseInt(e.target.value) || 0;
-          onChange(Math.max(min, Math.min(max, newValue)));
-        }}
-        className="w-12 h-8 text-center text-sm font-bold border-0 border-l border-r border-gray-300 dark:border-gray-600 bg-transparent focus:outline-none focus:ring-1 focus:ring-blue-500"
-      />
+
+
+      <span className="w-8 text-center font-bold text-lg dutch-text">
+        {value}
+      </span>
+      
+     
+     
       <Button
         variant="ghost"
         size="sm"
