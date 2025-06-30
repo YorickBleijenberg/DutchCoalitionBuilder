@@ -79,6 +79,29 @@
   h1, h2, h3, h4, h5, h6 {
     font-family: 'Inter', system-ui, sans-serif;
   }
+
+  .font-serif-display {
+    font-family: 'Playfair Display', serif;
+  }
+  .bg-gold {
+    background-color: #B48F4E; /* Subtle Gold */
+  }
+  .text-gold {
+    color: #B48F4E;
+  }
+  .hover\:bg-gold-dark:hover {
+    background-color: #a07d40; /* A slightly darker gold for hover effect */
+  }
+  .hero-bg {
+    /* Using the Binnenhof image as the background */
+    background-image: url('Binnenhof.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+
+  
 }
 
 @layer components {
