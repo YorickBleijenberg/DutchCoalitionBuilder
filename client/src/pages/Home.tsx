@@ -78,9 +78,15 @@ const [isDarkMode, setIsDarkMode] = useState(false);
       <div className="bg-[#374c7a] dark:bg-[#374c7a] text-white py-1.5">
         <div className="max-w-none mx-auto px-0.5 sm:px-4 lg:px-6">
           <div className="flex items-center justify-between">
+            
+            <a href="/" class="bg-gold hover:bg-gold-dark text-slate-900 font-bold py-3 px-8 rounded-lg shadow-lg transition-colors duration-300">
+              Nederland Coalitieland
+            </a>
+            
             <span className="text-sm font-medium">
-              &nbsp;&nbsp;Nederland Coalitieland
+              
             </span>
+            
             <div className="flex items-center gap-3">
               <span className="text-xs">
                 {(() => {

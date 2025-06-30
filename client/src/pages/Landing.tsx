@@ -1,24 +1,45 @@
+import { useState } from 'react';
+import { useApp } from '../context/AppContext';
+import { RotateCcw, Download, Settings, Moon, Sun, Calendar, TrendingUp, Users, Share2, BarChart,BarChart3, Target, Zap, ChevronRight, Lightbulb, } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'wouter';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { 
-  Users, 
-  BarChart3, 
-  Target, 
-  Zap, 
-  Settings,
-  ChevronRight,
-  Lightbulb,
-  TrendingUp
-} from 'lucide-react';
+
 
 export default function Landing() {
+    const [, setLocation] = useLocation();
   const { t } = useTranslation();
-  const [, setLocation] = useLocation();
+  const { loadCurrentSeats, resetSeats, darkMode, toggleDarkMode, language, setLanguage, selectedParties } = useApp();
+  const [activeTab, setActiveTab] = useState('coalitions');
 
-
+  const [isDarkMode, setIsDarkMode] = useState(false);
+  const themeClasses = {
+    light: {
+      bg: 'bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50',
+      header: 'bg-white/80 backdrop-blur-sm border-slate-200/50',
+      card: 'bg-white/60 backdrop-blur-sm border-slate-200/30',
+      cardHover: 'hover:bg-white/80 hover:border-slate-300/50',
+      text: 'text-slate-900',
+      textSecondary: 'text-slate-600',
+      textMuted: 'text-slate-500',
+      button: 'bg-slate-100/80 text-slate-700 hover:bg-slate-200/80',
+      buttonPrimary: 'bg-blue-500/90 text-white hover:bg-blue-600/90'
+    },
+    dark: {
+      bg: 'bg-gradient-to-br from-slate-900 via-blue-950 to-purple-950',
+      header: 'bg-slate-900/40 backdrop-blur-xl border-blue-500/20',
+      card: 'bg-slate-800/20 backdrop-blur-xl border-blue-500/20',
+      cardHover: 'hover:bg-slate-800/30 hover:border-blue-400/30',
+      text: 'text-slate-100',
+      textSecondary: 'text-slate-300',
+      textMuted: 'text-slate-400',
+      button: 'bg-slate-700/50 text-slate-200 hover:bg-slate-600/60',
+      buttonPrimary: 'bg-blue-600/80 text-white hover:bg-blue-500/90'
+    }
+  };
+  const theme = isDarkMode ? themeClasses.dark : themeClasses.light;
   
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-red-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
@@ -33,10 +54,30 @@ export default function Landing() {
               <h1 className="text-xl font-bold text-gray-900 dark:text-white">
                 Coalitieland Nederland
               </h1>
+
+              
             </div>
-            <Badge variant="outline" className="bg-orange-100 text-orange-800 border-orange-300 dark:bg-orange-900 dark:text-orange-200">
-              TK2025 Ready
-            </Badge>
+            <div className="flex items-center gap-3">
+              <span className="text-xs">
+                {(() => {
+                  const electionDate = new Date('2025-10-29');
+                  const today = new Date();
+                  const diffTime = electionDate.getTime() - today.getTime();
+                  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                  return diffDays > 0 ? `Dagen tot de verkiezingen: ${diffDays}` : 'Verkiezingen vandaag!';
+                })()}
+              </span>
+            </div> 
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={toggleDarkMode}
+              className="text-gray-100 dark:text-gray-100
+              hover:text-gray-900 dark:hover:text-white"
+            >
+              {darkMode  ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+            </Button>
+            
           </div>
         </div>
       </header>
@@ -44,28 +85,28 @@ export default function Landing() {
   
       {/*  <!-- Hero Section: Full screen, centered content -->
       */}
-        <main class="hero-bg min-h-screen flex flex-col items-center justify-center relative">
+        <main class="hero-bg min-h-screen flex flex-col items-left justify-left relative">
           {/* <!-- Dark Overlay for better text readability -->*/}
-            <div class="absolute inset-0 bg-slate-900 opacity-60"></div>
+            <div class="absolute inset-0 bg-slate-900 opacity-10"></div>
 
             {/*<!-- Content Container -->*/}
-            <div class="z-10 text-center px-4">
+            <div class="z-10 text-left px-4">
 
               {/*  <!-- Small Title -->
                 <h2 class="text-lg md:text-xl font-medium tracking-widest uppercase mb-4">Coalitieland.nl</h2>*/}
 
               {/*  <!-- Main Headline -->*/}
                 <h1 class="font-serif-display text-5xl md:text-7xl lg:text-8xl font-bold mb-4">
-                    Nederland, Coalitieland
+                  <br/>Nederland,<br/>Coalitieland
                 </h1>
 
              {/*   <!-- Subtitle -->*/}
-                <p class="text-lg md:text-xl max-w-2xl mx-auto mb-12">
-                    Inzichten en analyses over de Nederlandse politiek.
+                <p class="flex justify-left text-lg md:text-xl max-w-2xl mb-12">
+                    Bouw en analyseer Nederlandse politieke coalities met realtime zetelvoorspellingen en parlementsvisualisaties.
                 </p>
 
               {/*  <!-- Action Buttons -->*/}
-              <div class="flex justify-center items-center space-x-4">
+              <div class="flex justify-left items-center space-x-4">
                 {/*<a href="/simpel" class="bg-gold hover:bg-gold-dark text-slate-900 font-bold py-3 px-8 rounded-lg shadow-lg transition-colors duration-300">
                         Simpel
                     </a>
@@ -78,7 +119,7 @@ export default function Landing() {
                     className="bg-gold hover:bg-gold-dark text-slate-900 font-bold py-3 px-8 rounded-lg shadow-lg transition-colors duration-300"
                     onClick={() => setLocation('/advanced')}
                   >
-                    Begin Geavanceerd
+                    Naar de coalitie zoeker
                     <ChevronRight className="ml-2 h-4 w-4" />
                   </Button>  
                 </div>
