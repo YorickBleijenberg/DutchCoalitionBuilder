@@ -153,6 +153,7 @@ Changelog:
 - June 26, 2025. Fixed mobile plus/minus button issue: removed long press logic, now increments by 1 per tap
 - June 26, 2025. Enhanced PoliticalPredictor: fixed insights functionality, swapped badge/seats layout, implemented complete Dutch/English translation
 - June 26, 2025. Comprehensive code refactoring: extracted utility functions, created shared constants, organized components into common folder, improved type safety
+- June 26, 2025. Created beautiful landing page with hero section and two-track user experience: Simpel mode (coming soon) and Geavanceerd mode (current full experience)
 ```
 
 ## User Preferences
