@@ -25,7 +25,7 @@
   --destructive-foreground: hsl(0, 0%, 98%);
   --ring: hsl(217, 91%, 60%);
   --radius: 0.5rem;
-  
+
   /* Custom coalition app colors */
   --app-primary: hsl(223, 87%, 34%);
   --app-secondary: hsl(0, 74%, 48%);
@@ -56,7 +56,7 @@
   --destructive-foreground: hsl(213, 31%, 91%);
   --ring: hsl(216, 34%, 17%);
   --radius: 0.5rem;
-  
+
   /* Custom coalition app colors for dark mode */
   --app-primary: hsl(223, 87%, 34%);
   --app-secondary: hsl(0, 74%, 48%);
@@ -76,55 +76,66 @@
     font-family: 'Source Sans Pro', system-ui, sans-serif;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     font-family: 'Inter', system-ui, sans-serif;
   }
 
   .font-serif-display {
     font-family: 'Playfair Display', serif;
   }
+
   .bg-gold {
-    background-color: #B48F4E; /* Subtle Gold */
+    background-color: #B48F4E;
+    /* Subtle Gold */
   }
+
   .text-gold {
     color: #B48F4E;
   }
+
   .hover\:bg-gold-dark:hover {
-    background-color: #a07d40; /* A slightly darker gold for hover effect */
+    background-color: #a07d40;
+    /* A slightly darker gold for hover effect */
   }
+
   .hero-bg {
     /* Using the Binnenhof image as the background */
-    background-image: url('Binnenhof.png');
+    background-image: url('https://coalitieland.nl/Binnenhof.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
   }
 
 
-  
+
 }
 
 @layer components {
   .coalition-primary {
     @apply bg-[hsl(var(--app-primary))] text-white;
   }
-  
+
   .coalition-secondary {
     @apply bg-[hsl(var(--app-secondary))] text-white;
   }
-  
+
   .coalition-accent {
     @apply bg-[hsl(var(--app-accent))] text-white;
   }
-  
+
   .coalition-background {
     @apply bg-[hsl(var(--app-background))];
   }
-  
+
   .coalition-text {
     @apply text-[hsl(var(--app-text))];
   }
-  
+
   .coalition-neutral {
     @apply text-[hsl(var(--app-neutral))];
   }
