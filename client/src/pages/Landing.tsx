@@ -76,34 +76,34 @@ export default function Landing() {
   
       {/*  <!-- Hero Section: Full screen, centered content -->
       */}
-        <main class="hero-bg min-h-screen flex flex-col items-left justify-left relative">
+        <main className="hero-bg min-h-screen flex flex-col items-left justify-left relative">
           {/* <!-- Dark Overlay for better text readability -->*/}
-            <div class="absolute inset-0 bg-slate-900 opacity-30"></div>
+            <div className="absolute inset-0 bg-slate-900 opacity-30"></div>
 
             {/*<!-- Content Container -->*/}
-            <div class="z-10 text-left px-4">
+            <div className="z-10 text-left px-4">
 
               {/*  <!-- Small Title -->
-                <h2 class="text-lg md:text-xl font-medium tracking-widest uppercase mb-4">Coalitieland.nl</h2>*/}
+                <h2 className="text-lg md:text-xl font-medium tracking-widest uppercase mb-4">Coalitieland.nl</h2>*/}
 
               {/*  <!-- Main Headline -->*/}
-                <h1 class="font-serif-display text-5xl text-gray-100 md:text-7xl lg:text-8xl font-bold mb-4">
+                <h1 className="font-serif-display text-5xl text-gray-100 md:text-7xl lg:text-8xl font-bold mb-4">
                   <br/>Nederland,<br/>Coalitieland
                 </h1>
 
              {/*   <!-- Subtitle -->*/}
-                <p class="flex justify-left text-lg text-gray-100 md:text-xl max-w-2xl mb-12">
+                <p className="flex justify-left text-lg text-gray-100 md:text-xl max-w-2xl mb-12">
                     Bouw en analyseer Nederlandse politieke coalities met realtime zetelvoorspellingen en parlementsvisualisaties.
                 </p>
 <br/>
               <br/>
               <br/>
               {/*  <!-- Action Buttons -->*/}
-              <div class="flex justify-left items-center space-x-4">
-                {/*<a href="/simpel" class="bg-gold hover:bg-gold-dark text-slate-900 font-bold py-3 px-8 rounded-lg shadow-lg transition-colors duration-300">
+              <div className="flex justify-left items-center space-x-4">
+                {/*<a href="/simpel" className="bg-gold hover:bg-gold-dark text-slate-900 font-bold py-3 px-8 rounded-lg shadow-lg transition-colors duration-300">
                         Simpel
                     </a>
-                    <a href="/uitgebreid" class="bg-gold hover:bg-gold-dark text-slate-900 font-bold py-3 px-8 rounded-lg shadow-lg transition-colors duration-300">
+                    <a href="/uitgebreid" className="bg-gold hover:bg-gold-dark text-slate-900 font-bold py-3 px-8 rounded-lg shadow-lg transition-colors duration-300">
                         Uitgebreid
                     </a>*/}
                   
