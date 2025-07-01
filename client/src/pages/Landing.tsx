@@ -47,16 +47,7 @@ export default function Landing() {
       <header className="border-b border-gray-700 bg-gray-800/80 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-4">
-            <div className="flex items-center space-x-3">
-              <div className="w-8 h-8 bg-gradient-to-br from-red-500 to-blue-600 rounded-lg flex items-center justify-center">
-                <Users className="h-5 w-5 text-white" />
-              </div>
-              <h1 className="text-xl font-bold text-white">
-                Coalitieland Nederland
-              </h1>
-
-              
-            </div>
+            
             <div className="flex items-center gap-3">
               <span className="text-xs text-gray-100">
                 {(() => {
