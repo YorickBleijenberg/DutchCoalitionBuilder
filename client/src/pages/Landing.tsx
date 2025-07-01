@@ -44,21 +44,21 @@ export default function Landing() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-red-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       {/* Header */}
-      <header className="border-b border-gray-200 dark:border-gray-700 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm">
+      <header className="border-b border-gray-700 bg-gray-800/80 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-4">
             <div className="flex items-center space-x-3">
               <div className="w-8 h-8 bg-gradient-to-br from-red-500 to-blue-600 rounded-lg flex items-center justify-center">
                 <Users className="h-5 w-5 text-white" />
               </div>
-              <h1 className="text-xl font-bold text-gray-900 dark:text-white">
+              <h1 className="text-xl font-bold text-white">
                 Coalitieland Nederland
               </h1>
 
               
             </div>
             <div className="flex items-center gap-3">
-              <span className="text-xs">
+              <span className="text-xs text-gray-100">
                 {(() => {
                   const electionDate = new Date('2025-10-29');
                   const today = new Date();
@@ -68,15 +68,15 @@ export default function Landing() {
                 })()}
               </span>
             </div> 
-            <Button
+             {/* <Button
               variant="ghost"
               size="sm"
               onClick={toggleDarkMode}
-              className="text-gray-100 dark:text-gray-100
-              hover:text-gray-900 dark:hover:text-white"
+              className="text-gray-100
+              hover:text-white"
             >
               {darkMode  ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
-            </Button>
+            </Button>*/}
             
           </div>
         </div>
@@ -96,12 +96,12 @@ export default function Landing() {
                 <h2 class="text-lg md:text-xl font-medium tracking-widest uppercase mb-4">Coalitieland.nl</h2>*/}
 
               {/*  <!-- Main Headline -->*/}
-                <h1 class="font-serif-display text-5xl md:text-7xl lg:text-8xl font-bold mb-4">
+                <h1 class="font-serif-display text-5xl text-gray-100 md:text-7xl lg:text-8xl font-bold mb-4">
                   <br/>Nederland,<br/>Coalitieland
                 </h1>
 
              {/*   <!-- Subtitle -->*/}
-                <p class="flex justify-left text-lg md:text-xl max-w-2xl mb-12">
+                <p class="flex justify-left text-lg text-gray-100 md:text-xl max-w-2xl mb-12">
                     Bouw en analyseer Nederlandse politieke coalities met realtime zetelvoorspellingen en parlementsvisualisaties.
                 </p>
 

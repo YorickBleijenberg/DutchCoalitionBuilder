@@ -79,7 +79,14 @@ const [isDarkMode, setIsDarkMode] = useState(false);
         <div className="max-w-none mx-auto px-0.5 sm:px-4 lg:px-6">
           <div className="flex items-center justify-between">
             
-            <a href="/" class="bg-gold hover:bg-gold-dark text-slate-900 font-bold py-3 px-8 rounded-lg shadow-lg transition-colors duration-300">
+            <a 
+              href="/" 
+              className="bg-gold hover:bg-gold-dark text-slate-900 font-bold 
+                         py-1.5 px-3 text-xs
+                         sm:py-2 sm:px-4 sm:text-sm
+                         md:py-3 md:px-8 md:text-base
+                         rounded-lg shadow-lg transition-colors duration-300"
+            >
               Nederland Coalitieland
             </a>
             
