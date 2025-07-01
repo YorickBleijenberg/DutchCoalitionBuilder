@@ -78,7 +78,7 @@ export default function Landing() {
       */}
         <main class="hero-bg min-h-screen flex flex-col items-left justify-left relative">
           {/* <!-- Dark Overlay for better text readability -->*/}
-            <div class="absolute inset-0 bg-slate-900 opacity-10"></div>
+            <div class="absolute inset-0 bg-slate-900 opacity-30"></div>
 
             {/*<!-- Content Container -->*/}
             <div class="z-10 text-left px-4">
@@ -95,7 +95,9 @@ export default function Landing() {
                 <p class="flex justify-left text-lg text-gray-100 md:text-xl max-w-2xl mb-12">
                     Bouw en analyseer Nederlandse politieke coalities met realtime zetelvoorspellingen en parlementsvisualisaties.
                 </p>
-
+<br/>
+              <br/>
+              <br/>
               {/*  <!-- Action Buttons -->*/}
               <div class="flex justify-left items-center space-x-4">
                 {/*<a href="/simpel" class="bg-gold hover:bg-gold-dark text-slate-900 font-bold py-3 px-8 rounded-lg shadow-lg transition-colors duration-300">
