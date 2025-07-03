@@ -11,6 +11,7 @@ export interface Party {
   ideology: string;
   leader: string;
   currentSeats: number;
+  currentSeatsEK: number;
 }
 
 export interface Coalition {

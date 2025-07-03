@@ -115,7 +115,17 @@ export default function Landing() {
                     Naar de coalitie zoeker
                     <ChevronRight className="ml-2 h-4 w-4" />
                   </Button>  
+                <div>
+                <Button 
+                  size="lg" 
+                  className="bg-gold hover:bg-gold-dark text-slate-900 font-bold py-3 px-8 rounded-lg shadow-lg transition-colors duration-300"
+                  onClick={() => setLocation('/Stemming')}
+                >
+                  Stemming tool
+                  <ChevronRight className="ml-2 h-4 w-4" />
+                </Button>  
                 </div>
+              </div>
 
             </div>
 

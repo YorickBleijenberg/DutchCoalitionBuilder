@@ -7,6 +7,7 @@ import { AppProvider } from "./context/AppContext";
 import Landing from "@/pages/Landing";
 import Home from "@/pages/Home";
 import Simple from "@/pages/Simple";
+import Stemming from "@/pages/Stemming";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -15,6 +16,7 @@ function Router() {
       <Route path="/" component={Landing} />
       <Route path="/advanced" component={Home} />
       <Route path="/simple" component={Simple} />
+      <Route path="/stemming" component={Stemming} />
       <Route component={NotFound} />
     </Switch>
   );
