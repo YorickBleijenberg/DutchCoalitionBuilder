@@ -33,7 +33,7 @@ export default function Stemming() {
 
                   </span>
 
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-3 ">
                     <span className="text-xs">
                       {(() => {
                         const electionDate = new Date('2025-10-29');
@@ -52,12 +52,12 @@ export default function Stemming() {
           
           
           
-            <CardHeader>
+            <CardHeader style={{ backgroundColor: '#faf9f5' }}>
               <CardTitle className="text-2xl font-bold text-center text-gray-900 dark:text-white">
                 Stemming Tool
               </CardTitle>
             </CardHeader>
-            <CardContent className="py-12">
+            <CardContent className="py-12 style={{ backgroundColor: '#faf9f5' }}">
               <div>
                 <StemmingTK />
               </div>

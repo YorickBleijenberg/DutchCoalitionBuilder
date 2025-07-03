@@ -18,7 +18,7 @@ export default function StemmingEK() {
     <Card className={`mb-6 ${hasMajority ? 'bg-green-50 dark:bg-green-900 border-green-200 dark:border-green-700' : 'bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-600'} shadow-md`}>
       <CardHeader>
         <CardTitle className="text-lg font-semibold text-gray-900 dark:text-white">
-          Eerste Kamer - {selectedEKSeats} zetels geselecteerd
+          Eerste Kamer
         </CardTitle>
       </CardHeader>
       <CardContent className="p-4">
