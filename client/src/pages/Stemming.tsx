@@ -10,7 +10,7 @@ export default function Stemming() {
 
   return (
     <StemmingProvider>
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-4">
+      <div className="min-h-screen p-4" style={{ backgroundColor: '#faf9f5' }}>
         <div className="max-w-4xl mx-auto">
           
           <Card className="bg-white dark:bg-gray-800 shadow-lg border border-gray-200 dark:border-gray-700">
