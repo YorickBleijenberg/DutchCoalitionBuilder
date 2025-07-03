@@ -17,21 +17,20 @@ export default function Stemming() {
             <div className="bg-[#374c7a] dark:bg-[#374c7a] text-white py-1.5">
               <div className="max-w-none mx-auto px-0.5 sm:px-4 lg:px-6">
                 <div className="flex items-center justify-between">
+                    <a 
+                      href="/" 
+                      className="bg-yellow-400 hover:bg-yellow-500 text-slate-900 font-bold 
+                                 w-fit
+                                 py-1.5 px-2 text-xs
+                                 sm:py-2 sm:px-4 sm:text-sm
+                                 md:py-3 md:px-8 md:text-base
+                                 rounded-lg shadow-lg transition-colors duration-300"
+                    >
+                      <span className="sm:hidden">NL Coalitieland</span>
+                      <span className="hidden sm:inline">Nederland Coalitieland</span>
+                    </a>
 
-                  <a 
-                    href="/" 
-                    className="bg-yellow-400 hover:bg-yellow-500 text-slate-900 font-bold 
-                               py-1.5 px-3 text-xs
-                               sm:py-2 sm:px-4 sm:text-sm
-                               md:py-3 md:px-8 md:text-base
-                               rounded-lg shadow-lg transition-colors duration-300"
-                  >
-                    Nederland Coalitieland
-                  </a>
-
-                  <span className="text-sm font-medium">
-
-                  </span>
+                  
 
                   <div className="flex items-center gap-3 ">
                     <span className="text-xs">

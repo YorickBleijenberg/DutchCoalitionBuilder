@@ -99,7 +99,7 @@ export default function Landing() {
               <br/>
               <br/>
               {/*  <!-- Action Buttons -->*/}
-              <div className="flex justify-left items-center space-x-4">
+              <div className="flex flex-col justify-start items-center space-y-4">
                 {/*<a href="/simpel" className="bg-gold hover:bg-gold-dark text-slate-900 font-bold py-3 px-8 rounded-lg shadow-lg transition-colors duration-300">
                         Simpel
                     </a>
@@ -115,7 +115,7 @@ export default function Landing() {
                     Naar de coalitie zoeker
                     <ChevronRight className="ml-2 h-4 w-4" />
                   </Button>  
-                <div>
+                
                 <Button 
                   size="lg" 
                   className="bg-gold hover:bg-gold-dark text-slate-900 font-bold py-3 px-8 rounded-lg shadow-lg transition-colors duration-300"
@@ -124,7 +124,7 @@ export default function Landing() {
                   Stemming tool
                   <ChevronRight className="ml-2 h-4 w-4" />
                 </Button>  
-                </div>
+                
               </div>
 
             </div>
