@@ -148,5 +148,25 @@
     "leader": "Joost Eerdmans",
     "currentSeats": 1,
     "currentSeatsEK": 3
+  },
+  {
+    "id": "50plus",
+    "name": "50PLUS",
+    "fullName": "50 Plus",
+    "color": "#F97316",
+    "ideology": "Conservative Liberal",
+    "leader": "Martin van Rooijen",
+    "currentSeats": 0,
+    "currentSeatsEK": 1
+  },
+  {
+    "id": "opnl",
+    "name": "OPNL",
+    "fullName": "Onafhankelijke Politiek Nederland",
+    "color": "#84CC16",
+    "ideology": "Regional",
+    "leader": "Auke van der Goot",
+    "currentSeats": 0,
+    "currentSeatsEK": 1
   }
 ]
