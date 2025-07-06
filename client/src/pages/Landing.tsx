@@ -76,61 +76,47 @@ export default function Landing() {
   
       {/*  <!-- Hero Section: Full screen, centered content -->
       */}
-        <main className="hero-bg min-h-screen flex flex-col items-left justify-left relative">
-          {/* <!-- Dark Overlay for better text readability -->*/}
-            <div className="absolute inset-0 bg-slate-900 opacity-30"></div>
+      <main className="hero-bg min-h-screen flex flex-col relative">
+        {/* Dark Overlay for better text readability */}
+        <div className="absolute inset-0 bg-slate-900 opacity-30"></div>
 
-            {/*<!-- Content Container -->*/}
-            <div className="z-10 text-left px-4">
+        {/* Content Container - Add centering classes here */}
+        <div className="z-10 px-4 flex flex-col items-center justify-top min-h-screen text-center">
+          {/* Small Title */}
+          {/*<h2 className="text-lg md:text-xl font-medium tracking-widest uppercase mb-4">Coalitieland.nl</h2>*/}
 
-              {/*  <!-- Small Title -->
-                <h2 className="text-lg md:text-xl font-medium tracking-widest uppercase mb-4">Coalitieland.nl</h2>*/}
+          {/* Main Headline */}
+          <h1 className="font-serif-display text-5xl text-gray-100 md:text-7xl lg:text-8xl font-bold mb-4">
+            <br/>Nederland,<br/>Coalitieland
+          </h1>
 
-              {/*  <!-- Main Headline -->*/}
-                <h1 className="font-serif-display text-5xl text-gray-100 md:text-7xl lg:text-8xl font-bold mb-4">
-                  <br/>Nederland,<br/>Coalitieland
-                </h1>
+          {/* Subtitle */}
+          <p className="text-lg text-gray-100 md:text-xl max-w-2xl mb-12">
+            Bouw en analyseer Nederlandse politieke coalities met realtime zetelvoorspellingen en parlementsvisualisaties.
+          </p>
 
-             {/*   <!-- Subtitle -->*/}
-                <p className="flex justify-left text-lg text-gray-100 md:text-xl max-w-2xl mb-12">
-                    Bouw en analyseer Nederlandse politieke coalities met realtime zetelvoorspellingen en parlementsvisualisaties.
-                </p>
-<br/>
-              <br/>
-              <br/>
-              {/*  <!-- Action Buttons -->*/}
-              <div className="flex flex-col justify-start items-center space-y-4">
-                {/*<a href="/simpel" className="bg-gold hover:bg-gold-dark text-slate-900 font-bold py-3 px-8 rounded-lg shadow-lg transition-colors duration-300">
-                        Simpel
-                    </a>
-                    <a href="/uitgebreid" className="bg-gold hover:bg-gold-dark text-slate-900 font-bold py-3 px-8 rounded-lg shadow-lg transition-colors duration-300">
-                        Uitgebreid
-                    </a>*/}
-                  
-                  <Button 
-                    size="lg" 
-                    className="bg-gold hover:bg-gold-dark text-slate-900 font-bold py-3 px-8 rounded-lg shadow-lg transition-colors duration-300"
-                    onClick={() => setLocation('/advanced')}
-                  >
-                    Naar de coalitie zoeker
-                    <ChevronRight className="ml-2 h-4 w-4" />
-                  </Button>  
-                
-                <Button 
-                  size="lg" 
-                  className="bg-gold hover:bg-gold-dark text-slate-900 font-bold py-3 px-8 rounded-lg shadow-lg transition-colors duration-300"
-                  onClick={() => setLocation('/Stemming')}
-                >
-                  Stemming tool
-                  <ChevronRight className="ml-2 h-4 w-4" />
-                </Button>  
-                
-              </div>
+          {/* Action Buttons */}
+          <div className="flex flex-col space-y-4">
+            <Button 
+              size="lg" 
+              className="bg-gold hover:bg-gold-dark text-slate-900 font-bold py-3 px-8 rounded-lg shadow-lg transition-colors duration-300"
+              onClick={() => setLocation('/advanced')}
+            >
+              Naar de coalitie zoeker
+              <ChevronRight className="ml-2 h-4 w-4" />
+            </Button>  
 
-            </div>
-
-      
-        </main>
+            <Button 
+              size="lg" 
+              className="bg-gold hover:bg-gold-dark text-slate-900 font-bold py-3 px-8 rounded-lg shadow-lg transition-colors duration-300"
+              onClick={() => setLocation('/Stemming')}
+            >
+              Stemming tool
+              <ChevronRight className="ml-2 h-4 w-4" />
+            </Button>  
+          </div>
+        </div>
+      </main>
 
       {/* Footer */}
       <footer className="border-t border-gray-200 dark:border-gray-700 bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm mt-16">

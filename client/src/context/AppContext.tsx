@@ -107,20 +107,20 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         'nsc': 1
       },
       peil: {
-        'vvd': 22,
-        'd66': 8,
-        'gl-pvda': 29,
-        'pvv': 30,
+        'vvd': 20,
+        'd66': 9,
+        'gl-pvda': 28,
+        'pvv': 29,
         'cda': 21,
         'sp': 7,
         'fvd': 4,
         'pvdd': 4,
         'cu': 3,
         'volt': 3,
-        'ja21': 8,
+        'ja21': 10,
         'sgp': 4,
         'denk': 4,
-        'bbb': 3,
+        'bbb': 4,
         'nsc': 0
       },
       '1v': {
