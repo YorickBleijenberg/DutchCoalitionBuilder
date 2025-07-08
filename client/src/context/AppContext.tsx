@@ -87,58 +87,70 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   };
 
   const loadPollData = (pollSource: 'current' | 'peilingwijzer' | 'peil' | '1v') => {
-    const pollData: Record<string, Record<string, number>> = {
-      current: {},
+    const pollData: Record<string, {data: Record<string, number>, date: string}> = {
+      current: {
+        data: {},
+        date: '2023-11-22'
+      },
       peilingwijzer: {
-        'vvd': 25,
-        'd66': 10,
-        'gl-pvda': 27,
-        'pvv': 32,
-        'cda': 20,
-        'sp': 5,
-        'fvd': 3,
-        'pvdd': 6,
-        'cu': 3,
-        'volt': 4,
-        'ja21': 4,
-        'sgp': 3,
-        'denk': 4,
-        'bbb': 3,
-        'nsc': 1
+        data: {
+          'vvd': 25,
+          'd66': 10,
+          'gl-pvda': 27,
+          'pvv': 32,
+          'cda': 20,
+          'sp': 5,
+          'fvd': 3,
+          'pvdd': 6,
+          'cu': 3,
+          'volt': 4,
+          'ja21': 4,
+          'sgp': 3,
+          'denk': 4,
+          'bbb': 3,
+          'nsc': 1
+        },
+        date: '2025-06-28'
       },
       peil: {
-        'vvd': 20,
-        'd66': 9,
-        'gl-pvda': 28,
-        'pvv': 29,
-        'cda': 21,
-        'sp': 7,
-        'fvd': 4,
-        'pvdd': 4,
-        'cu': 3,
-        'volt': 3,
-        'ja21': 10,
-        'sgp': 4,
-        'denk': 4,
-        'bbb': 4,
-        'nsc': 0
+        data: {
+          'vvd': 20,
+          'd66': 9,
+          'gl-pvda': 28,
+          'pvv': 29,
+          'cda': 21,
+          'sp': 7,
+          'fvd': 4,
+          'pvdd': 4,
+          'cu': 3,
+          'volt': 3,
+          'ja21': 10,
+          'sgp': 4,
+          'denk': 4,
+          'bbb': 4,
+          'nsc': 0
+        },
+        date: '2025-07-07'
       },
       '1v': {
-        'vvd': 26,
-        'd66': 8,
-        'gl-pvda': 26,
-        'pvv': 32,
-        'cda': 20,
-        'sp': 5,
-        'fvd': 3,
-        'pvdd': 4,
-        'cu': 3,
-        'volt': 4,
-        'ja21': 9,
-        'sgp': 3,
-        'denk': 3,
-        'bbb': 3,
-        'nsc': 1
+        data: {
+          'vvd': 26,
+          'd66': 8,
+          'gl-pvda': 26,
+          'pvv': 32,
+          'cda': 20,
+          'sp': 5,
+          'fvd': 3,
+          'pvdd': 4,
+          'cu': 3,
+          'volt': 4,
+          'ja21': 9,
+          'sgp': 3,
+          'denk': 3,
+          'bbb': 3,
+          'nsc': 1
+        },
+        date: '2025-06-28'
       }
     };
 
@@ -147,7 +159,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     } else {
       const pollSeats: Record<string, number> = {};
       parties.forEach(party => {
-        pollSeats[party.id] = pollData[pollSource][party.id] || 0;
+        pollSeats[party.id] = pollData[pollSource].data[party.id] || 0;
       });
       setPartySeats(pollSeats);
     }
@@ -168,6 +180,11 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     i18n.changeLanguage(language);
   }, [language, i18n]);
+
+  // Load latest polling data by default (Peil.nl has the latest date: 2025-07-07)
+  useEffect(() => {
+    loadPollData('peil');
+  }, []);
 
   const value: AppContextType = {
     parties,

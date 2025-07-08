@@ -154,6 +154,10 @@ Changelog:
 - June 26, 2025. Enhanced PoliticalPredictor: fixed insights functionality, swapped badge/seats layout, implemented complete Dutch/English translation
 - June 26, 2025. Comprehensive code refactoring: extracted utility functions, created shared constants, organized components into common folder, improved type safety
 - June 26, 2025. Created beautiful landing page with hero section and two-track user experience: Simpel mode (coming soon) and Geavanceerd mode (current full experience)
+- January 8, 2025. Added poll dates to polling data structure (TK2023: 2023-11-22, Peilingwijzer: 2025-06-28, Peil.nl: 2025-07-07, 1V: 2025-06-28)
+- January 8, 2025. Set default polling data to Peil.nl (latest date: 2025-07-07) on app initialization
+- January 8, 2025. Created functional Simple Coalition Viewer page with poll selection and coalition building functionality
+- January 8, 2025. Added new parties to parties.json: 50PLUS (0 TK, 1 EK), OPNL (0 TK, 1 EK), updated existing party data
 ```
 
 ## User Preferences
