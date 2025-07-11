@@ -26,48 +26,23 @@ import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { RotateCcw, Download, Settings, Moon, Sun, Calendar, TrendingUp, Users, Share2, BarChart } from 'lucide-react';
 
+
 export default function Home() {
   const { t } = useTranslation();
   const { loadCurrentSeats, resetSeats, darkMode, toggleDarkMode, language, setLanguage, selectedParties } = useApp();
   const [activeTab, setActiveTab] = useState('coalitions');
 
-const [isDarkMode, setIsDarkMode] = useState(false);
 
-  const themeClasses = {
-    light: {
-      bg: 'bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50',
-      header: 'bg-white/80 backdrop-blur-sm border-slate-200/50',
-      card: 'bg-white/60 backdrop-blur-sm border-slate-200/30',
-      cardHover: 'hover:bg-white/80 hover:border-slate-300/50',
-      text: 'text-slate-900',
-      textSecondary: 'text-slate-600',
-      textMuted: 'text-slate-500',
-      button: 'bg-slate-100/80 text-slate-700 hover:bg-slate-200/80',
-      buttonPrimary: 'bg-blue-500/90 text-white hover:bg-blue-600/90'
-    },
-    dark: {
-      bg: 'bg-gradient-to-br from-slate-900 via-blue-950 to-purple-950',
-      header: 'bg-slate-900/40 backdrop-blur-xl border-blue-500/20',
-      card: 'bg-slate-800/20 backdrop-blur-xl border-blue-500/20',
-      cardHover: 'hover:bg-slate-800/30 hover:border-blue-400/30',
-      text: 'text-slate-100',
-      textSecondary: 'text-slate-300',
-      textMuted: 'text-slate-400',
-      button: 'bg-slate-700/50 text-slate-200 hover:bg-slate-600/60',
-      buttonPrimary: 'bg-blue-600/80 text-white hover:bg-blue-500/90'
-    }
-  };
-  const theme = isDarkMode ? themeClasses.dark : themeClasses.light;
   return (
     
     <div className="sticky top-0 md:top-20 z-40 min-h-screen coalition-background coalition-text transition-colors duration-300">
       {/* Animated Background Elements */}
       {/*<div className="fixed inset-0 overflow-hidden pointer-events-none">
          <div className={`absolute -top-40 -right-40 w-80 h-80 rounded-full opacity-20 blur-3xl ${
-          isDarkMode ? 'bg-blue-500' : 'bg-blue-300'
+          darkMode ? 'bg-blue-500' : 'bg-blue-300'
         } animate-pulse`}></div> 
         <div className={`absolute -bottom-40 -left-40 w-80 h-80 rounded-full opacity-20 blur-3xl ${
-          isDarkMode ? 'bg-purple-500' : 'bg-indigo-300'
+          darkMode ? 'bg-purple-500' : 'bg-indigo-300'
         } animate-pulse delay-1000`}></div>
       </div> */}
       
@@ -245,6 +220,12 @@ const [isDarkMode, setIsDarkMode] = useState(false);
             <div className="w-full">
               <ParliamentChart />
             </div>
+            {/* Flourish chart */}
+            <div className="flourish-embed flourish-chart" data-src="visualisation/24130152">
+              <img src="https://public.flourish.studio/visualisation/24130152/thumbnail" width="100%" alt="chart visualization" />
+            </div>
+
+            
           </TabsContent>
           {/* Mobile Bottom Navigation */}
           <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700 safe-area-bottom">

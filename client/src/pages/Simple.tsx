@@ -26,7 +26,9 @@ export default function Simple() {
               Nederland Coalitieland
             </a>
 
-            
+            <span className="text-sm font-medium">
+              Simple Coalition Viewer
+            </span>
 
             <div className="flex items-center gap-3">
               <span className="text-xs">
@@ -45,10 +47,6 @@ export default function Simple() {
 
       <div className="p-4">
         <div className="max-w-6xl mx-auto">
-          
-
-          {/* Coalition Prediction Bar */}
-          <CoalitionPredictionBar />
           {/* Poll Selection */}
           <Card className="mb-6 bg-white dark:bg-gray-800 shadow-lg border border-gray-200 dark:border-gray-700">
             <CardHeader className="py-4 bg-gray-50 dark:bg-gray-700 border-b border-gray-200 dark:border-gray-600">
@@ -91,7 +89,10 @@ export default function Simple() {
               </div> 
             </CardHeader>
           </Card>
-          
+
+          {/* Coalition Prediction Bar */}
+          <CoalitionPredictionBar />
+
           {/* Coalition Builder */}
           <div className="mt-6">
             <CoalitionBuilder />
