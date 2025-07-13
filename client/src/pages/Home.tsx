@@ -81,12 +81,13 @@ export default function Home() {
               </span>
               <Button
                 variant="ghost"
-                size="sm"
+                
                 onClick={toggleDarkMode}
-                className="text-gray-100 dark:text-gray-100
-                hover:text-gray-900 dark:hover:text-white"
+                className="p-2 rounded-lg 
+                text-gray-400 dark:text-yellow-300
+                hover:bg-gray-100 dark:hover:bg-gray-700"
               >
-                {darkMode  ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+                {darkMode  ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
               </Button>
               
               <DropdownMenu>

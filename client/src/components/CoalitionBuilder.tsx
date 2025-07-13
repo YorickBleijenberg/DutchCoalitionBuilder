@@ -72,12 +72,12 @@ export default function CoalitionBuilder() {
   );
 
   return (
-    <Card className="bg-white dark:bg-gray-800 shadow-lg border border-gray-200 dark:border-gray-700">
+    <Card className="backdrop-blur-md bg-white/20 dark:bg-gray-800/70 shadow-lg border border-gray-200/20 dark:border-gray-700/20">
       
       
       <CardContent className="p-6">
         {/* All Parties - 4 Columns Layout */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 ">
           {parties
             .filter(party => (seatData[party.id] || 0) > 0)
             .sort((a, b) => (seatData[b.id] || 0) - (seatData[a.id] || 0))
@@ -87,10 +87,10 @@ export default function CoalitionBuilder() {
               <div 
                 key={party.id} 
                 onClick={() => handlePartyToggle(party.id, !isSelected)}
-                className={`flex items-center justify-between p-3 rounded-lg transition-colors cursor-pointer ${
+                className={`flex items-center justify-between p-3 rounded-lg bg-white/20 transition-colors cursor-pointer ${
                   isSelected 
-                    ? 'bg-green-100 dark:bg-green-900/30 border-2 border-green-500 dark:border-green-400' 
-                    : 'border border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700'
+                    ? 'bg-green-100/80 dark:bg-green-900/30 border-2 border-green-500/90 dark:border-green-400/50' 
+                    : 'border border-gray-200/80 dark:border-gray-600/80 hover:bg-gray-50/80 dark:hover:bg-gray-700/90'
                 }`}
               >
                 <div className="flex items-center space-x-2">
@@ -123,7 +123,7 @@ export default function CoalitionBuilder() {
           </div>
         )}
       </CardContent>
-      <CardHeader className="bg-gray-50 dark:bg-gray-700 border-b border-gray-200 dark:border-gray-600 py-2">
+      <CardHeader className="bg-gray-50/20 dark:bg-gray-700/80 border-b border-gray-200/50 dark:border-gray-600/20 py-2">
         <div className="flex justify-between items-center">          
           <Button
             onClick={handleSaveScenario}

@@ -45,8 +45,8 @@ export default function Landing() {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-red-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       {/* Header */}
       <header className="border-b border-gray-700 bg-gray-800/80 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-4">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ">
+          <div className="flex justify-between items-center py-4 ">
             
             <div className="flex items-center gap-3">
               <span className="text-xs text-gray-100">

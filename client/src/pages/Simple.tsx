@@ -5,16 +5,32 @@ import CoalitionBuilder from '../components/CoalitionBuilder';
 import CoalitionPredictionBar from '../components/CoalitionPredictionBar';
 import CoalitionSuggestions from '../components/CoalitionSuggestions';
 import IdeologicalCoalitions from '../components/IdeologicalCoalitions';
+import { Moon, Sun } from 'lucide-react';
+
 
 export default function Simple() {
-  const { loadPollData } = useApp();
+  const { loadPollData, darkMode, toggleDarkMode, } = useApp();
 
   return (
-    <div className="min-h-screen bg-gray-100 dark:bg-gray-800">
+    /* page background */
+    <div 
+      className="min-h-screen bg-gray-100 dark:bg-gray-800"
+      style={{
+        backgroundImage: "url('http://coalitieland.nl/BinnenhofLight2.jpg?v=1')",
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        backgroundAttachment: 'fixed'
+      }}
+    >
+      
       {/* Header */}
       <div className="bg-[#374c7a] dark:bg-[#374c7a] text-white py-1.5">
+        
         <div className="max-w-none mx-auto px-0.5 sm:px-4 lg:px-6">
+          
           <div className="flex items-center justify-between">
+            
             <a 
               href="/" 
               className="bg-yellow-400 hover:bg-yellow-500 text-slate-900 font-bold 
@@ -26,9 +42,7 @@ export default function Simple() {
               Nederland Coalitieland
             </a>
 
-            <span className="text-sm font-medium">
-              Simple Coalition Viewer
-            </span>
+              
 
             <div className="flex items-center gap-3">
               <span className="text-xs">
@@ -40,6 +54,18 @@ export default function Simple() {
                   return diffDays > 0 ? `Dagen tot de verkiezingen: ${diffDays}` : 'Verkiezingen vandaag!';
                 })()}
               </span>
+
+              <Button
+                variant="ghost"
+
+                onClick={toggleDarkMode}
+                className="p-2 rounded-lg 
+                text-gray-400 dark:text-yellow-300
+                hover:bg-gray-100 dark:hover:bg-gray-700"
+              >
+                {darkMode  ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+              </Button>
+              
             </div>
           </div>
         </div>
@@ -47,12 +73,14 @@ export default function Simple() {
 
       <div className="p-4">
         <div className="max-w-6xl mx-auto">
+
+          
           {/* Poll Selection */}
-          <Card className="mb-6 bg-white dark:bg-gray-800 shadow-lg border border-gray-200 dark:border-gray-700">
+          <Card className="mb-6 bg-white dark:bg-gray-800 shadow-lg border border-gray-200 dark:border-gray-700 backdrop-blur-md bg-opacity-90">
             <CardHeader className="py-4 bg-gray-50 dark:bg-gray-700 border-b border-gray-200 dark:border-gray-600">
               <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
                 <CardTitle className="text-lg font-inter font-semibold">Selecteer Peiling Data</CardTitle>
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-2 ">
                   <Button
                     variant="outline"
                     size="sm"
@@ -91,7 +119,9 @@ export default function Simple() {
           </Card>
 
           {/* Coalition Prediction Bar */}
-          <CoalitionPredictionBar />
+          <div className="backdrop-blur-md bg-white dark:bg-gray-800 bg-opacity-90 dark:bg-opacity-90 rounded-lg shadow-lg">
+            <CoalitionPredictionBar />
+          </div>
 
           {/* Coalition Builder */}
           <div className="mt-6">
