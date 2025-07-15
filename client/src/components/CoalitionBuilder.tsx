@@ -87,7 +87,7 @@ export default function CoalitionBuilder() {
               <div 
                 key={party.id} 
                 onClick={() => handlePartyToggle(party.id, !isSelected)}
-                className={`flex items-center justify-between p-3 rounded-lg bg-white/20 transition-colors cursor-pointer ${
+                className={`flex items-center justify-between p-3 rounded-lg bg-white/80 transition-colors cursor-pointer ${
                   isSelected 
                     ? 'bg-green-100/80 dark:bg-green-900/30 border-2 border-green-500/90 dark:border-green-400/50' 
                     : 'border border-gray-200/80 dark:border-gray-600/80 hover:bg-gray-50/80 dark:hover:bg-gray-700/90'
