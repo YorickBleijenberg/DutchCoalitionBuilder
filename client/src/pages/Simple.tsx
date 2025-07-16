@@ -76,8 +76,10 @@ export default function Simple() {
 
           
           {/* Poll Selection */}
-          <Card className="mb-6 bg-white dark:bg-gray-800 shadow-lg border border-gray-200 dark:border-gray-700 backdrop-blur-md bg-opacity-90">
-            <CardHeader className="py-4 bg-gray-50 dark:bg-gray-700 border-b border-gray-200 dark:border-gray-600">
+          <Card className="mb-6 bg-gray-50/80 dark:bg-gray-700/80 border-gray-200/50 dark:border-gray-600/20 py-2">
+            
+            
+          
               <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
                 <CardTitle className="text-lg font-inter font-semibold">Selecteer Peiling Data</CardTitle>
                 <div className="flex flex-wrap gap-2 ">
@@ -115,7 +117,7 @@ export default function Simple() {
                   </Button>
                 </div>
               </div> 
-            </CardHeader>
+            
           </Card>
 
           {/* Coalition Prediction Bar */}

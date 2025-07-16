@@ -135,8 +135,8 @@ export default function CoalitionSuggestions() {
   );
 
   return (
-    <Card className="bg-white dark:bg-gray-800 shadow-lg border border-gray-200 dark:border-gray-700">
-      <CardHeader className="bg-gray-50 dark:bg-gray-700 border-b border-gray-200 dark:border-gray-600 py-2">
+    <Card className="backdrop-blur-md bg-white/20 dark:bg-gray-800/70 shadow-lg border border-gray-200/20 dark:border-gray-700/20">
+      <CardHeader className="backdrop-blur-md bg-white/20 dark:bg-gray-800/70 shadow-lg border border-gray-200/20 dark:border-gray-700/20 py-2">
         <div className="flex justify-between items-center">
           <div>
             <CardTitle className="text-lg font-inter font-semibold">{t('suggestions.title')}</CardTitle>

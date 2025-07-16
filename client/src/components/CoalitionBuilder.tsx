@@ -123,7 +123,7 @@ export default function CoalitionBuilder() {
           </div>
         )}
       </CardContent>
-      <CardHeader className="bg-gray-50/20 dark:bg-gray-700/80 border-b border-gray-200/50 dark:border-gray-600/20 py-2">
+      <CardHeader className="bg-gray-50/20 dark:bg-gray-700/80 border-gray-200/50 dark:border-gray-600/20 py-2">
         <div className="flex justify-between items-center">          
           <Button
             onClick={handleSaveScenario}
