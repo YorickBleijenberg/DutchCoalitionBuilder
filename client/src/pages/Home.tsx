@@ -221,6 +221,7 @@ export default function Home() {
             <div className="w-full">
               <ParliamentChart />
             </div>
+            
             {/* Flourish chart */}
             <div className="flourish-embed flourish-chart" data-src="visualisation/24130152">
               <img src="https://public.flourish.studio/visualisation/24130152/thumbnail" width="100%" alt="chart visualization" />
