@@ -99,6 +99,8 @@ export default function PollsPlus() {
                     const colorPalette = ['#636efa','#EF553B','#00cc96','#ab63fa','#FFA15A','#19d3f3','#FF6692','#B6E880','#FF97FF','#FECB52'];
                     function timeWeight(d,c){return Math.exp(-decayLambda*((c-d)/(1000*60*60*24)));}
 
+                    console.log('Starting to load CSV files...');
+                    
                     // Load events data first
                     Papa.parse('/events.csv', {
                       download: true,
@@ -106,6 +108,7 @@ export default function PollsPlus() {
                       dynamicTyping: true,
                       skipEmptyLines: true,
                       complete: res => {
+                        console.log('Events CSV loaded successfully:', res);
                         eventsData = res.data
                           .filter(r => r.Datum && r.Gebeurtenis && r.Gebeurtenis.trim() !== '')
                           .map(r => ({
@@ -115,14 +118,20 @@ export default function PollsPlus() {
                           }))
                           .filter(r => r.date instanceof Date && !isNaN(r.date));
                         
-                        console.log('Loaded events:', eventsData.length);
+                        console.log('Processed events data:', eventsData.length, eventsData);
                         
                         // Now load polls data
+                        loadPolls();
+                      },
+                      error: function(error) {
+                        console.error('Error loading events.csv:', error);
+                        // Continue with polls loading even if events fail
                         loadPolls();
                       }
                     });
 
                     function loadPolls() {
+                      console.log('Starting to load polls.csv...');
                       Papa.parse('/polls.csv', {
                         download: true,
                         header: true,
@@ -130,25 +139,50 @@ export default function PollsPlus() {
                         dynamicTyping: true,
                         skipEmptyLines: true,
                         complete: res => {
-                          const raw = res.data.map(r => ({ ...r, date: r.Datum ? new Date(r.Datum) : null }));
-                          const data = raw.filter(r => r.date instanceof Date && !isNaN(r.date));
-                          const parties = Object.keys(data[0]).filter(c => !['Peilingsorganisatie','Datum','date'].includes(c));
+                          console.log('Polls CSV loaded successfully:', res);
+                          console.log('Raw CSV data sample:', res.data.slice(0, 3));
                           
-                          console.log('Loaded polls:', data.length, 'parties:', parties);
+                          const raw = res.data.map(r => ({ ...r, date: r.Datum ? new Date(r.Datum) : null }));
+                          console.log('After date mapping:', raw.slice(0, 3));
+                          
+                          const data = raw.filter(r => r.date instanceof Date && !isNaN(r.date));
+                          console.log('After date filtering:', data.length, 'valid entries');
+                          
+                          if (data.length === 0) {
+                            console.error('No valid polling data found!');
+                            document.getElementById('chart').innerHTML = '<div class="p-8 text-center text-red-600">No valid polling data found. Check date format in polls.csv.</div>';
+                            return;
+                          }
+                          
+                          const parties = Object.keys(data[0]).filter(c => !['Peilingsorganisatie','Datum','date'].includes(c));
+                          console.log('Extracted parties:', parties);
+                          
+                          if (parties.length === 0) {
+                            console.error('No parties found in data!');
+                            document.getElementById('chart').innerHTML = '<div class="p-8 text-center text-red-600">No party data found in polls.csv.</div>';
+                            return;
+                          }
+                          
+                          console.log('Showing controls and building interface...');
                           document.getElementById('controls').classList.remove('hidden');
                           buildButtons(parties, data);
                           draw(parties, data);
                         },
                         error: function(error) {
                           console.error('Error loading polls.csv:', error);
-                          // Fallback to minimal functionality
-                          document.getElementById('chart').innerHTML = '<div class="p-8 text-center text-red-600">Error loading polling data. Please check that polls.csv is accessible.</div>';
+                          document.getElementById('chart').innerHTML = '<div class="p-8 text-center text-red-600">Error loading polling data: ' + error.message + '</div>';
                         }
                       });
                     }
 
                     function buildButtons(parties, data) {
+                      console.log('Building buttons for parties:', parties);
                       const ctr = document.getElementById('buttons'); 
+                      if (!ctr) {
+                        console.error('Could not find buttons container!');
+                        return;
+                      }
+                      
                       ctr.innerHTML = '';
                       parties.forEach((p, i) => {
                         const btn = document.createElement('button');
@@ -165,6 +199,7 @@ export default function PollsPlus() {
                         };
                         ctr.appendChild(btn);
                       });
+                      console.log('Created', parties.length, 'party buttons');
                       
                       document.getElementById('enable-all').onclick = () => { parties.forEach(p => toggleButton(p, true)); draw(parties, data); };
                       document.getElementById('disable-all').onclick = () => { parties.forEach(p => toggleButton(p, false)); draw(parties, data); };
@@ -197,7 +232,10 @@ export default function PollsPlus() {
                     }
 
                     function draw(parties, data) {
+                      console.log('Drawing chart with parties:', parties, 'data entries:', data.length);
                       const sel = getSelected(parties);
+                      console.log('Selected parties:', sel);
+                      
                       const sigma = +document.getElementById('sigma').value;
                       const showEvents = document.getElementById('show-events').checked;
                       const dates = data.map(r => r.date);
@@ -326,7 +364,23 @@ export default function PollsPlus() {
                         };
                       }
 
-                      Plotly.newPlot('chart', traces, layout, {responsive: true});
+                      console.log('Creating Plotly chart with', traces.length, 'traces');
+                      console.log('Traces:', traces);
+                      console.log('Layout:', layout);
+                      
+                      const chartElement = document.getElementById('chart');
+                      if (!chartElement) {
+                        console.error('Chart element not found!');
+                        return;
+                      }
+                      
+                      Plotly.newPlot('chart', traces, layout, {responsive: true})
+                        .then(() => {
+                          console.log('Chart created successfully!');
+                        })
+                        .catch(error => {
+                          console.error('Error creating chart:', error);
+                        });
                       window._lastAgg = agg;
                     }
                     
