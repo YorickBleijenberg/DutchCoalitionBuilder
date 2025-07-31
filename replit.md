@@ -162,6 +162,10 @@ Changelog:
 - January 8, 2025. Created PollsPlus.tsx page with embedded HTML poll aggregator using dangerouslySetInnerHTML
 - January 8, 2025. Replaced iframe approach with direct HTML embedding to avoid X-Frame-Options restrictions
 - January 8, 2025. Integrated Plotly.js-based interactive poll aggregator with party selection, weight controls, and export functionality
+- July 31, 2025. Rebuilt poll aggregator as native React component with proper script loading and state management
+- July 31, 2025. Fixed JavaScript execution issues by replacing dangerouslySetInnerHTML with React patterns
+- July 31, 2025. Successfully integrated real Dutch polling data (72 entries) from CSV files with 15 political parties
+- July 31, 2025. Implemented time-weighted aggregation algorithm with pollster quality weighting system
 ```
 
 ## User Preferences

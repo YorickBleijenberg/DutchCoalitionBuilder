@@ -1,0 +1,46 @@
+Download the React DevTools for a better development experience: https://reactjs.org/link/react-devtools
+88d0f7b5-bb2a-4f30-8d30-a8a4094deff1-00-1cdk0l8vpp1ob.worf.replit.dev/:1 Mixed Content: The page at 'https://88d0f7b5-bb2a-4f30-8d30-a8a4094deff1-00-1cdk0l8vpp1ob.worf.replit.dev/' was loaded over HTTPS, but requested an insecure element 'http://coalitieland.nl/BinnenhofLight2.jpg?v=1'. This request was automatically upgraded to HTTPS, For more information see https://blog.chromium.org/2019/10/no-more-mixed-messages-about-https.htmlUnderstand this warning
+ Starting CSV data load...
+ CSV text loaded: Peilingsorganisatie;Datum;PVV;GL/PvdA;VVD;NSC;D66;BBB;CDA;SP;DENK;PvdD;FVD;SGP;CU;Volt;JA21
+Verian;2025-07-29;30;29;23;1;10;2;23;7;2;4;4;3;3;2;7
+Ipsos I&O;2025-07-28;27;24;20;1;12;4;24;6;4;6;3;4;4;4...
+ Papa Parse results: Object
+ Valid data entries: 72
+ Sample data: Array(3)
+ Extracted parties: Array(15)
+ Creating chart with selected parties: Array(5)
+ Chart created successfully
+ Starting CSV data load...
+ CSV text loaded: Peilingsorganisatie;Datum;PVV;GL/PvdA;VVD;NSC;D66;BBB;CDA;SP;DENK;PvdD;FVD;SGP;CU;Volt;JA21
+Verian;2025-07-29;30;29;23;1;10;2;23;7;2;4;4;3;3;2;7
+Ipsos I&O;2025-07-28;27;24;20;1;12;4;24;6;4;6;3;4;4;4...
+ Papa Parse results: Object
+ Valid data entries: 72
+ Sample data: Array(3)
+ Extracted parties: Array(15)
+ Creating chart with selected parties: Array(5)
+ Chart created successfully
+ Creating chart with selected parties: Array(4)
+ Chart created successfully
+ Creating chart with selected parties: Array(3)
+ Chart created successfully
+ Creating chart with selected parties: Array(2)
+ Chart created successfully
+ Creating chart with selected parties: Array(1)
+ Chart created successfully
+ Creating chart with selected parties: Array(1)
+ Chart created successfully
+ Creating chart with selected parties: Array(1)
+ Chart created successfully
+ Creating chart with selected parties: Array(1)
+ Chart created successfully
+ Creating chart with selected parties: Array(2)
+ Chart created successfully
+ Creating chart with selected parties: Array(15)
+ Chart created successfully
+ Creating chart with selected parties: Array(15)
+ Chart created successfully
+ Creating chart with selected parties: Array(1)
+ Chart created successfully
+ Creating chart with selected parties: Array(2)
+ Chart created successfully
