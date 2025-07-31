@@ -158,6 +158,8 @@ Changelog:
 - January 8, 2025. Set default polling data to Peil.nl (latest date: 2025-07-07) on app initialization
 - January 8, 2025. Created functional Simple Coalition Viewer page with poll selection and coalition building functionality
 - January 8, 2025. Added new parties to parties.json: 50PLUS (0 TK, 1 EK), OPNL (0 TK, 1 EK), updated existing party data
+- January 8, 2025. Added "Polls Plus" button to landing page with new dedicated page for poll aggregator
+- January 8, 2025. Created PollsPlus.tsx page with embedded iframe displaying yorick-online.nl poll aggregator
 ```
 
 ## User Preferences

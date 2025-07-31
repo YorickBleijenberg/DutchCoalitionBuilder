@@ -8,6 +8,7 @@ import Landing from "@/pages/Landing";
 import Home from "@/pages/Home";
 import Simple from "@/pages/Simple";
 import Stemming from "@/pages/Stemming";
+import PollsPlus from "@/pages/PollsPlus";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -17,6 +18,7 @@ function Router() {
       <Route path="/advanced" component={Home} />
       <Route path="/simple" component={Simple} />
       <Route path="/stemming" component={Stemming} />
+      <Route path="/polls-plus" component={PollsPlus} />
       <Route component={NotFound} />
     </Switch>
   );

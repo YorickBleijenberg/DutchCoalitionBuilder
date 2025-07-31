@@ -125,6 +125,15 @@ export default function Landing() {
               Stemming tool
               <ChevronRight className="ml-2 h-4 w-4" />
             </Button> 
+
+            <Button 
+              size="lg" 
+              className="bg-gold hover:bg-gold-dark text-slate-900 font-bold py-3 px-8 rounded-lg shadow-lg transition-colors duration-300"
+              onClick={() => setLocation('/polls-plus')}
+            >
+              Polls Plus
+              <BarChart3 className="ml-2 h-4 w-4" />
+            </Button> 
           </div>
         </div>
       </main>
