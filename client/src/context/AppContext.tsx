@@ -94,23 +94,23 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       },
       peilingwijzer: {
         data: {
-          'vvd': 25,
-          'd66': 10,
+          'vvd': 22,
+          'd66': 11,
           'gl-pvda': 27,
-          'pvv': 32,
-          'cda': 20,
-          'sp': 5,
+          'pvv': 30,
+          'cda': 23,
+          'sp': 6,
           'fvd': 3,
-          'pvdd': 6,
+          'pvdd': 5,
           'cu': 3,
-          'volt': 4,
-          'ja21': 4,
+          'volt': 3,
+          'ja21': 7,
           'sgp': 3,
-          'denk': 4,
+          'denk': 3,
           'bbb': 3,
           'nsc': 1
         },
-        date: '2025-06-28'
+        date: '2025-07-30'
       },
       peil: {
         data: {
@@ -134,23 +134,23 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       },
       '1v': {
         data: {
-          'vvd': 26,
-          'd66': 8,
-          'gl-pvda': 26,
-          'pvv': 32,
-          'cda': 20,
-          'sp': 5,
-          'fvd': 3,
+          'vvd': 23,
+          'd66': 10,
+          'gl-pvda': 29,
+          'pvv': 30,
+          'cda': 23,
+          'sp': 7,
+          'fvd': 4,
           'pvdd': 4,
           'cu': 3,
-          'volt': 4,
-          'ja21': 9,
+          'volt': 2,
+          'ja21': 7,
           'sgp': 3,
-          'denk': 3,
-          'bbb': 3,
+          'denk': 2,
+          'bbb': 2,
           'nsc': 1
         },
-        date: '2025-06-28'
+        date: '2025-07-29'
       }
     };
 

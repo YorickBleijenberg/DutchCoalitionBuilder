@@ -33,7 +33,7 @@ export default function Simple() {
             
             <a 
               href="/" 
-              className="bg-yellow-400 hover:bg-yellow-500 text-slate-900 font-bold 
+              className="bg-gold hover:bg-gold-dark text-slate-900 font-bold 
                          py-1.5 px-3 text-xs
                          sm:py-2 sm:px-4 sm:text-sm
                          md:py-3 md:px-8 md:text-base
