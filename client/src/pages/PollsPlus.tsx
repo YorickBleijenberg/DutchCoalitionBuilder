@@ -99,19 +99,53 @@ export default function PollsPlus() {
                     const colorPalette = ['#636efa','#EF553B','#00cc96','#ab63fa','#FFA15A','#19d3f3','#FF6692','#B6E880','#FF97FF','#FECB52'];
                     function timeWeight(d,c){return Math.exp(-decayLambda*((c-d)/(1000*60*60*24)));}
 
-                    // Mock data since CSV files won't be available
-                    const mockPolls = [
-                      {Datum: '2024-12-01', Peilingsorganisatie: 'Peil.nl', VVD: 24, PVV: 37, CDA: 5, D66: 9, GL: 8, SP: 5, PvdA: 8, ChristenUnie: 3, Partij: 20, FVD: 3, DENK: 3, '50PLUS': 1, SGP: 3, VOLT: 2, JA21: 1, BBB: 7, NSC: 20, 'Piratenpartij': 0},
-                      {Datum: '2024-11-15', Peilingsorganisatie: 'Ipsos I&O', VVD: 26, PVV: 35, CDA: 6, D66: 10, GL: 9, SP: 6, PvdA: 9, ChristenUnie: 4, Partij: 18, FVD: 4, DENK: 2, '50PLUS': 1, SGP: 3, VOLT: 3, JA21: 1, BBB: 8, NSC: 18, 'Piratenpartij': 0},
-                      {Datum: '2024-11-01', Peilingsorganisatie: 'Verian', VVD: 25, PVV: 36, CDA: 5, D66: 8, GL: 7, SP: 5, PvdA: 7, ChristenUnie: 3, Partij: 19, FVD: 3, DENK: 3, '50PLUS': 2, SGP: 3, VOLT: 2, JA21: 1, BBB: 9, NSC: 19, 'Piratenpartij': 0}
-                    ];
+                    // Load events data first
+                    Papa.parse('/events.csv', {
+                      download: true,
+                      header: true,
+                      dynamicTyping: true,
+                      skipEmptyLines: true,
+                      complete: res => {
+                        eventsData = res.data
+                          .filter(r => r.Datum && r.Gebeurtenis && r.Gebeurtenis.trim() !== '')
+                          .map(r => ({
+                            date: new Date(r.Datum),
+                            event: r.Gebeurtenis,
+                            description: r.Toelichting || ''
+                          }))
+                          .filter(r => r.date instanceof Date && !isNaN(r.date));
+                        
+                        console.log('Loaded events:', eventsData.length);
+                        
+                        // Now load polls data
+                        loadPolls();
+                      }
+                    });
 
-                    const data = mockPolls.map(r => ({ ...r, date: new Date(r.Datum) }));
-                    const parties = Object.keys(data[0]).filter(c => !['Peilingsorganisatie','Datum','date'].includes(c));
-                    
-                    document.getElementById('controls').classList.remove('hidden');
-                    buildButtons(parties, data);
-                    draw(parties, data);
+                    function loadPolls() {
+                      Papa.parse('/polls.csv', {
+                        download: true,
+                        header: true,
+                        delimiter: ';',
+                        dynamicTyping: true,
+                        skipEmptyLines: true,
+                        complete: res => {
+                          const raw = res.data.map(r => ({ ...r, date: r.Datum ? new Date(r.Datum) : null }));
+                          const data = raw.filter(r => r.date instanceof Date && !isNaN(r.date));
+                          const parties = Object.keys(data[0]).filter(c => !['Peilingsorganisatie','Datum','date'].includes(c));
+                          
+                          console.log('Loaded polls:', data.length, 'parties:', parties);
+                          document.getElementById('controls').classList.remove('hidden');
+                          buildButtons(parties, data);
+                          draw(parties, data);
+                        },
+                        error: function(error) {
+                          console.error('Error loading polls.csv:', error);
+                          // Fallback to minimal functionality
+                          document.getElementById('chart').innerHTML = '<div class="p-8 text-center text-red-600">Error loading polling data. Please check that polls.csv is accessible.</div>';
+                        }
+                      });
+                    }
 
                     function buildButtons(parties, data) {
                       const ctr = document.getElementById('buttons'); 
@@ -164,6 +198,8 @@ export default function PollsPlus() {
 
                     function draw(parties, data) {
                       const sel = getSelected(parties);
+                      const sigma = +document.getElementById('sigma').value;
+                      const showEvents = document.getElementById('show-events').checked;
                       const dates = data.map(r => r.date);
                       const minD = new Date(Math.min(...dates));
                       const maxD = new Date();
@@ -175,36 +211,161 @@ export default function PollsPlus() {
                         if (!sub.length) return null;
                         const rec = { date: current };
                         sel.forEach(p => {
-                          let num = 0, den = 0;
+                          let num = 0, den = 0, vals = [];
                           sub.forEach(r => {
                             const w = (pollsterQuality[r.Peilingsorganisatie] || 0.75) * timeWeight(r.date, current);
                             num += r[p] * w;
                             den += w;
+                            vals.push(r[p]);
                           });
-                          rec[p] = den ? num/den : 0;
+                          const avg = den ? num/den : 0;
+                          const variance = vals.reduce((a, v) => a + (v - avg)**2, 0) / vals.length;
+                          rec[p] = avg;
+                          rec[p+'_std'] = Math.sqrt(variance);
                         });
                         return rec;
                       }).filter(r => r);
 
-                      const traces = sel.map((p, i) => ({
-                        x: agg.map(r => r.date),
-                        y: agg.map(r => r[p]),
-                        mode: 'lines+markers',
-                        name: p,
-                        line: { color: colorPalette[i % colorPalette.length], width: 3 },
-                        hovertemplate: p + ': %{y:.1f} zetels<br>%{x|%d-%m-%Y}<extra></extra>'
-                      }));
+                      const thresh = +document.getElementById('uncertainty-threshold').value;
+                      const traces = [];
+                      
+                      sel.forEach((p, i) => {
+                        const color = colorPalette[i % colorPalette.length];
+                        traces.push({ 
+                          x: agg.map(r => r.date), 
+                          y: agg.map(r => r[p]), 
+                          mode: 'lines', 
+                          name: p, 
+                          line: { color, width: 3 }, 
+                          hovertemplate: p + ': %{y:.1f} zetels<br>%{x|%d-%m-%Y}<extra></extra>'
+                        });
+                        
+                        if (sel.length <= thresh) {
+                          const upper = agg.map(r => Math.max(0, r[p] + sigma * r[p+'_std']));
+                          const lower = agg.map(r => Math.max(0, r[p] - sigma * r[p+'_std']));
+                          traces.push({
+                            x: agg.map(r => r.date).concat(agg.map(r => r.date).reverse()),
+                            y: upper.concat(lower.reverse()),
+                            fill: 'toself',
+                            fillcolor: 'rgba(' + hex(color) + ',0.2)',
+                            line: { width: 0 },
+                            hoverinfo: 'skip',
+                            showlegend: false
+                          });
+                        }
+                        
+                        if (sel.length <= 3) {
+                          const dots = data.filter(r => r[p] != null);
+                          traces.push({
+                            x: dots.map(r => r.date),
+                            y: dots.map(r => r[p]),
+                            mode: 'markers',
+                            name: p,
+                            marker: { color, size: 6 },
+                            showlegend: false,
+                            text: dots.map(r => r[p].toFixed(0) + '<br>' + r.date.getDate().toString().padStart(2, '0') + '-' + (r.date.getMonth() + 1).toString().padStart(2, '0') + '<br>' + r.Peilingsorganisatie),
+                            hovertemplate: '%{text}<extra></extra>'
+                          });
+                        }
+                      });
 
-                      const layout = {
-                        margin: { t: 40, b: 40, l: 50, r: 40 },
-                        yaxis: { title: 'Zetels', range: [0, null] },
-                        xaxis: { title: 'Datum' },
-                        hovermode: 'closest',
-                        showlegend: true
-                      };
+                      // Add event markers if enabled
+                      let layout;
+                      if (showEvents && eventsData.length > 0) {
+                        const eventDates = eventsData.filter(e => e.date >= minD && e.date <= maxD);
+                        
+                        const shapes = eventDates.map(event => ({
+                          type: 'line',
+                          x0: event.date,
+                          x1: event.date,
+                          y0: 0,
+                          y1: 1,
+                          yref: 'paper',
+                          line: {
+                            color: 'rgba(255, 0, 0, 0.6)',
+                            width: 1,
+                            dash: 'dash'
+                          }
+                        }));
+
+                        const annotations = eventDates.map((event, i) => ({
+                          x: event.date,
+                          y: 1,
+                          yref: 'paper',
+                          text: event.event,
+                          showarrow: true,
+                          arrowhead: 2,
+                          arrowcolor: 'red',
+                          arrowwidth: 1,
+                          arrowsize: 1,
+                          ax: 0,
+                          ay: -30 - (i % 3) * 20,
+                          bgcolor: 'rgba(255, 255, 255, 0.8)',
+                          bordercolor: 'red',
+                          borderwidth: 1,
+                          font: { size: 10 },
+                          hovertext: event.description || event.event
+                        }));
+
+                        layout = { 
+                          margin: { t: 80, b: 40, l: 50, r: 40 }, 
+                          yaxis: { title: 'Zetels', range: [0, null] },
+                          xaxis: { title: 'Datum' },
+                          shapes: shapes,
+                          annotations: annotations,
+                          hovermode: 'closest',
+                          showlegend: true
+                        };
+                      } else {
+                        layout = { 
+                          margin: { t: 40, b: 40, l: 50, r: 40 }, 
+                          yaxis: { title: 'Zetels', range: [0, null] },
+                          xaxis: { title: 'Datum' },
+                          hovermode: 'closest',
+                          showlegend: true
+                        };
+                      }
 
                       Plotly.newPlot('chart', traces, layout, {responsive: true});
+                      window._lastAgg = agg;
                     }
+                    
+                    function hex(hex) {
+                      const c = hex.replace('#','');
+                      const num = parseInt(c, 16);
+                      const r = (num >> 16) & 255;
+                      const g = (num >> 8) & 255;
+                      const b = num & 255;
+                      return r + ',' + g + ',' + b;
+                    }
+
+                    function exportCSV(parties) {
+                      const agg = window._lastAgg;
+                      if (!agg) return;
+                      const hdr = ['date', ...parties, ...parties.map(p => 'std_'+p)];
+                      const rows = agg.map(r => [r.date.toISOString().slice(0,10), ...parties.map(p => r[p].toFixed(2)), ...parties.map(p => r[p+'_std'].toFixed(2))]);
+                      const csv = [hdr.join(',')].concat(rows.map(r => r.join(','))).join('\\n');
+                      const blob = new Blob([csv],{type:'text/csv'});
+                      const url = URL.createObjectURL(blob);
+                      const a = document.createElement('a'); a.href = url; a.download = 'aggregated_polls.csv'; a.click();
+                    }
+
+                    function exportPNG() {
+                      Plotly.toImage('chart', { format: 'png', height: 1080, width: 1920 }).then(url => {
+                        const a = document.createElement('a'); a.href = url; a.download = 'chart.png'; a.click();
+                      });
+                    }
+
+                    document.getElementById('toggle-dark').onclick = () => {
+                      document.body.classList.toggle('bg-gray-100');
+                      document.body.classList.toggle('bg-gray-900');
+                      document.body.classList.toggle('text-gray-800');
+                      document.body.classList.toggle('text-gray-100');
+                      document.querySelectorAll('.bg-white').forEach(el => {
+                        el.classList.toggle('bg-white');
+                        el.classList.toggle('bg-gray-800');
+                      });
+                    };
                   </script>
                 `
               }} />
