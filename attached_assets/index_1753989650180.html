@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Poll Aggregator</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Plotly.js -->
+  <script src="https://cdn.plot.ly/plotly-2.31.1.min.js"></script>
+  <!-- PapaParse -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
+</head>
+
+<body class="bg-gray-100 text-gray-800">
+  <div class="container mx-auto p-4">
+    <h1 class="text-3xl font-bold mb-4">Tweede Kamer 2025 Poll Aggregator</h1>
+
+    <button id="toggle-dark" class="fixed top-4 right-4 z-50 bg-gray-800 text-white px-4 py-2 rounded shadow">
+      Toggle Dark Mode
+    </button>
+
+    <div id="controls" class="bg-white p-4 rounded shadow mb-4 hidden">
+      <div class="flex flex-wrap items-center mb-3 gap-2">
+        <button id="enable-all" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Enable All</button>
+        <button id="disable-all" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Disable All</button>
+        <button id="export-csv" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 ml-auto">Export CSV</button>
+        <button id="export-img" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">Export PNG</button>
+        <button id="reset-weights" class="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600">Reset Weights</button>
+        <label class="flex items-center">
+          <input id="show-events" type="checkbox" checked class="mr-2" />
+          <span>Show Events</span>
+        </label>
+      </div>
+      <div id="buttons" class="flex flex-wrap gap-2 mb-4"></div>
+      <div class="flex flex-wrap items-center gap-4 mb-2">
+        <label class="flex items-center"><span class="mr-2">Half-life (days):</span><input id="half-life" type="number" value="30" min="1" class="border rounded px-2 py-1 w-20" /></label>
+        <label class="flex items-center"><span class="mr-2">Show uncertainty when =</span><input id="uncertainty-threshold" type="number" value="5" min="1" class="border rounded px-2 py-1 w-16" /><span class="ml-2">parties selected</span></label>
+        <label class="flex items-center"><span class="mr-2">Uncertainty level (s):</span><select id="sigma" class="border rounded px-2 py-1"><option value="1">1s</option><option value="2" selected>2s</option></select></label>
+        <label class="flex items-center"><span class="mr-2">Verian weight:</span><input id="verian-weight" type="number" step="0.01" value="0.88" class="border rounded px-2 py-1 w-20" /></label>
+        <label class="flex items-center"><span class="mr-2">Peil.nl weight:</span><input id="peilnl-weight" type="number" step="0.01" value="0.90" class="border rounded px-2 py-1 w-20" /></label>
+        <label class="flex items-center"><span class="mr-2">Ipsos I&O weight:</span><input id="ipsos-weight" type="number" step="0.01" value="0.95" class="border rounded px-2 py-1 w-20" /></label>
+      </div>
+    </div>
+    <div id="chart" class="bg-white rounded shadow" style="width:100%;height:600px;">
+    </div>
+    <div id="options-card" class="bg-white p-4 rounded shadow mt-8 hidden">
+      <div class="flex flex-wrap items-center gap-4">
+        <button id="export-csv" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Export CSV</button>
+        <button id="export-img" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">Export PNG</button>
+        <button id="reset-weights" class="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600">Reset Weights</button>
+
+        <label class="flex items-center"><span class="mr-2">Half-life (days):</span><input id="half-life" type="number" value="30" min="1" class="border rounded px-2 py-1 w-20" /></label>
+        <label class="flex items-center"><span class="mr-2">Show uncertainty when =</span><input id="uncertainty-threshold" type="number" value="5" min="1" class="border rounded px-2 py-1 w-16" /><span class="ml-2">parties selected</span></label>
+        <label class="flex items-center"><span class="mr-2">Uncertainty level (s):</span><select id="sigma" class="border rounded px-2 py-1"><option value="1">1s</option><option value="2" selected>2s</option></select></label>
+        <label class="flex items-center"><span class="mr-2">Verian weight:</span><input id="verian-weight" type="number" step="0.01" value="0.88" class="border rounded px-2 py-1 w-20" /></label>
+        <label class="flex items-center"><span class="mr-2">Peil.nl weight:</span><input id="peilnl-weight" type="number" step="0.01" value="0.90" class="border rounded px-2 py-1 w-20" /></label>
+        <label class="flex items-center"><span class="mr-2">Ipsos I&O weight:</span><input id="ipsos-weight" type="number" step="0.01" value="0.95" class="border rounded px-2 py-1 w-20" /></label>
+      </div>
+    </div>
+  </div>
+
+<script>
+let defaultPollsterQuality = { 'Peilingwijzer':1,'Ipsos I&O':0.95,'Ipsos':0.95,'I&O Research':0.9,'TNS NIPO':0.85,'Peil.nl':0.9,'Verian':0.88 };
+let pollsterQuality = JSON.parse(JSON.stringify(defaultPollsterQuality));
+let halfLife = 30;
+let decayLambda = Math.log(2)/halfLife;
+let eventsData = [];
+const colorPalette = ['#636efa','#EF553B','#00cc96','#ab63fa','#FFA15A','#19d3f3','#FF6692','#B6E880','#FF97FF','#FECB52'];
+function timeWeight(d,c){return Math.exp(-decayLambda*((c-d)/(1000*60*60*24)));}
+
+// Load events data first
+Papa.parse('events.csv', {
+  download: true,
+  header: true,
+  dynamicTyping: true,
+  skipEmptyLines: true,
+  complete: res => {
+    eventsData = res.data
+      .filter(r => r.Datum && r.Gebeurtenis && r.Gebeurtenis.trim() !== '')
+      .map(r => ({
+        date: new Date(r.Datum),
+        event: r.Gebeurtenis,
+        description: r.Toelichting || ''
+      }))
+      .filter(r => r.date instanceof Date && !isNaN(r.date));
+    
+    console.log('Loaded events:', eventsData.length);
+    
+    // Now load polls data
+    loadPolls();
+  }
+});
+
+function loadPolls() {
+  Papa.parse('polls.csv',{download:true,header:true,dynamicTyping:true,skipEmptyLines:true,
+    complete:res=>{
+      const raw = res.data.map(r => ({ ...r, date: r.Datum ? new Date(r.Datum) : null }));
+      const data = raw.filter(r => r.date instanceof Date);
+      const parties = Object.keys(data[0]).filter(c => !['Peilingsorganisatie','Datum','pollster','date'].includes(c));
+      document.getElementById('controls').classList.remove('hidden');
+      buildButtons(parties, data);
+      draw(parties, data);
+    }
+  });
+}
+
+function buildButtons(parties, data) {
+  const ctr = document.getElementById('buttons'); ctr.innerHTML = '';
+  parties.forEach((p, i) => {
+    const btn = document.createElement('button');
+    btn.innerText = p;
+    btn.id = p;
+    btn.className = 'px-3 py-1 rounded bg-blue-500 text-white';
+    btn.dataset.on = 'true';
+    btn.onclick = () => {
+      btn.dataset.on = (btn.dataset.on === 'true' ? 'false' : 'true');
+      btn.classList.toggle('bg-blue-500');
+      btn.classList.toggle('bg-gray-200');
+      btn.classList.toggle('text-white');
+      draw(parties, data);
+    };
+    ctr.appendChild(btn);
+  });
+  document.getElementById('enable-all').onclick = () => { parties.forEach(p => toggleButton(p, true)); draw(parties, data); };
+  document.getElementById('disable-all').onclick = () => { parties.forEach(p => toggleButton(p, false)); draw(parties, data); };
+  document.getElementById('export-csv').onclick = () => exportCSV(getSelected(parties));
+  document.getElementById('export-img').onclick = () => exportPNG();
+  document.getElementById('half-life').onchange = e => { halfLife = +e.target.value; decayLambda = Math.log(2)/halfLife; draw(parties, data); };
+  document.getElementById('uncertainty-threshold').onchange = () => draw(parties, data);
+  document.getElementById('verian-weight').onchange = e => { pollsterQuality['Verian'] = +e.target.value; draw(parties, data); };
+  document.getElementById('peilnl-weight').onchange = e => { pollsterQuality['Peil.nl'] = +e.target.value; draw(parties, data); };
+  document.getElementById('ipsos-weight').onchange = e => { pollsterQuality['Ipsos I&O'] = +e.target.value; draw(parties, data); };
+  document.getElementById('sigma').onchange = () => draw(parties, data);
+  document.getElementById('show-events').onchange = () => draw(parties, data);
+  document.getElementById('reset-weights').onclick = () => {
+    pollsterQuality = JSON.parse(JSON.stringify(defaultPollsterQuality));
+    document.getElementById('verian-weight').value = defaultPollsterQuality['Verian'];
+    document.getElementById('peilnl-weight').value = defaultPollsterQuality['Peil.nl'];
+    document.getElementById('ipsos-weight').value = defaultPollsterQuality['Ipsos I&O'];
+    draw(parties, data);
+  }
+}
+
+function toggleButton(p, on) {
+  const btn = document.getElementById(p);
+  btn.dataset.on = on ? 'true' : 'false';
+  btn.classList.toggle('bg-blue-500', on);
+  btn.classList.toggle('bg-gray-200', !on);
+  btn.classList.toggle('text-white', on);
+}
+
+function getSelected(parties) {
+  return parties.filter(p => document.getElementById(p).dataset.on === 'true');
+}
+
+function draw(parties, data) {
+  const sel = getSelected(parties);
+  const sigma = +document.getElementById('sigma').value;
+  const showEvents = document.getElementById('show-events').checked;
+  const dates = data.map(r => r.date);
+  const minD = new Date(Math.min(...dates));
+  const maxD = new Date();
+  const allDates = [];
+  for (let d = new Date(minD); d <= maxD; d.setDate(d.getDate() + 1)) allDates.push(new Date(d));
+
+  const agg = allDates.map(current => {
+    const sub = data.filter(r => r.date <= current);
+    if (!sub.length) return null;
+    const rec = { date: current };
+    sel.forEach(p => {
+      let num = 0, den = 0, vals = [];
+      sub.forEach(r => {
+        const w = (pollsterQuality[r.Peilingsorganisatie] || 0.75) * timeWeight(r.date, current);
+        num += r[p] * w;
+        den += w;
+        vals.push(r[p]);
+      });
+      const avg = den ? num/den : 0;
+      const variance = vals.reduce((a, v) => a + (v - avg)**2, 0) / vals.length;
+      rec[p] = avg;
+      rec[p+'_std'] = Math.sqrt(variance);
+    });
+    return rec;
+  }).filter(r => r);
+
+  const thresh = +document.getElementById('uncertainty-threshold').value;
+  const traces = [];
+  
+  sel.forEach((p, i) => {
+    const color = colorPalette[i % colorPalette.length];
+    traces.push({ x: agg.map(r => r.date), y: agg.map(r => r[p]), mode: 'lines', name: p, line: { color, width: 3 }, hovertemplate: `%{y:.1f}<br>%{x|%d-%m}<br>PollsPlus` });
+    if (sel.length <= thresh) {
+      const upper = agg.map(r => Math.max(0, r[p] + sigma * r[p+'_std']));
+      const lower = agg.map(r => Math.max(0, r[p] - sigma * r[p+'_std']));
+      traces.push({
+        x: agg.map(r => r.date).concat(agg.map(r => r.date).reverse()),
+        y: upper.concat(lower.reverse()),
+        fill: 'toself',
+        fillcolor: `rgba(${hex(color)},0.2)`,
+        line: { width: 0 },
+        hoverinfo: 'skip',
+        showlegend: false
+      });
+    }
+    if (sel.length <= 3) {
+      const dots = data.filter(r => r[p] != null);
+      traces.push({
+        x: dots.map(r => r.date),
+        y: dots.map(r => r[p]),
+        mode: 'markers',
+        name: p,
+        marker: { color, size: 6 },
+        showlegend: false,
+        text: dots.map(r => `${r[p].toFixed(0)}<br>${r.date.getDate().toString().padStart(2, '0')}-${(r.date.getMonth() + 1).toString().padStart(2, '0')}<br>${r.Peilingsorganisatie}`),
+        hovertemplate: '%{text}'    
+      });
+    }
+  });
+
+  // Add event markers if enabled
+  if (showEvents && eventsData.length > 0) {
+    const eventDates = eventsData.filter(e => e.date >= minD && e.date <= maxD);
+    
+    // Add vertical lines for events
+    const shapes = eventDates.map(event => ({
+      type: 'line',
+      x0: event.date,
+      x1: event.date,
+      y0: 0,
+      y1: 1,
+      yref: 'paper',
+      line: {
+        color: 'rgba(255, 0, 0, 0.6)',
+        width: 1,
+        dash: 'dash'
+      }
+    }));
+
+    // Add event annotations
+    const annotations = eventDates.map((event, i) => ({
+      x: event.date,
+      y: 1,
+      yref: 'paper',
+      text: event.event,
+      showarrow: true,
+      arrowhead: 2,
+      arrowcolor: 'red',
+      arrowwidth: 1,
+      arrowsize: 1,
+      ax: 0,
+      ay: -30 - (i % 3) * 20, // Stagger annotations to avoid overlap
+      bgcolor: 'rgba(255, 255, 255, 0.8)',
+      bordercolor: 'red',
+      borderwidth: 1,
+      font: { size: 10 },
+      hovertext: event.description || event.event
+    }));
+
+    const layout = { 
+      margin: { t: 80 }, 
+      yaxis: { title: 'Zetels', range: [0, null] },
+      shapes: shapes,
+      annotations: annotations
+    };
+    Plotly.newPlot('chart', traces, layout);
+  } else {
+    const layout = { margin: { t: 40 }, yaxis: { title: 'Zetels', range: [0, null] } };
+    Plotly.newPlot('chart', traces, layout);
+  }
+  
+  window._lastAgg = agg;
+}
+
+function hex(hex) {
+  const c = hex.replace('#','');
+  const num = parseInt(c, 16);
+  const r = (num >> 16) & 255;
+  const g = (num >> 8) & 255;
+  const b = num & 255;
+  return `${r},${g},${b}`;
+}
+
+function exportCSV(parties) {
+  const agg = window._lastAgg;
+  const hdr = ['date', ...parties, ...parties.map(p => 'std_'+p)];
+  const rows = agg.map(r => [r.date.toISOString().slice(0,10), ...parties.map(p => r[p].toFixed(2)), ...parties.map(p => r[p+'_std'].toFixed(2))]);
+  const csv = [hdr.join(',')].concat(rows.map(r => r.join(','))).join('\n');
+  const blob = new Blob([csv],{type:'text/csv'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href = url; a.download = 'aggregated_polls.csv'; a.click();
+}
+
+function exportPNG() {
+  Plotly.toImage('chart', { format: 'png', height: 1080, width: 1920 }).then(url => {
+    const a = document.createElement('a'); a.href = url; a.download = 'chart.png'; a.click();
+  });
+}
+
+document.getElementById('toggle-dark').onclick = () => {
+  document.body.classList.toggle('bg-gray-100');
+  document.body.classList.toggle('bg-gray-900');
+  document.body.classList.toggle('text-gray-800');
+  document.body.classList.toggle('text-gray-100');
+  document.querySelectorAll('.bg-white').forEach(el => {
+    el.classList.toggle('bg-white');
+    el.classList.toggle('bg-gray-800');
+  });
+};
+</script>
+</body>
+</html>

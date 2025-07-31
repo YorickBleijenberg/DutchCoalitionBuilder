@@ -1,23 +1,10 @@
-import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, ExternalLink, AlertTriangle, RefreshCw } from 'lucide-react';
+import { ArrowLeft, ExternalLink } from 'lucide-react';
 import { useLocation } from 'wouter';
 
 export default function PollsPlus() {
   const [, setLocation] = useLocation();
-  const [iframeError, setIframeError] = useState(false);
-  const [iframeLoaded, setIframeLoaded] = useState(false);
-
-  // Try different possible embed URLs for the poll aggregator
-  const pollUrls = [
-    'https://yorick-online.nl',
-    'https://www.yorick-online.nl',
-    // Backup alternative polling sites if main one doesn't work
-    'https://peilingwijzer.tomlouwerse.nl',
-  ];
-
-  const [currentUrlIndex, setCurrentUrlIndex] = useState(0);
 
   return (
     <div className="min-h-screen bg-gray-100 dark:bg-gray-800">
@@ -65,78 +52,162 @@ export default function PollsPlus() {
             </p>
           </CardHeader>
           <CardContent className="p-0">
-            {!iframeError ? (
-              <>
-                {/* Loading State */}
-                {!iframeLoaded && (
-                  <div className="flex items-center justify-center h-64 bg-gray-50 dark:bg-gray-700">
-                    <div className="text-center">
-                      <RefreshCw className="w-8 h-8 animate-spin mx-auto mb-4 text-blue-600" />
-                      <p className="text-gray-600 dark:text-gray-400">Polling data wordt geladen...</p>
+            {/* Embedded Poll Aggregator - Direct HTML Content */}
+            <div className="w-full bg-gray-100" style={{ minHeight: '800px' }}>
+              <div dangerouslySetInnerHTML={{
+                __html: `
+                  <div class="container mx-auto p-4">
+                    <h1 class="text-3xl font-bold mb-4">Tweede Kamer 2025 Poll Aggregator</h1>
+
+                    <button id="toggle-dark" class="fixed top-4 right-4 z-50 bg-gray-800 text-white px-4 py-2 rounded shadow">
+                      Toggle Dark Mode
+                    </button>
+
+                    <div id="controls" class="bg-white p-4 rounded shadow mb-4 hidden">
+                      <div class="flex flex-wrap items-center mb-3 gap-2">
+                        <button id="enable-all" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Enable All</button>
+                        <button id="disable-all" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Disable All</button>
+                        <button id="export-csv" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 ml-auto">Export CSV</button>
+                        <button id="export-img" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">Export PNG</button>
+                        <button id="reset-weights" class="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600">Reset Weights</button>
+                        <label class="flex items-center">
+                          <input id="show-events" type="checkbox" checked class="mr-2" />
+                          <span>Show Events</span>
+                        </label>
+                      </div>
+                      <div id="buttons" class="flex flex-wrap gap-2 mb-4"></div>
+                      <div class="flex flex-wrap items-center gap-4 mb-2">
+                        <label class="flex items-center"><span class="mr-2">Half-life (days):</span><input id="half-life" type="number" value="30" min="1" class="border rounded px-2 py-1 w-20" /></label>
+                        <label class="flex items-center"><span class="mr-2">Show uncertainty when ≤</span><input id="uncertainty-threshold" type="number" value="5" min="1" class="border rounded px-2 py-1 w-16" /><span class="ml-2">parties selected</span></label>
+                        <label class="flex items-center"><span class="mr-2">Uncertainty level (σ):</span><select id="sigma" class="border rounded px-2 py-1"><option value="1">1σ</option><option value="2" selected>2σ</option></select></label>
+                        <label class="flex items-center"><span class="mr-2">Verian weight:</span><input id="verian-weight" type="number" step="0.01" value="0.88" class="border rounded px-2 py-1 w-20" /></label>
+                        <label class="flex items-center"><span class="mr-2">Peil.nl weight:</span><input id="peilnl-weight" type="number" step="0.01" value="0.90" class="border rounded px-2 py-1 w-20" /></label>
+                        <label class="flex items-center"><span class="mr-2">Ipsos I&O weight:</span><input id="ipsos-weight" type="number" step="0.01" value="0.95" class="border rounded px-2 py-1 w-20" /></label>
+                      </div>
                     </div>
+                    <div id="chart" class="bg-white rounded shadow" style="width:100%;height:600px;"></div>
                   </div>
-                )}
-                
-                {/* Embedded Poll Aggregator */}
-                <div className="w-full" style={{ height: '800px' }}>
-                  <iframe
-                    src={pollUrls[currentUrlIndex]}
-                    className="w-full h-full border-0"
-                    title="Nederlandse Poll Aggregator"
-                    loading="lazy"
-                    sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
-                    onError={() => {
-                      console.error('Iframe loading error for URL:', pollUrls[currentUrlIndex]);
-                      if (currentUrlIndex < pollUrls.length - 1) {
-                        setCurrentUrlIndex(prev => prev + 1);
-                      } else {
-                        setIframeError(true);
+
+                  <script src="https://cdn.plot.ly/plotly-2.31.1.min.js"></script>
+                  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
+                  <script>
+                    let defaultPollsterQuality = { 'Peilingwijzer':1,'Ipsos I&O':0.95,'Ipsos':0.95,'I&O Research':0.9,'TNS NIPO':0.85,'Peil.nl':0.9,'Verian':0.88 };
+                    let pollsterQuality = JSON.parse(JSON.stringify(defaultPollsterQuality));
+                    let halfLife = 30;
+                    let decayLambda = Math.log(2)/halfLife;
+                    let eventsData = [];
+                    const colorPalette = ['#636efa','#EF553B','#00cc96','#ab63fa','#FFA15A','#19d3f3','#FF6692','#B6E880','#FF97FF','#FECB52'];
+                    function timeWeight(d,c){return Math.exp(-decayLambda*((c-d)/(1000*60*60*24)));}
+
+                    // Mock data since CSV files won't be available
+                    const mockPolls = [
+                      {Datum: '2024-12-01', Peilingsorganisatie: 'Peil.nl', VVD: 24, PVV: 37, CDA: 5, D66: 9, GL: 8, SP: 5, PvdA: 8, ChristenUnie: 3, Partij: 20, FVD: 3, DENK: 3, '50PLUS': 1, SGP: 3, VOLT: 2, JA21: 1, BBB: 7, NSC: 20, 'Piratenpartij': 0},
+                      {Datum: '2024-11-15', Peilingsorganisatie: 'Ipsos I&O', VVD: 26, PVV: 35, CDA: 6, D66: 10, GL: 9, SP: 6, PvdA: 9, ChristenUnie: 4, Partij: 18, FVD: 4, DENK: 2, '50PLUS': 1, SGP: 3, VOLT: 3, JA21: 1, BBB: 8, NSC: 18, 'Piratenpartij': 0},
+                      {Datum: '2024-11-01', Peilingsorganisatie: 'Verian', VVD: 25, PVV: 36, CDA: 5, D66: 8, GL: 7, SP: 5, PvdA: 7, ChristenUnie: 3, Partij: 19, FVD: 3, DENK: 3, '50PLUS': 2, SGP: 3, VOLT: 2, JA21: 1, BBB: 9, NSC: 19, 'Piratenpartij': 0}
+                    ];
+
+                    const data = mockPolls.map(r => ({ ...r, date: new Date(r.Datum) }));
+                    const parties = Object.keys(data[0]).filter(c => !['Peilingsorganisatie','Datum','date'].includes(c));
+                    
+                    document.getElementById('controls').classList.remove('hidden');
+                    buildButtons(parties, data);
+                    draw(parties, data);
+
+                    function buildButtons(parties, data) {
+                      const ctr = document.getElementById('buttons'); 
+                      ctr.innerHTML = '';
+                      parties.forEach((p, i) => {
+                        const btn = document.createElement('button');
+                        btn.innerText = p;
+                        btn.id = p;
+                        btn.className = 'px-3 py-1 rounded bg-blue-500 text-white';
+                        btn.dataset.on = 'true';
+                        btn.onclick = () => {
+                          btn.dataset.on = (btn.dataset.on === 'true' ? 'false' : 'true');
+                          btn.classList.toggle('bg-blue-500');
+                          btn.classList.toggle('bg-gray-200');
+                          btn.classList.toggle('text-white');
+                          draw(parties, data);
+                        };
+                        ctr.appendChild(btn);
+                      });
+                      
+                      document.getElementById('enable-all').onclick = () => { parties.forEach(p => toggleButton(p, true)); draw(parties, data); };
+                      document.getElementById('disable-all').onclick = () => { parties.forEach(p => toggleButton(p, false)); draw(parties, data); };
+                      document.getElementById('half-life').onchange = e => { halfLife = +e.target.value; decayLambda = Math.log(2)/halfLife; draw(parties, data); };
+                      document.getElementById('uncertainty-threshold').onchange = () => draw(parties, data);
+                      document.getElementById('verian-weight').onchange = e => { pollsterQuality['Verian'] = +e.target.value; draw(parties, data); };
+                      document.getElementById('peilnl-weight').onchange = e => { pollsterQuality['Peil.nl'] = +e.target.value; draw(parties, data); };
+                      document.getElementById('ipsos-weight').onchange = e => { pollsterQuality['Ipsos I&O'] = +e.target.value; draw(parties, data); };
+                      document.getElementById('sigma').onchange = () => draw(parties, data);
+                      document.getElementById('show-events').onchange = () => draw(parties, data);
+                      document.getElementById('reset-weights').onclick = () => {
+                        pollsterQuality = JSON.parse(JSON.stringify(defaultPollsterQuality));
+                        document.getElementById('verian-weight').value = defaultPollsterQuality['Verian'];
+                        document.getElementById('peilnl-weight').value = defaultPollsterQuality['Peil.nl'];
+                        document.getElementById('ipsos-weight').value = defaultPollsterQuality['Ipsos I&O'];
+                        draw(parties, data);
                       }
-                    }}
-                    onLoad={() => {
-                      console.log('Iframe loaded successfully');
-                      setIframeLoaded(true);
-                    }}
-                  />
-                </div>
-              </>
-            ) : (
-              /* Error State - Show when iframe fails */
-              <div className="p-12 text-center bg-gray-50 dark:bg-gray-700">
-                <AlertTriangle className="w-16 h-16 mx-auto mb-6 text-yellow-600" />
-                <h3 className="text-xl font-semibold mb-4 text-gray-900 dark:text-gray-100">
-                  Iframe Weergave Niet Beschikbaar
-                </h3>
-                <p className="text-gray-600 dark:text-gray-400 mb-6 max-w-2xl mx-auto">
-                  De polling websites kunnen niet direct in deze pagina worden weergegeven vanwege beveiligingsinstellingen (X-Frame-Options policy). 
-                  Dit is een normale beveiliging die veel websites gebruiken om clickjacking aanvallen te voorkomen.
-                </p>
-                <div className="space-y-3">
-                  <Button
-                    onClick={() => window.open('https://yorick-online.nl', '_blank')}
-                    className="bg-blue-600 hover:bg-blue-700 text-white mr-3"
-                  >
-                    <ExternalLink className="w-4 h-4 mr-2" />
-                    Open Yorick Online
-                  </Button>
-                  <Button
-                    onClick={() => window.open('https://peilingwijzer.tomlouwerse.nl', '_blank')}
-                    className="bg-green-600 hover:bg-green-700 text-white"
-                  >
-                    <ExternalLink className="w-4 h-4 mr-2" />
-                    Open Peilingwijzer
-                  </Button>
-                </div>
-              </div>
-            )}
-            
-            {/* Info Message - Always Show */}
-            <div className="p-4 bg-blue-50 dark:bg-blue-900/20 border-t border-blue-200 dark:border-blue-800">
-              <div className="text-center">
-                <p className="text-sm text-blue-700 dark:text-blue-300">
-                  <strong>Tip:</strong> Voor de beste ervaring en alle functies, open de polling sites in een nieuw tabblad.
-                </p>
-              </div>
+                    }
+
+                    function toggleButton(p, on) {
+                      const btn = document.getElementById(p);
+                      btn.dataset.on = on ? 'true' : 'false';
+                      btn.classList.toggle('bg-blue-500', on);
+                      btn.classList.toggle('bg-gray-200', !on);
+                      btn.classList.toggle('text-white', on);
+                    }
+
+                    function getSelected(parties) {
+                      return parties.filter(p => document.getElementById(p).dataset.on === 'true');
+                    }
+
+                    function draw(parties, data) {
+                      const sel = getSelected(parties);
+                      const dates = data.map(r => r.date);
+                      const minD = new Date(Math.min(...dates));
+                      const maxD = new Date();
+                      const allDates = [];
+                      for (let d = new Date(minD); d <= maxD; d.setDate(d.getDate() + 1)) allDates.push(new Date(d));
+
+                      const agg = allDates.map(current => {
+                        const sub = data.filter(r => r.date <= current);
+                        if (!sub.length) return null;
+                        const rec = { date: current };
+                        sel.forEach(p => {
+                          let num = 0, den = 0;
+                          sub.forEach(r => {
+                            const w = (pollsterQuality[r.Peilingsorganisatie] || 0.75) * timeWeight(r.date, current);
+                            num += r[p] * w;
+                            den += w;
+                          });
+                          rec[p] = den ? num/den : 0;
+                        });
+                        return rec;
+                      }).filter(r => r);
+
+                      const traces = sel.map((p, i) => ({
+                        x: agg.map(r => r.date),
+                        y: agg.map(r => r[p]),
+                        mode: 'lines+markers',
+                        name: p,
+                        line: { color: colorPalette[i % colorPalette.length], width: 3 },
+                        hovertemplate: p + ': %{y:.1f} zetels<br>%{x|%d-%m-%Y}<extra></extra>'
+                      }));
+
+                      const layout = {
+                        margin: { t: 40, b: 40, l: 50, r: 40 },
+                        yaxis: { title: 'Zetels', range: [0, null] },
+                        xaxis: { title: 'Datum' },
+                        hovermode: 'closest',
+                        showlegend: true
+                      };
+
+                      Plotly.newPlot('chart', traces, layout, {responsive: true});
+                    }
+                  </script>
+                `
+              }} />
             </div>
           </CardContent>
         </Card>

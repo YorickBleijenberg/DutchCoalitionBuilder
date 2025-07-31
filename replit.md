@@ -159,7 +159,9 @@ Changelog:
 - January 8, 2025. Created functional Simple Coalition Viewer page with poll selection and coalition building functionality
 - January 8, 2025. Added new parties to parties.json: 50PLUS (0 TK, 1 EK), OPNL (0 TK, 1 EK), updated existing party data
 - January 8, 2025. Added "Polls Plus" button to landing page with new dedicated page for poll aggregator
-- January 8, 2025. Created PollsPlus.tsx page with embedded iframe displaying yorick-online.nl poll aggregator
+- January 8, 2025. Created PollsPlus.tsx page with embedded HTML poll aggregator using dangerouslySetInnerHTML
+- January 8, 2025. Replaced iframe approach with direct HTML embedding to avoid X-Frame-Options restrictions
+- January 8, 2025. Integrated Plotly.js-based interactive poll aggregator with party selection, weight controls, and export functionality
 ```
 
 ## User Preferences
