@@ -19,12 +19,6 @@ export default function PollsPlus() {
   const [parties, setParties] = useState<string[]>([]);
   const [selectedParties, setSelectedParties] = useState<Set<string>>(new Set());
 
-  // New state for advanced options
-  const [halfLife, setHalfLife] = useState(15);
-  const [uncertaintyThreshold, setUncertaintyThreshold] = useState(5);
-  const [sigma, setSigma] = useState(0.5);
-  const [showAdvancedOptions, setShowAdvancedOptions] = useState(false);
-
   useEffect(() => {
     // Load external scripts first
     const loadScripts = () => {
@@ -91,10 +85,10 @@ export default function PollsPlus() {
       if (!response.ok) {
         throw new Error(`Failed to fetch polls.csv: ${response.statusText}`);
       }
-
+      
       const csvText = await response.text();
       console.log('CSV text loaded:', csvText.substring(0, 200) + '...');
-
+      
       window.Papa.parse(csvText, {
         header: true,
         delimiter: ';',
@@ -102,7 +96,7 @@ export default function PollsPlus() {
         skipEmptyLines: true,
         complete: (results: any) => {
           console.log('Papa Parse results:', results);
-
+          
           if (results.errors.length > 0) {
             console.error('Parse errors:', results.errors);
           }
@@ -111,7 +105,7 @@ export default function PollsPlus() {
             ...r,
             date: r.Datum ? new Date(r.Datum) : null
           }));
-
+          
           const validData = rawData.filter((r: any) => r.date instanceof Date && !isNaN(r.date.getTime()));
           console.log('Valid data entries:', validData.length);
           console.log('Sample data:', validData.slice(0, 3));
@@ -123,12 +117,12 @@ export default function PollsPlus() {
           const extractedParties = Object.keys(validData[0]).filter(
             c => !['Peilingsorganisatie', 'Datum', 'date'].includes(c)
           );
-
+          
           console.log('Extracted parties:', extractedParties);
-
+          
           setPollData(validData);
           setParties(extractedParties);
-          setSelectedParties(new Set(extractedParties.slice(0, 4))); // Select first 4 parties by default
+          setSelectedParties(new Set(extractedParties.slice(0, 5))); // Select first 5 parties by default
           setIsLoading(false);
         },
         error: (error: any) => {
@@ -147,55 +141,24 @@ export default function PollsPlus() {
     if (pollData.length > 0 && parties.length > 0 && !isLoading && selectedParties.size > 0) {
       createChart();
     }
-  }, [pollData, parties, selectedParties, isLoading, halfLife, uncertaintyThreshold, sigma]);
-
-  const hexToRgb = (hex: string) => {
-    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-    return result ? {
-      r: parseInt(result[1], 16),
-      g: parseInt(result[2], 16),
-      b: parseInt(result[3], 16)
-    } : { r: 0, g: 0, b: 0 };
-  };
+  }, [pollData, parties, selectedParties, isLoading]);
 
   const createChart = () => {
     console.log('Creating chart with selected parties:', Array.from(selectedParties));
-
+    
     if (!window.Plotly) {
       console.error('Plotly not loaded');
       return;
     }
 
     const selectedPartiesArray = Array.from(selectedParties);
-    if (selectedPartiesArray.length === 0) {
-      // Clear the chart when no parties are selected
-      const layout = {
-        margin: { t: 40, b: 40, l: 50, r: 40 },
-        yaxis: { title: 'Zetels', range: [0, null] },
-        xaxis: { title: 'Datum' },
-        hovermode: 'closest',
-        showlegend: true,
-        plot_bgcolor: 'white',
-        annotations: [{
-          text: 'Selecteer partijen om de grafiek te bekijken',
-          x: 0.5,
-          y: 0.5,
-          xref: 'paper',
-          yref: 'paper',
-          showarrow: false,
-          font: { size: 16, color: 'gray' }
-        }]
-      };
-
-      window.Plotly.newPlot('poll-chart', [], layout, { responsive: true });
-      return;
-    }
+    if (selectedPartiesArray.length === 0) return;
 
     // Create time-weighted aggregation
     const dates = pollData.map(r => r.date);
     const minDate = new Date(Math.min(...dates.map(d => d.getTime())));
     const maxDate = new Date();
-
+    
     const allDates = [];
     for (let d = new Date(minDate); d <= maxDate; d.setDate(d.getDate() + 1)) {
       allDates.push(new Date(d));
@@ -207,7 +170,7 @@ export default function PollsPlus() {
       'Peil.nl': 0.9, 
       'Verian': 0.88 
     };
-
+    const halfLife = 30;
     const decayLambda = Math.log(2) / halfLife;
     const timeWeight = (d: Date, c: Date) => Math.exp(-decayLambda * ((c.getTime() - d.getTime()) / (1000 * 60 * 60 * 24)));
 
@@ -219,91 +182,31 @@ export default function PollsPlus() {
       selectedPartiesArray.forEach(party => {
         let weightedSum = 0;
         let totalWeight = 0;
-        const values: number[] = [];
-
+        
         relevantPolls.forEach(poll => {
-          if (poll[party] != null) {
-            const weight = (pollsterQuality[poll.Peilingsorganisatie as keyof typeof pollsterQuality] || 0.75) * 
-                          timeWeight(poll.date, currentDate);
-            weightedSum += poll[party] * weight;
-            totalWeight += weight;
-            values.push(poll[party]);
-          }
+          const weight = (pollsterQuality[poll.Peilingsorganisatie as keyof typeof pollsterQuality] || 0.75) * 
+                        timeWeight(poll.date, currentDate);
+          weightedSum += poll[party] * weight;
+          totalWeight += weight;
         });
-
-        if (totalWeight > 0) {
-          const avg = weightedSum / totalWeight;
-          const variance = values.length > 1 ? 
-            values.reduce((sum, val) => sum + Math.pow(val - avg, 2), 0) / values.length : 0;
-
-          result[party] = avg;
-          result[party + '_std'] = Math.sqrt(variance);
-        } else {
-          result[party] = 0;
-          result[party + '_std'] = 0;
-        }
+        
+        result[party] = totalWeight > 0 ? weightedSum / totalWeight : 0;
       });
-
+      
       return result;
     }).filter(r => r !== null);
 
     // Create traces for Plotly
-    const colorPalette = [
-      '#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', 
-      '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22', '#17becf',
-      '#aec7e8', '#ffbb78', '#98df8a', '#ff9896', '#c5b0d5',
-      '#c49c94', '#f7b6d3', '#c7c7c7', '#dbdb8d', '#9edae5'
-    ];
-    const traces: any[] = [];
-
-    selectedPartiesArray.forEach((party, i) => {
-      const color = colorPalette[i % colorPalette.length];
-      const rgb = hexToRgb(color);
-
-      // Main trend line
-      traces.push({
-        x: aggregatedData.map(d => d.date),
-        y: aggregatedData.map(d => d[party]),
-        mode: 'lines',
-        name: party,
-        line: { color: color, width: 3 },
-        hovertemplate: `${party}: %{y:.1f} zetels<br>%{x|%d-%m-%Y}<extra></extra>`
-      });
-
-      // Add uncertainty bands if threshold is met
-      if (selectedPartiesArray.length <= uncertaintyThreshold) {
-        const upper = aggregatedData.map(d => Math.max(0, d[party] + sigma * d[party + '_std']));
-        const lower = aggregatedData.map(d => Math.max(0, d[party] - sigma * d[party + '_std']));
-
-        traces.push({
-          x: aggregatedData.map(d => d.date).concat(aggregatedData.map(d => d.date).reverse()),
-          y: upper.concat(lower.reverse()),
-          fill: 'toself',
-          fillcolor: `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 0.2)`,
-          line: { width: 0 },
-          hoverinfo: 'skip',
-          showlegend: false,
-          name: `${party} uncertainty`
-        });
-      }
-
-      // Add individual poll dots if few parties selected
-      if (selectedPartiesArray.length <= 3) {
-        const individualPolls = pollData.filter(r => r[party] != null);
-        traces.push({
-          x: individualPolls.map(r => r.date),
-          y: individualPolls.map(r => r[party]),
-          mode: 'markers',
-          name: `${party} polls`,
-          marker: { color: color, size: 6 },
-          showlegend: false,
-          text: individualPolls.map(r => 
-            `${r[party].toFixed(0)}<br>${r.date.getDate().toString().padStart(2, '0')}-${(r.date.getMonth() + 1).toString().padStart(2, '0')}<br>${r.Peilingsorganisatie}`
-          ),
-          hovertemplate: '%{text}<extra></extra>'
-        });
-      }
-    });
+    const colorPalette = ['#636efa','#EF553B','#00cc96','#ab63fa','#FFA15A','#19d3f3','#FF6692','#B6E880','#FF97FF','#FECB52'];
+    
+    const traces = selectedPartiesArray.map((party, i) => ({
+      x: aggregatedData.map(d => d.date),
+      y: aggregatedData.map(d => d[party]),
+      mode: 'lines+markers',
+      name: party,
+      line: { color: colorPalette[i % colorPalette.length], width: 3 },
+      hovertemplate: `${party}: %{y:.1f} zetels<br>%{x|%d-%m-%Y}<extra></extra>`
+    }));
 
     const layout = {
       margin: { t: 40, b: 40, l: 50, r: 40 },
@@ -332,14 +235,6 @@ export default function PollsPlus() {
       newSelected.add(party);
     }
     setSelectedParties(newSelected);
-  };
-
-  const selectAllParties = () => {
-    setSelectedParties(new Set(parties));
-  };
-
-  const clearAllParties = () => {
-    setSelectedParties(new Set());
   };
 
   return (
@@ -401,83 +296,25 @@ export default function PollsPlus() {
                 <div className="p-4 bg-white dark:bg-gray-800 border-b">
                   <div className="flex flex-wrap gap-2 mb-4">
                     <Button
-                      onClick={selectAllParties}
+                      onClick={() => setSelectedParties(new Set(parties))}
                       className="bg-blue-500 hover:bg-blue-600 text-white"
                       size="sm"
                     >
                       Select All
                     </Button>
                     <Button
-                      onClick={clearAllParties}
+                      onClick={() => setSelectedParties(new Set())}
                       className="bg-red-500 hover:bg-red-600 text-white"
                       size="sm"
                     >
                       Clear All
-                    </Button>
-                    <Button
-                      onClick={() => setShowAdvancedOptions(!showAdvancedOptions)}
-                      variant="outline"
-                      size="sm"
-                    >
-                      {showAdvancedOptions ? 'Hide' : 'Show'} Advanced Options
                     </Button>
                     <div className="flex-1" />
                     <span className="text-sm text-gray-600 dark:text-gray-400 self-center">
                       {selectedParties.size} van {parties.length} partijen geselecteerd
                     </span>
                   </div>
-
-                  {/* Advanced Options */}
-                  {showAdvancedOptions && (
-                    <div className="mb-4 p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
-                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                        <div>
-                          <label className="block text-sm font-medium mb-2">
-                            Half-life (days):
-                          </label>
-                          <input
-                            type="number"
-                            value={halfLife}
-                            onChange={(e) => setHalfLife(Number(e.target.value))}
-                            min="1"
-                            className="w-full px-3 py-1 border rounded dark:bg-gray-600 dark:border-gray-500"
-                          />
-                        </div>
-                        <div>
-                          <label className="block text-sm font-medium mb-2">
-                            Show uncertainty when ≤ parties:
-                          </label>
-                          <input
-                            type="number"
-                            value={uncertaintyThreshold}
-                            onChange={(e) => setUncertaintyThreshold(Number(e.target.value))}
-                            min="1"
-                            className="w-full px-3 py-1 border rounded dark:bg-gray-600 dark:border-gray-500"
-                          />
-                        </div>
-                        <div>
-                          <label className="block text-sm font-medium mb-2">
-                            Uncertainty level (σ):
-                          </label>
-                          <select
-                            value={sigma}
-                            onChange={(e) => setSigma(Number(e.target.value))}
-                            className="w-full px-3 py-1 border rounded dark:bg-gray-600 dark:border-gray-500"
-                          >
-                            <option value="0.5">0.5σ</option>
-                            <option value="1">1σ</option>
-                            <option value="2">2σ</option>
-                          </select>
-                        </div>
-                        <div className="flex items-end">
-                          <div className="text-xs text-gray-500 dark:text-gray-400">
-                            Individual polls shown when ≤3 parties selected
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-
+                  
                   <div className="flex flex-wrap gap-2">
                     {parties.map(party => (
                       <button
@@ -506,35 +343,6 @@ export default function PollsPlus() {
           </CardContent>
         </Card>
 
-        {/* Info Card */}
-        <Card className="bg-white dark:bg-gray-800 shadow-lg border border-gray-200 dark:border-gray-700 mb-8">
-          <CardHeader>
-            <CardTitle className="text-lg">Chart Features</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid md:grid-cols-3 gap-4 text-sm">
-              <div>
-                <h4 className="font-semibold mb-2">Trend Lines</h4>
-                <p className="text-gray-600 dark:text-gray-400">
-                  Time-weighted aggregation with configurable half-life decay
-                </p>
-              </div>
-              <div>
-                <h4 className="font-semibold mb-2">Uncertainty Bands</h4>
-                <p className="text-gray-600 dark:text-gray-400">
-                  Shows when ≤{uncertaintyThreshold} parties selected (±{sigma}σ confidence)
-                </p>
-              </div>
-              <div>
-                <h4 className="font-semibold mb-2">Individual Polls</h4>
-                <p className="text-gray-600 dark:text-gray-400">
-                  Raw poll data points shown when ≤3 parties selected
-                </p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
         {/* Quick Links Card */}
         <Card className="bg-white dark:bg-gray-800 shadow-lg border border-gray-200 dark:border-gray-700">
           <CardHeader>
@@ -556,7 +364,7 @@ export default function PollsPlus() {
                   Bezoek Site
                 </Button>
               </div>
-
+              
               <div className="p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
                 <h4 className="font-semibold mb-2">Peilingwijzer</h4>
                 <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
@@ -572,7 +380,7 @@ export default function PollsPlus() {
                 </Button>
               </div>
             </div>
-
+            
             <div className="pt-4 border-t border-gray-200 dark:border-gray-600">
               <p className="text-sm text-gray-500 dark:text-gray-400 text-center">
                 Deze sites worden onderhouden door onafhankelijke polling experts en bieden de meest actuele Nederlandse verkiezingspeilingen.
