@@ -128,7 +128,9 @@ export default function PollsPlus() {
 
           setPollData(validData);
           setParties(extractedParties);
-          setSelectedParties(new Set(extractedParties.slice(0, 4))); // Select first 4 parties by default
+          // Select specific default parties
+          const defaultParties = ['GL/PvdA', 'VVD', 'CDA'].filter(party => extractedParties.includes(party));
+          setSelectedParties(new Set(defaultParties));
           setIsLoading(false);
         },
         error: (error: any) => {
@@ -247,17 +249,38 @@ export default function PollsPlus() {
       return result;
     }).filter(r => r !== null);
 
-    // Create traces for Plotly
-    const colorPalette = [
-      '#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', 
-      '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22', '#17becf',
-      '#aec7e8', '#ffbb78', '#98df8a', '#ff9896', '#c5b0d5',
-      '#c49c94', '#f7b6d3', '#c7c7c7', '#dbdb8d', '#9edae5'
-    ];
+    // Create traces for Plotly with party-specific colors
+    const partyColors = {
+      'VVD': '#1f77b4',         // Blue
+      'PVV': '#ff7f0e',         // Orange  
+      'CDA': '#2ca02c',         // Green
+      'D66': '#d62728',         // Red
+      'GL/PvdA': '#9467bd',     // Purple
+      'SP': '#8c564b',          // Brown
+      'PvdD': '#e377c2',        // Pink
+      'ChristenUnie': '#7f7f7f', // Gray
+      'SGP': '#bcbd22',         // Olive
+      'DENK': '#17becf',        // Cyan
+      'FVD': '#aec7e8',         // Light Blue
+      'JA21': '#ffbb78',        // Light Orange
+      '50PLUS': '#98df8a',      // Light Green
+      'BBB': '#ff9896',         // Light Red
+      'Volt': '#c5b0d5',        // Light Purple
+      'BIJ1': '#c49c94',        // Light Brown
+      'Piratenpartij': '#f7b6d3', // Light Pink
+      'BVNL': '#c7c7c7',        // Light Gray
+      'NSC': '#dbdb8d',         // Light Olive
+      'PvdF': '#9edae5'         // Light Cyan
+    };
+
+    const getPartyColor = (party: string, index: number) => {
+      return partyColors[party] || colorPalette[index % colorPalette.length];
+    };
+
     const traces: any[] = [];
 
     selectedPartiesArray.forEach((party, i) => {
-      const color = colorPalette[i % colorPalette.length];
+      const color = getPartyColor(party, i);
       const rgb = hexToRgb(color);
 
       // Main trend line
@@ -541,14 +564,14 @@ export default function PollsPlus() {
             <CardTitle className="text-lg">Nederlandse Polling Resources</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="grid md:grid-cols-2 gap-4">
+            <div className="grid md:grid-cols-3 gap-4">
               <div className="p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
-                <h4 className="font-semibold mb-2">Yorick Online</h4>
+                <h4 className="font-semibold mb-2">Peil.nl</h4>
                 <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
-                  Gedetailleerde polling aggregator met historische trends
+                  Wekelijkse Nederlandse peilingen en politieke trends
                 </p>
                 <Button
-                  onClick={() => window.open('https://yorick-online.nl', '_blank')}
+                  onClick={() => window.open('https://peil.nl', '_blank')}
                   className="bg-blue-600 hover:bg-blue-700 text-white w-full"
                   size="sm"
                 >
@@ -558,13 +581,28 @@ export default function PollsPlus() {
               </div>
 
               <div className="p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
-                <h4 className="font-semibold mb-2">Peilingwijzer</h4>
+                <h4 className="font-semibold mb-2">Ipsos Nederland</h4>
                 <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
-                  Tom Louwerse's academische polling analyse
+                  Marktonderzoek en publieke opiniepeilingen
                 </p>
                 <Button
-                  onClick={() => window.open('https://peilingwijzer.tomlouwerse.nl', '_blank')}
+                  onClick={() => window.open('https://www.ipsos-publiek.nl/', '_blank')}
                   className="bg-green-600 hover:bg-green-700 text-white w-full"
+                  size="sm"
+                >
+                  <ExternalLink className="w-4 h-4 mr-2" />
+                  Bezoek Site
+                </Button>
+              </div>
+
+              <div className="p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                <h4 className="font-semibold mb-2">Verian Group</h4>
+                <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
+                  Onderzoek en inzichten over publieke opinie
+                </p>
+                <Button
+                  onClick={() => window.open('https://www.veriangroup.com/nl/news-and-insights', '_blank')}
+                  className="bg-purple-600 hover:bg-purple-700 text-white w-full"
                   size="sm"
                 >
                   <ExternalLink className="w-4 h-4 mr-2" />
@@ -575,7 +613,7 @@ export default function PollsPlus() {
 
             <div className="pt-4 border-t border-gray-200 dark:border-gray-600">
               <p className="text-sm text-gray-500 dark:text-gray-400 text-center">
-                Deze sites worden onderhouden door onafhankelijke polling experts en bieden de meest actuele Nederlandse verkiezingspeilingen.
+                Deze sites zijn van de belangrijkste Nederlandse peilingbureaus en bieden actuele verkiezingspeilingen en politieke analyses.
               </p>
             </div>
           </CardContent>
