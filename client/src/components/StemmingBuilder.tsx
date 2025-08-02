@@ -26,8 +26,8 @@ export default function StemmingBuilder() {
                 onClick={() => toggleParty(party.id)}
                 className={`flex items-center justify-between p-3 rounded-lg transition-colors cursor-pointer ${
                   isSelected 
-                    ? 'bg-green-100 dark:bg-green-900/30 border-2 border-green-500 dark:border-green-400' 
-                    : 'border border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700'
+                    ? 'text-white bg-green-500 bg-opacity-80 dark:bg-green-900 dark:bg-opacity-30 border-2 border-green-500 border-opacity-90 dark:border-green-400 dark:border-opacity-50' 
+                    : 'dark:text-black border border-gray-200 border-opacity-80 dark:border-gray-600 dark:border-opacity-80 hover:bg-gray-50 hover:bg-opacity-80 dark:hover:bg-gray-700 dark:hover:bg-opacity-90'
                 }`}
               >
                 <div className="flex items-center space-x-2">
