@@ -125,6 +125,9 @@ export default function CoalitionBuilder() {
       </CardContent>
       <CardHeader className="bg-gray-50/20 dark:bg-gray-700/80 border-gray-200/50 dark:border-gray-600/20 py-2">
         <div className="flex justify-between items-center">          
+
+          <CardTitle className="text-lg text-white font-inter font-semibold">coalitieland.nl</CardTitle>
+          
           <Button
             onClick={handleSaveScenario}
             size="sm"
