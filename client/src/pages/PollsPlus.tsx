@@ -251,14 +251,14 @@ export default function PollsPlus() {
 
     // Create traces for Plotly with party-specific colors
     const partyColors = {
-      'VVD': '#1f77b4',         // Blue
-      'PVV': '#ff7f0e',         // Orange  
-      'CDA': '#2ca02c',         // Green
-      'D66': '#d62728',         // Red
-      'GL/PvdA': '#9467bd',     // Purple
-      'SP': '#8c564b',          // Brown
+      'VVD': '#0328cb',         // Ultramarijn
+      'PVV': '#012758',         // cyaan-blauw  
+      'CDA': '#28c94c',         // Green
+      'D66': '#32CD32',         // Green
+      'GL/PvdA': '#dd2132',     // Red
+      'SP': '#FF0000',          // Red
       'PvdD': '#e377c2',        // Pink
-      'ChristenUnie': '#7f7f7f', // Gray
+      'CU': '#7f7f7f', // Gray
       'SGP': '#bcbd22',         // Olive
       'DENK': '#17becf',        // Cyan
       'FVD': '#aec7e8',         // Light Blue
@@ -269,7 +269,7 @@ export default function PollsPlus() {
       'BIJ1': '#c49c94',        // Light Brown
       'Piratenpartij': '#f7b6d3', // Light Pink
       'BVNL': '#c7c7c7',        // Light Gray
-      'NSC': '#dbdb8d',         // Light Olive
+      'NSC': '#13123B',         // blauw-magenta
       'PvdF': '#9edae5'         // Light Cyan
     };
 

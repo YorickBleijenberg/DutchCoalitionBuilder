@@ -59,7 +59,7 @@ export default function Landing() {
                 })()}
               </span>
             </div> 
-             {/* <Button
+             <Button
               variant="ghost"
               size="sm"
               onClick={toggleDarkMode}
@@ -67,7 +67,7 @@ export default function Landing() {
               hover:text-white"
             >
               {darkMode  ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
-            </Button>*/}
+            </Button>
             
           </div>
         </div>
