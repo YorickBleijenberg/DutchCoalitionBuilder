@@ -114,23 +114,23 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       },
       peil: {
         data: {
-          'vvd': 19,
-          'd66': 10,
-          'gl-pvda': 27,
-          'pvv': 29,
-          'cda': 21,
+          'vvd': 16,
+          'd66': 11,
+          'gl-pvda': 28,
+          'pvv': 28,
+          'cda': 24,
           'sp': 8,
           'fvd': 4,
-          'pvdd': 5,
+          'pvdd': 4,
           'cu': 3,
           'volt': 3,
-          'ja21': 8,
+          'ja21': 7,
           'sgp': 4,
           'denk': 4,
-          'bbb': 5,
+          'bbb': 6,
           'nsc': 0
         },
-        date: '2025-07-27'
+        date: '2025-08-09'
       },
       '1v': {
         data: {
