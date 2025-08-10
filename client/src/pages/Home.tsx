@@ -5,9 +5,6 @@ import Header from '../components/Header';
 import SeatTable from '../components/SeatTable';
 
 import ComparisonBarChart from '../components/ComparisonBarChart';
-import PartyBar from '../components/PartyBar';
-import ParliamentChart from '../components/ParliamentChart';
-
 import CoalitionSuggestions from '../components/CoalitionSuggestions';
 import CoalitionBuilder from '../components/CoalitionBuilder';
 import CoalitionPredictionBar from '../components/CoalitionPredictionBar';
@@ -16,11 +13,11 @@ import StabilityAnalysis from '../components/StabilityAnalysis';
 import ScenarioManager from '../components/ScenarioManager';
 import SwingAnalysis from '../components/SwingAnalysis';
 import CoalitionTimeline from '../components/CoalitionTimeline';
-import ExportShare from '../components/ExportShare';
 import GuidedBuilder from '../components/GuidedBuilder';
 import MediaSentiment from '../components/MediaSentiment';
 import IdeologicalCoalitions from '../components/IdeologicalCoalitions';
 import PoliticalPredictor from '../components/PoliticalPredictor';
+import ParliamentChart from '../components/ParliamentChart';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';

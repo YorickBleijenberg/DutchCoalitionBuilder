@@ -100,7 +100,7 @@ export default function Landing() {
             <Button 
               size="lg" 
               className="bg-gold hover:bg-gold-dark text-slate-900 font-bold py-3 px-8 rounded-lg shadow-lg transition-colors duration-300"
-              onClick={() => setLocation('/Simple')}
+              onClick={() => setLocation('/simple')}
             >
               Naar de coalitiezoeker
               <ChevronRight className="ml-2 h-4 w-4" />
@@ -120,7 +120,7 @@ export default function Landing() {
             <Button 
               size="lg" 
               className="bg-gold hover:bg-gold-dark text-slate-900 font-bold py-3 px-8 rounded-lg shadow-lg transition-colors duration-300"
-              onClick={() => setLocation('/Stemming')}
+              onClick={() => setLocation('/stemming')}
             >
               Stemming tool
               <ChevronRight className="ml-2 h-4 w-4" />
